@@ -4,6 +4,7 @@ import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
+const NUM_OF_USERS_TO_SHOW = 10
 
 export default function App() {
 
@@ -13,7 +14,7 @@ export default function App() {
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
-    function fetchRandomUserData(numOfResults = numOfUsersToShow) {
+    function fetchRandomUserData(numOfResults = NUM_OF_USERS_TO_SHOW) {
         const apiParams = "?format=JSON&nat=CA,US&results=" + numOfResults
         fetch(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((response) => response.json())
