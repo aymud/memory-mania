@@ -1,0 +1,27 @@
+.user-cards-container {
+    width: 800px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.user-card {
+    grid-gap: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.user-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.user-card .user-name {
+    font-weight: bold;
+    margin-top: 10px;
+}

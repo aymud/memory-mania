@@ -1,10 +1,11 @@
 import React from "react";
 
+
 export default function UserCard(props) {
     return (
-        <div>
-            <img src={props.user.picture.large} alt="User" />
-            <p>Name: {`${props.user.name.first} ${props.user.name.last}`}</p>
+        <div className="user-card">
+            <img className="user-image" src={props.user.picture.large} alt="User" />
+            <div className="user-name">{props.user.name.first}</div>
         </div>
     )
 }

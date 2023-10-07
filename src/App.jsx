@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import UserCard from "./components/UserCard.jsx";
 
-const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/?format=JSON&results=5&nat=CA,US'
+const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/?format=JSON&results=10&nat=CA,US'
 
 export default function App() {
 
@@ -25,8 +25,8 @@ export default function App() {
     )
 
     return (
-        <React.Fragment>
+        <div className="user-cards-container">
             {randomUserElements}
-        </React.Fragment>
+        </div>
     )
 }
