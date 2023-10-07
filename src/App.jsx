@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
+import TestCountdown from "./components/TestCountdown.jsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
@@ -10,8 +11,9 @@ export default function App() {
 
     const [randomUsers, setRandomUsers] = React.useState([])
     const [isLearning, setIsLearning] = React.useState(true)
-    const [enteredNames, setEnteredNames] = React.useState([])
+    const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
+    const [enteredNames, setEnteredNames] = React.useState([])
     const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
     function fetchRandomUserData(numOfResults = NUM_OF_USERS_TO_SHOW) {
@@ -39,8 +41,13 @@ export default function App() {
         />)
     )
 
-    function handleTest() {
+    function handleTestCountdown() {
+        setIsWaitingTestStart(false)
+    }
+
+    function handleTestStart() {
         setIsLearning(false)
+        setIsWaitingTestStart(true)
     }
 
     function handleTestSubmit() {
@@ -86,11 +93,12 @@ export default function App() {
 
     return (
         <main>
-            <div className="user-cards-container">
-                {randomUserElements}
-            </div>
-            {isLearning && <button className="test-button" onClick={handleTest}>Test</button>}
-            {!isLearning && !isGameOver &&
+            {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
+                <div className="user-cards-container">
+                    {randomUserElements}
+                </div>}
+            {isLearning && <button className="test-button" onClick={handleTestStart}>Test</button>}
+            {!isLearning && !isWaitingTestStart && !isGameOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
             {isGameOver && (
                 <React.Fragment>
