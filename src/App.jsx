@@ -3,12 +3,17 @@ import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
+import {tryFetchData} from "./utils/apiHelper.js";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
 
 export default function App() {
 
+    /* The game is divided into a learning phase and a testing phase.
+       In the learning phase, the player will memorize the faces and names.
+       Then there is a small wait before the test begins.
+     */
     const [randomUsers, setRandomUsers] = React.useState([])
     const [isLearning, setIsLearning] = React.useState(true)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
@@ -16,21 +21,16 @@ export default function App() {
     const [enteredNames, setEnteredNames] = React.useState([])
     const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
-    function fetchRandomUserData(numOfResults = NUM_OF_USERS_TO_SHOW) {
-        const apiParams = "?format=JSON&nat=CA,US&results=" + numOfResults
-        fetch(RANDOM_USER_GENERATOR_API_URL + apiParams)
-            .then((response) => response.json())
-            .then((data) => {
-                setRandomUsers(data.results);
-            })
-            .catch((error) => {
-                console.error("Error fetching random user data:", error);
-            });
-    }
-
     React.useEffect(() => {
-        fetchRandomUserData();
-    }, [])
+        if (!isLearning) return
+
+        // Filtered on nationality because then the names get too hard :p
+        const apiParams = "?format=JSON&nat=CA,US&results=" + NUM_OF_USERS_TO_SHOW
+        tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
+            .then((data) => {
+            setRandomUsers(data.results);
+        })
+    }, [isLearning])
 
     const randomUserElements = randomUsers.map(user =>
         (<UserCard key={user.id.value}
@@ -40,6 +40,12 @@ export default function App() {
                    isGameOver={isGameOver}
         />)
     )
+
+    function handleGameRestart() {
+        setIsLearning(true)
+        setIsGameOver(false)
+        setEnteredNames([])
+    }
 
     function handleTestCountdown() {
         setIsWaitingTestStart(false)
@@ -82,13 +88,6 @@ export default function App() {
             }
             return [...prevEnteredNames];
         });
-    }
-
-    function handleGameRestart() {
-        setIsLearning(true)
-        setIsGameOver(false)
-        setEnteredNames([])
-        fetchRandomUserData();
     }
 
     return (

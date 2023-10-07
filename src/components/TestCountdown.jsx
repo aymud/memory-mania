@@ -1,4 +1,7 @@
 import React from "react";
+import {tryFetchData} from "../utils/apiHelper.js";
+
+const RANDOM_FACT_API_URL = "https://api.api-ninjas.com/v1/facts?limit=1"
 
 export default function TestCountdown(props) {
     const [countdownTimeInSeconds, setCountdownTimeInSeconds] = React.useState(10)
@@ -6,22 +9,15 @@ export default function TestCountdown(props) {
 
     React.useEffect(() => {
         const apiKey = "JZDgzZNFXjQ2o7glprpbPg==kRpmEoxXi5UALX0e"
-        fetch('https://api.api-ninjas.com/v1/facts?limit=1', {
+        const options = {
             method: 'GET',
-            headers: {
-                'X-Api-Key': apiKey,
-            },
+            headers: {'X-Api-Key': apiKey}
+        }
+        tryFetchData(RANDOM_FACT_API_URL, options).then((data) => {
+            setFunFact(data[0].fact)
         })
-            .then((response) => response.json())
-            .then((data) => {
-                setFunFact(data[0].fact);
-            })
-            .catch((error) => {
-                console.error("Error fetching fact:", error);
-            });
     }, []);
 
-    // Start the countdownTimeInSeconds timer
     React.useEffect(() => {
         const timerIntervalInMilliSeconds = 1000
         const timer = setInterval(() => {
