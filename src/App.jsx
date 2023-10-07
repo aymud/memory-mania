@@ -26,6 +26,7 @@ export default function App() {
     React.useEffect(() => {
         if (!isLearning) return
 
+        // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
         // Filtered on nationality because then the names get too hard :p
         const apiParams = "?format=JSON&nat=CA,US&results=" + NUM_OF_USERS_TO_SHOW
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
