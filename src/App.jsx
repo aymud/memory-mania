@@ -1,17 +1,20 @@
 import React from 'react'
 import './App.css'
 import UserCard from "./components/UserCard.jsx";
+import ScoreMessage from "./components/ScoreMessage.jsx";
 
-const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/?format=JSON&results=2&nat=CA,US"
+const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/?format=JSON&nat=CA,US&results="
 
 export default function App() {
 
     const [randomUsers, setRandomUsers] = React.useState([])
-    const [isMemorizing, setIsMemorizing] = React.useState(true)
+    const [isLearning, setIsLearning] = React.useState(true)
     const [enteredNames, setEnteredNames] = React.useState([])
+    const [isGameOver, setIsGameOver] = React.useState(false)
+    const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
-    React.useEffect(() => {
-        fetch(RANDOM_USER_GENERATOR_API_URL)
+    function fetchRandomUserData(numOfResults = numOfUsersToShow) {
+        fetch(RANDOM_USER_GENERATOR_API_URL + numOfResults)
             .then((response) => response.json())
             .then((data) => {
                 setRandomUsers(data.results);
@@ -19,33 +22,34 @@ export default function App() {
             .catch((error) => {
                 console.error("Error fetching random user data:", error);
             });
+    }
+
+    React.useEffect(() => {
+        fetchRandomUserData();
     }, [])
 
     const randomUserElements = randomUsers.map(user =>
         (<UserCard key={user.id.value}
+                   handleOnChange={handleNameEntered}
                    user={user}
-                   isMemorizing={isMemorizing}
-                   handleOnChange={handleNameEntered}/>)
+                   isLearning={isLearning}
+                   isGameOver={isGameOver}
+        />)
     )
 
     function handleTest() {
-        setIsMemorizing(false)
+        setIsLearning(false)
     }
 
     function handleTestSubmit() {
         let correctCount = 0;
-        let totalUsers = 0;
 
-        // Iterate over randomUsers and check if the entered names match.
+        // Iterate over randomUsers and check if the entered names match, and update score.
         randomUsers.forEach((randomUser) => {
             const userId = randomUser.id.value;
             const enteredUser = enteredNames.find((enteredUser) => enteredUser.id === userId);
 
-            // Check if a user with the same ID exists in enteredNames.
             if (enteredUser) {
-                totalUsers++;
-
-                // Compare entered name (case-insensitive) with actual name.
                 const isNameCorrect = enteredUser.name.trim().toLowerCase() === randomUser.name.first.toLowerCase()
                 if (isNameCorrect) {
                     correctCount++;
@@ -53,10 +57,8 @@ export default function App() {
             }
         });
 
-        // TODO: CLEAN UP; Provide feedback to the player.
-        alert(`You got ${correctCount} names correct out of ${totalUsers}.`);
-
-        setIsMemorizing(true);
+        setCorrectAnswersCount(correctCount)
+        setIsGameOver(true)
     }
 
     function handleNameEntered(name, id) {
@@ -67,19 +69,34 @@ export default function App() {
             if (userIndex !== -1) {
                 prevEnteredNames[userIndex].name = name;
             } else {
-                prevEnteredNames.push({ id: id, name: name });
+                prevEnteredNames.push({id: id, name: name});
             }
             return [...prevEnteredNames];
         });
     }
 
+    function handleGameRestart() {
+        setIsLearning(true)
+        setIsGameOver(false)
+        setEnteredNames([])
+        fetchRandomUserData();
+    }
+
     return (
-        <React.Fragment>
+        <main>
             <div className="user-cards-container">
                 {randomUserElements}
             </div>
-            {isMemorizing && <button onClick={handleTest}>Test</button>}
-            {!isMemorizing && <button onClick={handleTestSubmit}>Finish Test</button>}
-        </React.Fragment>
+            {isLearning && <button className="test-button" onClick={handleTest}>Test</button>}
+            {!isLearning && !isGameOver &&
+                <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
+            {isGameOver && (
+                <React.Fragment>
+                    <ScoreMessage correctAnswersCount={correctAnswersCount} totalUsers={randomUsers.length}/>
+                    <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
+                </React.Fragment>
+            )
+            }
+        </main>
     )
 }
