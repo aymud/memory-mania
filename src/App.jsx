@@ -4,6 +4,7 @@ import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
+import StartMenu from "./components/StartMenu.jsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
@@ -14,8 +15,9 @@ export default function App() {
        In the learning phase, the player will memorize the faces and names.
        Then there is a small wait before the test begins.
      */
+    const [isGameStarted, setIsGameStarted] = React.useState(false);
     const [randomUsers, setRandomUsers] = React.useState([])
-    const [isLearning, setIsLearning] = React.useState(true)
+    const [isLearning, setIsLearning] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
@@ -40,6 +42,11 @@ export default function App() {
                    isGameOver={isGameOver}
         />)
     )
+
+    function handleStartGame() {
+        setIsGameStarted(true);
+        handleGameRestart()
+    }
 
     function handleGameRestart() {
         setIsLearning(true)
@@ -92,12 +99,14 @@ export default function App() {
 
     return (
         <main>
+            {!isGameStarted && <StartMenu onStartGame={handleStartGame} />}
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
                 <div className="user-cards-container">
                     {randomUserElements}
-                </div>}
+                </div>
+            }
             {isLearning && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {!isLearning && !isWaitingTestStart && !isGameOver &&
+            {isGameStarted && !isLearning && !isWaitingTestStart && !isGameOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
             {isGameOver && (
                 <React.Fragment>
