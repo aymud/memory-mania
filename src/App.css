@@ -78,3 +78,11 @@ main {
     font-weight: bold;
     color: #333;
 }
+
+.name-correct {
+    color: green;
+}
+
+.name-incorrect {
+    color: red;
+}

@@ -3,7 +3,7 @@ import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 
-const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/?format=JSON&nat=CA,US&results="
+const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 
 export default function App() {
 
@@ -14,7 +14,8 @@ export default function App() {
     const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
     function fetchRandomUserData(numOfResults = numOfUsersToShow) {
-        fetch(RANDOM_USER_GENERATOR_API_URL + numOfResults)
+        const apiParams = "?format=JSON&nat=CA,US&results=" + numOfResults
+        fetch(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((response) => response.json())
             .then((data) => {
                 setRandomUsers(data.results);
@@ -50,7 +51,7 @@ export default function App() {
             const enteredUser = enteredNames.find((enteredUser) => enteredUser.id === userId);
 
             if (enteredUser) {
-                const isNameCorrect = enteredUser.name.trim().toLowerCase() === randomUser.name.first.toLowerCase()
+                const isNameCorrect = enteredUser.name === randomUser.name.first.toLowerCase()
                 if (isNameCorrect) {
                     correctCount++;
                 }

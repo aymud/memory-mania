@@ -1,4 +1,8 @@
+import React from "react";
+
 export default function UserCard(props) {
+
+    const [nameEntered, setNameEnetered] = React.useState('')
 
     return (
         <div className="user-card">
@@ -10,9 +14,18 @@ export default function UserCard(props) {
                     type="text"
                     placeholder="Enter Name"
                     // value={nameEntered}
-                    onChange={(event) => props.handleOnChange(event.target.value, props.user.id.value)}
+                    onChange={(event) => {
+                        const name = event.target.value.trim().toLowerCase()
+                        setNameEnetered(name)
+                        props.handleOnChange(name, props.user.id.value)
+                    }
+                    }
                 />
             }
+            {props.isGameOver
+                && <div className={nameEntered === props.user.name.first.toLowerCase() ? "name-correct" : "name-incorrect"}>
+                    {props.user.name.first}
+                </div>}
         </div>
     )
 }
