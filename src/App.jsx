@@ -1,11 +1,32 @@
 import React from 'react'
 import './App.css'
+import UserCard from "./components/UserCard.jsx";
+
+const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/?format=JSON&results=5&nat=CA,US'
 
 export default function App() {
 
-  return (
-    <React.Fragment>
+    const [randomUsers, setRandomUsers] = React.useState([])
 
-    </React.Fragment>
-  )
+    React.useEffect(() => {
+        fetch(RANDOM_USER_GENERATOR_API_URL)
+            .then((response) => response.json())
+            .then((data) => {
+                setRandomUsers(data.results);
+            })
+            .catch((error) => {
+                console.error('Error fetching random user data:', error);
+            });
+    }, [])
+
+    const randomUserElements = randomUsers.map(user =>
+        (<UserCard key={user.id.value}
+                   user={user}/>)
+    )
+
+    return (
+        <React.Fragment>
+            {randomUserElements}
+        </React.Fragment>
+    )
 }
