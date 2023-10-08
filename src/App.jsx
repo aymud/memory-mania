@@ -31,7 +31,7 @@ export default function App() {
 
     React.useEffect(() => {
 
-    if(isLearning){
+    if(isLearningPhase){
 
         const interval = setInterval(() => {
         
@@ -81,6 +81,11 @@ export default function App() {
         setTimeRemaining(ALLOWED_TIME)
     }
 
+    function handleStartGame() {
+        setIsGameStarted(true);
+        handleGameRestart()
+    }
+
     function handleTestCountdown() {
         // Shuffling the array, to make the test harder and display the users is a random order.
         const shuffledRandomUsers = shuffleArray([...randomUsers])
@@ -126,6 +131,10 @@ export default function App() {
         });
     }
 
+    function getScore() {
+        const correctCount = enteredNames.filter((user) => user.isCorrect).length
+        return correctCount
+    }
     
     
 
@@ -136,10 +145,10 @@ export default function App() {
                 <div className="user-cards-container">
                     {randomUserElements}
                 </div>}
-            {isLearning && 
+            {isLearningPhase && 
                 <text className="test-countdown-container"> {timeRemaining}S Remaining</text>}
-            {isLearning && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {!isLearning && !isWaitingTestStart && !isGameOver &&
+            {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
+            {!isLearningPhase && !isWaitingTestStart && !isGameOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
 
             {isGameOver && (
