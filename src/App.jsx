@@ -3,9 +3,9 @@ import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
+import StartMenu from "./components/StartMenu.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
 import {shuffleArray} from "./utils/manipulation.js";
-import StartMenu from "./components/StartMenu.jsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
@@ -16,13 +16,12 @@ export default function App() {
        In the learning phase, the player will memorize the faces and names.
        Then there is a small wait before the test begins.
      */
-    const [isGameStarted, setIsGameStarted] = React.useState(false);
     const [randomUsers, setRandomUsers] = React.useState([])
+    const [isGameStarted, setIsGameStarted] = React.useState(false);
     const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
-    const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
     React.useEffect(() => {
         if (!isLearningPhase) return
@@ -45,18 +44,19 @@ export default function App() {
         />)
     )
 
-    function handleStartGame() {
-        setIsGameStarted(true);
-        handleGameRestart()
-    }
-
     function handleGameRestart() {
         setIsLearningPhase(true)
         setIsGameOver(false)
         setEnteredNames([])
     }
 
+    function handleStartGame() {
+        setIsGameStarted(true);
+        handleGameRestart()
+    }
+
     function handleTestCountdown() {
+        // Shuffling the array, to make the test harder and display the users is a random order.
         const shuffledRandomUsers = shuffleArray([...randomUsers])
         setRandomUsers(shuffledRandomUsers)
         setIsWaitingTestStart(false)
@@ -68,22 +68,21 @@ export default function App() {
     }
 
     function handleTestSubmit() {
-        let correctCount = 0;
-
         // Iterate over randomUsers and check if the entered names match, and update score.
-        randomUsers.forEach((randomUser) => {
-            const userId = randomUser.id.value;
-            const enteredUser = enteredNames.find((enteredUser) => enteredUser.id === userId);
-
-            if (enteredUser) {
-                const isNameCorrect = enteredUser.name === randomUser.name.first.toLowerCase()
-                if (isNameCorrect) {
-                    correctCount++;
+        const namesValidated = enteredNames.map((actualUser) => {
+            const expectedUser = randomUsers.find((user) => user.id.value === actualUser.id);
+            if (expectedUser) {
+                const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
+                return {
+                    ...actualUser,
+                    isCorrect: isNameCorrect,
                 }
+            } else {
+                // User did not enter a name for this person.
+                return {actualUser, isCorrect: false}
             }
-        });
-
-        setCorrectAnswersCount(correctCount)
+        })
+        setEnteredNames(namesValidated);
         setIsGameOver(true)
     }
 
@@ -101,6 +100,11 @@ export default function App() {
         });
     }
 
+    function getScore() {
+        const correctCount = enteredNames.filter((user) => user.isCorrect).length
+        return correctCount
+    }
+
     return (
         <main>
             {!isGameStarted && <StartMenu onStartGame={handleStartGame} />}
@@ -114,7 +118,7 @@ export default function App() {
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
             {isGameOver && (
                 <React.Fragment>
-                    <ScoreMessage correctAnswersCount={correctAnswersCount} totalUsers={randomUsers.length}/>
+                    <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
                 </React.Fragment>
             )

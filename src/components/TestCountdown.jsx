@@ -36,8 +36,7 @@ export default function TestCountdown(props) {
 
     return (
         <div className="test-countdown-container">
-            <h2>Rest Phase</h2>
-            <p className="countdown-text">Time remaining: {countdownTimeInSeconds} seconds</p>
+            <h2 className="countdown-text">Recall begins in {countdownTimeInSeconds} seconds</h2>
             <p className="fun-fact-text">Did you know ... {funFact}</p>
             <button className="skip-button" onClick={props.handleTestCountdown}>Skip</button>
         </div>
