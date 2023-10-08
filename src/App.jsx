@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
@@ -7,9 +7,12 @@ import {tryFetchData} from "./utils/apiHelper.js";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
+const ALLOWED_TIME = 10
+//in seconds could maybe change based on difficulty
 
 export default function App() {
 
+   
     /* The game is divided into a learning phase and a testing phase.
        In the learning phase, the player will memorize the faces and names.
        Then there is a small wait before the test begins.
@@ -20,6 +23,32 @@ export default function App() {
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
     const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
+    const [timeRemaining, setTimeRemaining] = React.useState(ALLOWED_TIME)
+
+
+    React.useEffect(() => {
+
+    if(isLearning){
+
+        const interval = setInterval(() => {
+        
+        if(timeRemaining>0){
+            const newTime = timeRemaining - 1
+            setTimeRemaining(newTime)
+
+        }else{
+            clearInterval(interval)
+            handleTestStart()
+
+        }
+      }, 1000);
+        
+      return () => clearInterval(interval);
+      
+    }
+    })
+        
+
 
     React.useEffect(() => {
         if (!isLearning) return
@@ -45,6 +74,7 @@ export default function App() {
         setIsLearning(true)
         setIsGameOver(false)
         setEnteredNames([])
+        setTimeRemaining(ALLOWED_TIME)
     }
 
     function handleTestCountdown() {
@@ -90,19 +120,26 @@ export default function App() {
         });
     }
 
+    
+    
+
     return (
         <main>
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
                 <div className="user-cards-container">
                     {randomUserElements}
                 </div>}
+            {isLearning && 
+                <text className="test-countdown-container"> {timeRemaining}S Remaining</text>}
             {isLearning && <button className="test-button" onClick={handleTestStart}>Test</button>}
             {!isLearning && !isWaitingTestStart && !isGameOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
+
             {isGameOver && (
                 <React.Fragment>
                     <ScoreMessage correctAnswersCount={correctAnswersCount} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
+                    
                 </React.Fragment>
             )
             }
