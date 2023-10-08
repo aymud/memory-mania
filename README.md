@@ -18,6 +18,7 @@ The objective of the game is to memorize the names and then test your memory by 
 It's a fun and challenging way to improve your memory skills!
 
 ## Folder Structure
+This React project was bootstrapped using [Vite](https://vitejs.dev/guide/).
 ```
 ├── public/ - Contains the HTML template and any static assets
 ├── src/ - Contains the source code for the React application
@@ -35,7 +36,7 @@ It's a fun and challenging way to improve your memory skills!
 Before you begin, ensure you have met the prerequisites, and then
 follow these steps to run the application locally:  
 1. **Clone the repository**: Start by cloning the repository to your local machine.
-2. Navigate to the project root directory:
+2. Navigate to the project root directory
 3. **Install dependencies:** Install the project dependencies using npm.
    ```shell
     npm install
@@ -45,6 +46,7 @@ follow these steps to run the application locally:
     ```shell
     npm run dev
     ```
+   The `npm run dev` command starts the development server provided by Vite. It automatically compiles and serves the React application.
 5. Once the development server starts,
    it will display the actual URL in the terminal. You can access the application by navigating to the URL shown in your terminal.
 

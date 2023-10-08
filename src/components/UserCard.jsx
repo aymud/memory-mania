@@ -2,7 +2,7 @@ import React from "react";
 
 export default function UserCard(props) {
 
-    const [nameEntered, setNameEnetered] = React.useState('')
+    const [nameEntered, setNameEntered] = React.useState('')
 
     const nameInput =
         <input
@@ -12,7 +12,7 @@ export default function UserCard(props) {
             // value={nameEntered}
             onChange={(event) => {
                 const name = event.target.value.trim().toLowerCase()
-                setNameEnetered(name)
+                setNameEntered(name)
                 props.handleOnChange(name, props.user.id.value)
             }
             }

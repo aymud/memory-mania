@@ -3,7 +3,9 @@ import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
+import StartMenu from "./components/StartMenu.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
+import {shuffleArray} from "./utils/manipulation.js";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
@@ -18,7 +20,8 @@ export default function App() {
        Then there is a small wait before the test begins.
      */
     const [randomUsers, setRandomUsers] = React.useState([])
-    const [isLearning, setIsLearning] = React.useState(true)
+    const [isGameStarted, setIsGameStarted] = React.useState(false);
+    const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
@@ -51,58 +54,61 @@ export default function App() {
 
 
     React.useEffect(() => {
-        if (!isLearning) return
+        if (!isLearningPhase) return
 
+        // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
         // Filtered on nationality because then the names get too hard :p
         const apiParams = "?format=JSON&nat=CA,US&results=" + NUM_OF_USERS_TO_SHOW
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
             setRandomUsers(data.results);
         })
-    }, [isLearning])
+    }, [isLearningPhase])
 
     const randomUserElements = randomUsers.map(user =>
         (<UserCard key={user.id.value}
                    handleOnChange={handleNameEntered}
                    user={user}
-                   isLearning={isLearning}
+                   isLearning={isLearningPhase}
                    isGameOver={isGameOver}
         />)
     )
 
     function handleGameRestart() {
-        setIsLearning(true)
+        setIsLearningPhase(true)
         setIsGameOver(false)
         setEnteredNames([])
         setTimeRemaining(ALLOWED_TIME)
     }
 
     function handleTestCountdown() {
+        // Shuffling the array, to make the test harder and display the users is a random order.
+        const shuffledRandomUsers = shuffleArray([...randomUsers])
+        setRandomUsers(shuffledRandomUsers)
         setIsWaitingTestStart(false)
     }
 
     function handleTestStart() {
-        setIsLearning(false)
+        setIsLearningPhase(false)
         setIsWaitingTestStart(true)
     }
 
     function handleTestSubmit() {
-        let correctCount = 0;
-
         // Iterate over randomUsers and check if the entered names match, and update score.
-        randomUsers.forEach((randomUser) => {
-            const userId = randomUser.id.value;
-            const enteredUser = enteredNames.find((enteredUser) => enteredUser.id === userId);
-
-            if (enteredUser) {
-                const isNameCorrect = enteredUser.name === randomUser.name.first.toLowerCase()
-                if (isNameCorrect) {
-                    correctCount++;
+        const namesValidated = enteredNames.map((actualUser) => {
+            const expectedUser = randomUsers.find((user) => user.id.value === actualUser.id);
+            if (expectedUser) {
+                const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
+                return {
+                    ...actualUser,
+                    isCorrect: isNameCorrect,
                 }
+            } else {
+                // User did not enter a name for this person.
+                return {actualUser, isCorrect: false}
             }
-        });
-
-        setCorrectAnswersCount(correctCount)
+        })
+        setEnteredNames(namesValidated);
         setIsGameOver(true)
     }
 
@@ -125,6 +131,7 @@ export default function App() {
 
     return (
         <main>
+            {!isGameStarted && <StartMenu onStartGame={handleStartGame} />}
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
                 <div className="user-cards-container">
                     {randomUserElements}
@@ -137,7 +144,7 @@ export default function App() {
 
             {isGameOver && (
                 <React.Fragment>
-                    <ScoreMessage correctAnswersCount={correctAnswersCount} totalUsers={randomUsers.length}/>
+                    <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
                     
                 </React.Fragment>
