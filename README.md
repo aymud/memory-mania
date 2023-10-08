@@ -35,7 +35,7 @@ It's a fun and challenging way to improve your memory skills!
 Before you begin, ensure you have met the prerequisites, and then
 follow these steps to run the application locally:  
 1. **Clone the repository**: Start by cloning the repository to your local machine.
-2. Navigate to the project root directory:
+2. Navigate to the project root directory
 3. **Install dependencies:** Install the project dependencies using npm.
    ```shell
     npm install
