@@ -4,6 +4,7 @@ import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
+import {shuffleArray} from "./utils/manipulation.js";
 import StartMenu from "./components/StartMenu.jsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
@@ -17,14 +18,14 @@ export default function App() {
      */
     const [isGameStarted, setIsGameStarted] = React.useState(false);
     const [randomUsers, setRandomUsers] = React.useState([])
-    const [isLearning, setIsLearning] = React.useState(false)
+    const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
     const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 
     React.useEffect(() => {
-        if (!isLearning) return
+        if (!isLearningPhase) return
 
         // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
         // Filtered on nationality because then the names get too hard :p
@@ -33,13 +34,13 @@ export default function App() {
             .then((data) => {
             setRandomUsers(data.results);
         })
-    }, [isLearning])
+    }, [isLearningPhase])
 
     const randomUserElements = randomUsers.map(user =>
         (<UserCard key={user.id.value}
                    handleOnChange={handleNameEntered}
                    user={user}
-                   isLearning={isLearning}
+                   isLearning={isLearningPhase}
                    isGameOver={isGameOver}
         />)
     )
@@ -50,17 +51,19 @@ export default function App() {
     }
 
     function handleGameRestart() {
-        setIsLearning(true)
+        setIsLearningPhase(true)
         setIsGameOver(false)
         setEnteredNames([])
     }
 
     function handleTestCountdown() {
+        const shuffledRandomUsers = shuffleArray([...randomUsers])
+        setRandomUsers(shuffledRandomUsers)
         setIsWaitingTestStart(false)
     }
 
     function handleTestStart() {
-        setIsLearning(false)
+        setIsLearningPhase(false)
         setIsWaitingTestStart(true)
     }
 
@@ -106,8 +109,8 @@ export default function App() {
                     {randomUserElements}
                 </div>
             }
-            {isLearning && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {isGameStarted && !isLearning && !isWaitingTestStart && !isGameOver &&
+            {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
+            {isGameStarted && !isLearningPhase && !isWaitingTestStart && !isGameOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
             {isGameOver && (
                 <React.Fragment>
