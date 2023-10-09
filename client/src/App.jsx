@@ -136,9 +136,9 @@ export default function App() {
                 <p className="test-countdown-container"> {learningPhaseTimeRemainingInSeconds} seconds remaining</p>
             }
             {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {!isLearningPhase && !isWaitingTestStart && !isGameOver &&
-                <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
-
+            {isGameStarted && !isLearningPhase && !isWaitingTestStart && !isGameOver &&
+                <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>
+            }
             {isGameOver && (
                 <React.Fragment>
                     <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
