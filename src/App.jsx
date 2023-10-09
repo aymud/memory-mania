@@ -9,6 +9,7 @@ import {shuffleArray} from "./utils/manipulation.js";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 10
+const LEARNING_PHASE_DURATION_IN_SECONDS = 180
 
 export default function App() {
 
@@ -22,6 +23,23 @@ export default function App() {
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
+    const [learningPhaseTimeRemainingInSeconds, setLearningPhaseTimeRemainingInSeconds] = React.useState(LEARNING_PHASE_DURATION_IN_SECONDS)
+
+    React.useEffect(() => {
+        if (!isLearningPhase) return
+
+        const timerIntervalInMilliSeconds = 1000
+        const interval = setInterval(() => {
+            if (learningPhaseTimeRemainingInSeconds > 0) {
+                const newTime = learningPhaseTimeRemainingInSeconds - 1
+                setLearningPhaseTimeRemainingInSeconds(newTime)
+            } else {
+                clearInterval(interval)
+                handleTestStart()
+            }
+        }, timerIntervalInMilliSeconds);
+        return () => clearInterval(interval);
+    }, [isLearningPhase, learningPhaseTimeRemainingInSeconds])
 
     React.useEffect(() => {
         if (!isLearningPhase) return
@@ -31,8 +49,8 @@ export default function App() {
         const apiParams = "?format=JSON&nat=CA,US&results=" + NUM_OF_USERS_TO_SHOW
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
-            setRandomUsers(data.results);
-        })
+                setRandomUsers(data.results);
+            })
     }, [isLearningPhase])
 
     const randomUserElements = randomUsers.map(user =>
@@ -48,6 +66,7 @@ export default function App() {
         setIsLearningPhase(true)
         setIsGameOver(false)
         setEnteredNames([])
+        setLearningPhaseTimeRemainingInSeconds(LEARNING_PHASE_DURATION_IN_SECONDS)
     }
 
     function handleStartGame() {
@@ -105,21 +124,26 @@ export default function App() {
         return correctCount
     }
 
+
     return (
         <main>
-            {!isGameStarted && <StartMenu onStartGame={handleStartGame} />}
+            {!isGameStarted && <StartMenu onStartGame={handleStartGame}/>}
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
                 <div className="user-cards-container">
                     {randomUserElements}
-                </div>
+                </div>}
+            {isLearningPhase &&
+                <p className="test-countdown-container"> {learningPhaseTimeRemainingInSeconds} seconds remaining</p>
             }
             {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {isGameStarted && !isLearningPhase && !isWaitingTestStart && !isGameOver &&
+            {!isLearningPhase && !isWaitingTestStart && !isGameOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>}
+
             {isGameOver && (
                 <React.Fragment>
                     <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
+
                 </React.Fragment>
             )
             }
