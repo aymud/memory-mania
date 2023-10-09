@@ -4,6 +4,7 @@ import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
 import StartMenu from "./components/StartMenu.jsx";
+import HighScores from "./components/HighScores.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
 import {shuffleArray} from "./utils/manipulation.js";
 
@@ -155,6 +156,7 @@ export default function App() {
                 <React.Fragment>
                     <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
+                    <HighScores playerScore={getScore()}></HighScores>
                     
                 </React.Fragment>
             )
