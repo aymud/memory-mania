@@ -2,7 +2,7 @@ export default function HighScores(props){
     return(
         <div>
             <text>
-                If you wish to enter your highscore please enter your name 
+                If you wish to enter your highscore please enter your name.
             </text>
             <div>
             <input 
