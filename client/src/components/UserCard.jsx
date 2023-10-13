@@ -1,22 +1,15 @@
 import React from "react";
+import NameInput from "./NameInput.jsx";
 
 export default function UserCard(props) {
 
     const [nameEntered, setNameEntered] = React.useState('')
 
-    const nameInput =
-        <input
-            disabled={props.isGameOver}
-            type="text"
-            placeholder="Enter Name"
-            // value={nameEntered}
-            onChange={(event) => {
-                const name = event.target.value.trim().toLowerCase()
-                setNameEntered(name)
-                props.handleOnChange(name, props.user.id.value)
-            }
-            }
-        />
+    const nameInput = <NameInput user={props.user}
+                                 isGameOver={props.isGameOver}
+                                 setNameEntered={setNameEntered}
+                                 handleOnChange={props.handleOnChange}
+    />
 
     const gameResults =
         props.isGameOver
