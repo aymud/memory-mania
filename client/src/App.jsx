@@ -18,6 +18,7 @@ export default function App() {
        Then there is a small wait before the test begins.
      */
     const [randomUsers, setRandomUsers] = React.useState([])
+    const userNames = randomUsers.map(user => user.name.first);
     const [isGameStarted, setIsGameStarted] = React.useState(false);
     const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
@@ -57,6 +58,7 @@ export default function App() {
         (<UserCard key={user.id.value}
                    handleOnChange={handleNameEntered}
                    user={user}
+                   allUserNames={userNames}
                    isLearning={isLearningPhase}
                    isGameOver={isGameOver}
         />)
