@@ -4,6 +4,7 @@ import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
 import StartMenu from "./components/StartMenu.jsx";
+// import Leaderboard from "./components/Leaderboard.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
 import {shuffleArray} from "./utils/manipulation.js";
 
@@ -23,6 +24,7 @@ export default function App() {
     const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
+    // const [showHighScore, setShowHighScore] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
     const [learningPhaseTimeRemainingInSeconds, setLearningPhaseTimeRemainingInSeconds] = React.useState(LEARNING_PHASE_DURATION_IN_SECONDS)
 
@@ -126,6 +128,9 @@ export default function App() {
         return correctCount
     }
 
+    // function toggleHighScores() {
+    //     setShowHighScore(prevShowHighScore => !prevShowHighScore);
+    // }
 
     return (
         <main>
@@ -145,10 +150,12 @@ export default function App() {
                 <React.Fragment>
                     <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
-
+                    {/*<button className="highscore-button" onClick={toggleHighScores}>View/Submit High Scores</button>*/}
+                    {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
                 </React.Fragment>
             )
             }
+
         </main>
     )
 }
