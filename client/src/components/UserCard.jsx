@@ -1,26 +1,21 @@
 import React from "react";
+import NameDropdown from "./NameDropdown.jsx";
 
 export default function UserCard(props) {
 
-    const [nameEntered, setNameEntered] = React.useState('')
+    const [currentName, setCurrentName] = React.useState('')
 
-    const nameInput =
-        <input
-            disabled={props.isGameOver}
-            type="text"
-            placeholder="Enter Name"
-            // value={nameEntered}
-            onChange={(event) => {
-                const name = event.target.value.trim().toLowerCase()
-                setNameEntered(name)
-                props.handleOnChange(name, props.user.id.value)
-            }
-            }
-        />
+    const nameInput = <NameDropdown user={props.user}
+                                    allNames={props.allUserNames}
+                                    setCurrentName={setCurrentName}
+                                    handleOnChange={props.handleOnChange}
+                                    isGameOver={props.isGameOver}
+
+    />
 
     const gameResults =
         props.isGameOver
-        && <div className={nameEntered === props.user.name.first.toLowerCase() ?
+        && <div className={currentName === props.user.name.first.toLowerCase() ?
             "name-correct" : "name-incorrect"}>
             {props.user.name.first}
         </div>
