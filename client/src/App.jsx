@@ -23,6 +23,7 @@ export default function App() {
     const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     const [isGameOver, setIsGameOver] = React.useState(false)
+    const [showHighScore, setShowHighScore] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
     const [learningPhaseTimeRemainingInSeconds, setLearningPhaseTimeRemainingInSeconds] = React.useState(LEARNING_PHASE_DURATION_IN_SECONDS)
 
@@ -125,6 +126,11 @@ export default function App() {
         return correctCount
     }
 
+    function toggleHighScores() {
+        const toggleScore = !showHighScore
+        setShowHighScore(toggleScore);
+    }
+
 
     return (
         <main>
@@ -144,10 +150,12 @@ export default function App() {
                 <React.Fragment>
                     <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
-                    <HighScores playersScore={getScore()}></HighScores>
+                    <button className="restart-button" onClick={toggleHighScores}>View/Submit Highscores</button>
+                    {showHighScore && <HighScores onToggle={toggleHighScores} userScore={getScore()}></HighScores>}
                 </React.Fragment>
             )
             }
+            
         </main>
     )
 }
