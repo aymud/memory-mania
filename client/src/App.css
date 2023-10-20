@@ -67,7 +67,12 @@ main {
     cursor: not-allowed;
 }
 
-.test-button, .submit-button, .restart-button, .skip-button, .menu-button {
+.test-button,
+.submit-button,
+.restart-button,
+.skip-button,
+.menu-button,
+.next-button{
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;

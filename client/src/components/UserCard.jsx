@@ -9,12 +9,12 @@ export default function UserCard(props) {
                                     allNames={props.allUserNames}
                                     setCurrentName={setCurrentName}
                                     handleOnChange={props.handleOnChange}
-                                    isGameOver={props.isGameOver}
+                                    isLevelOver={props.isLevelOver}
 
     />
 
     const gameResults =
-        props.isGameOver
+        props.isLevelOver
         && <div className={currentName === props.user.name.first.toLowerCase() ?
             "name-correct" : "name-incorrect"}>
             {props.user.name.first}
