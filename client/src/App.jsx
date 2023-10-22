@@ -53,11 +53,17 @@ export default function App() {
 
         // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
         // Filtered on nationality because then the names get too hard :p
-        const apiParams = "?format=JSON&nat=CA,US&results=" + numOfRandomUsers
+        
+        
+        const apiParams = "?format=JSON&nat=CA,US&results=" + (numOfRandomUsers * 2)
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
-                setRandomUsers(data.results);
+                console.log(data.results)
+                const randomUsers = checkImageDuplicates(data.results)
+                setRandomUsers(randomUsers);
             })
+        
+        
     }, [isLearningPhase, numOfRandomUsers])
 
     const randomUserElements = randomUsers.map(user =>
@@ -82,6 +88,30 @@ export default function App() {
     function handleStartGame() {
         setIsGameStarted(true);
         handleGameRestart()
+    }
+
+   
+
+    function checkImageDuplicates(data){
+        const picList = {}
+        const result = []
+
+        data.every((x,i) => {
+            if(result.length==numOfRandomUsers){
+                return false
+            }
+            if (x.picture.large in picList){
+                console.log("dup found")
+            }else{
+            result.push(x)
+            picList[x.picture.large] = 1
+            }
+
+            return true
+
+        })
+        
+        return result
     }
 
     function handleTestCountdown() {
