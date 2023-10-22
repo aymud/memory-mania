@@ -10,7 +10,7 @@ export default function NameDropdown(props) {
 
     return (<React.Fragment>
         <select className={"names-dropdown"}
-                disabled={props.isGameOver}
+                disabled={props.isLevelOver}
                 value={selectedName}
                 onChange={event => {
                     let name = event.target.value

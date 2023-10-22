@@ -9,8 +9,10 @@ import {tryFetchData} from "./utils/apiHelper.js";
 import {shuffleArray} from "./utils/manipulation.js";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
-const NUM_OF_USERS_TO_SHOW = 10
+const NUM_OF_USERS_TO_SHOW = 3
 const LEARNING_PHASE_DURATION_IN_SECONDS = 180
+const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6
+const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2
 
 export default function App() {
 
@@ -18,14 +20,16 @@ export default function App() {
        In the learning phase, the player will memorize the faces and names.
        Then there is a small wait before the test begins.
      */
+    const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(NUM_OF_USERS_TO_SHOW)
+    const [currentLevel, setCurrentLevel] = React.useState(1)
+    const [isLevelOver, setIsLevelOver] = React.useState(false)
     const [randomUsers, setRandomUsers] = React.useState([])
-    const userNames = randomUsers.map(user => user.name.first);
-    const [isGameStarted, setIsGameStarted] = React.useState(false);
+    const [isGameStarted, setIsGameStarted] = React.useState(false)
     const [isLearningPhase, setIsLearningPhase] = React.useState(false)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
-    const [isGameOver, setIsGameOver] = React.useState(false)
     // const [showHighScore, setShowHighScore] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
+    const userNames = randomUsers.map(user => user.name.first)
     const [learningPhaseTimeRemainingInSeconds, setLearningPhaseTimeRemainingInSeconds] = React.useState(LEARNING_PHASE_DURATION_IN_SECONDS)
 
     React.useEffect(() => {
@@ -49,12 +53,12 @@ export default function App() {
 
         // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
         // Filtered on nationality because then the names get too hard :p
-        const apiParams = "?format=JSON&nat=CA,US&results=" + NUM_OF_USERS_TO_SHOW
+        const apiParams = "?format=JSON&nat=CA,US&results=" + numOfRandomUsers
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
                 setRandomUsers(data.results);
             })
-    }, [isLearningPhase])
+    }, [isLearningPhase, numOfRandomUsers])
 
     const randomUserElements = randomUsers.map(user =>
         (<UserCard key={user.id.value}
@@ -62,15 +66,17 @@ export default function App() {
                    user={user}
                    allUserNames={userNames}
                    isLearning={isLearningPhase}
-                   isGameOver={isGameOver}
+                   isLevelOver={isLevelOver}
         />)
     )
 
     function handleGameRestart() {
         setIsLearningPhase(true)
-        setIsGameOver(false)
         setEnteredNames([])
         setLearningPhaseTimeRemainingInSeconds(LEARNING_PHASE_DURATION_IN_SECONDS)
+        setNumOfRandomUsers(NUM_OF_USERS_TO_SHOW)
+        setIsLevelOver(false)
+        setCurrentLevel(1)
     }
 
     function handleStartGame() {
@@ -105,8 +111,8 @@ export default function App() {
                 return {actualUser, isCorrect: false}
             }
         })
-        setEnteredNames(namesValidated);
-        setIsGameOver(true)
+        setEnteredNames(namesValidated)
+        setIsLevelOver(true)
     }
 
     function handleNameEntered(name, id) {
@@ -132,6 +138,15 @@ export default function App() {
     //     setShowHighScore(prevShowHighScore => !prevShowHighScore);
     // }
 
+    function handleGameNextLevel() {
+        setIsLearningPhase(true)
+        setEnteredNames([])
+        setLearningPhaseTimeRemainingInSeconds(LEARNING_PHASE_DURATION_IN_SECONDS)
+        setIsLevelOver(false)
+        setNumOfRandomUsers(prevNumOfRandomUsers => prevNumOfRandomUsers + NUM_OF_USERS_TO_ADD_PER_LEVEL)
+        setCurrentLevel(prevLevel => prevLevel + 1)
+    }
+
     return (
         <main>
             {!isGameStarted && <StartMenu onStartGame={handleStartGame}/>}
@@ -143,19 +158,20 @@ export default function App() {
                 <p className="test-countdown-container"> {learningPhaseTimeRemainingInSeconds} seconds remaining</p>
             }
             {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {isGameStarted && !isLearningPhase && !isWaitingTestStart && !isGameOver &&
+            {isGameStarted && !isLearningPhase && !isWaitingTestStart && !isLevelOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>
             }
-            {isGameOver && (
+            {isLevelOver && <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length} level={currentLevel}/>}
+            {isLevelOver && getScore() / numOfRandomUsers >= MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE &&
+                <button className="next-button" onClick={handleGameNextLevel}>Next Level</button>
+            }
+            {isLevelOver && getScore() / numOfRandomUsers < MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE &&
                 <React.Fragment>
-                    <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length}/>
                     <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
                     {/*<button className="highscore-button" onClick={toggleHighScores}>View/Submit High Scores</button>*/}
                     {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
                 </React.Fragment>
-            )
             }
-
         </main>
     )
 }
