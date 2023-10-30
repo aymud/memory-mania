@@ -51,19 +51,13 @@ export default function App() {
     React.useEffect(() => {
         if (!isLearningPhase) return
 
-        // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
-        // Filtered on nationality because then the names get too hard :p
-        
-        
+        // Get 2x the users so we have users to replace duplicate users 
         const apiParams = "?format=JSON&nat=CA,US&results=" + (numOfRandomUsers * 2)
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
-                console.log(data.results)
-                const randomUsers = checkImageDuplicates(data.results)
+                const randomUsers = getDistinctUsers(data.results)
                 setRandomUsers(randomUsers);
             })
-        
-        
     }, [isLearningPhase, numOfRandomUsers])
 
     const randomUserElements = randomUsers.map(user =>
@@ -92,26 +86,23 @@ export default function App() {
 
    
 
-    function checkImageDuplicates(data){
-        const picList = {}
-        const result = []
+    function getDistinctUsers(data){
+        const pictures = new Set()
+        const distinctUsers = []
 
-        data.every((x,i) => {
-            if(result.length==numOfRandomUsers){
-                return false
+        for(let i = 0;i < data.length;i++){
+            if(distinctUsers.length==numOfRandomUsers){
+                break;
             }
-            if (x.picture.large in picList){
-                console.log("dup found")
-            }else{
-            result.push(x)
-            picList[x.picture.large] = 1
+            if (pictures.has(data[i].picture.large)){
+                continue;         
             }
+            
+            distinctUsers.push(data[i])
+            pictures.add(data[i].picture.large)
+        }
 
-            return true
-
-        })
-        
-        return result
+        return distinctUsers
     }
 
     function handleTestCountdown() {
