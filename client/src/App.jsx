@@ -51,12 +51,13 @@ export default function App() {
     React.useEffect(() => {
         if (!isLearningPhase) return
 
-        // Get 2x the users so we have users to replace duplicate users 
+        // Note: The api can sometimes return duplicate images in a set.
+        // To only show unique users, we get more users than needed.
+        // then we remove any duplicates and return the correct amount of unique users needed.
         const apiParams = "?format=JSON&nat=CA,US&results=" + (numOfRandomUsers * 2)
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
-                const randomUsers = getDistinctUsers(data.results)
-                setRandomUsers(randomUsers);
+                setRandomUsers(getDistinctUsers(data.results))
             })
     }, [isLearningPhase, numOfRandomUsers])
 
@@ -84,24 +85,26 @@ export default function App() {
         handleGameRestart()
     }
 
-   
+    function getDistinctUsers(data) {
+        // Distinct user := unique user picture.
 
-    function getDistinctUsers(data){
-        const pictures = new Set()
+        const userPictures = new Set()
         const distinctUsers = []
 
-        for(let i = 0;i < data.length;i++){
-            if(distinctUsers.length==numOfRandomUsers){
+        for (const user of data) {
+            const picture = user.picture.thumbnail
+
+            // Only add a user to the list if there isn't already a user with that picture.
+            if (userPictures.has(picture)) {
+                continue;
+            }
+            distinctUsers.push(user)
+            userPictures.add(picture)
+
+            if (distinctUsers.length === numOfRandomUsers) {
                 break;
             }
-            if (pictures.has(data[i].picture.large)){
-                continue;         
-            }
-            
-            distinctUsers.push(data[i])
-            pictures.add(data[i].picture.large)
         }
-
         return distinctUsers
     }
 
