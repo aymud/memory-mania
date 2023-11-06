@@ -51,12 +51,13 @@ export default function App() {
     React.useEffect(() => {
         if (!isLearningPhase) return
 
-        // BUG: SOMETIMES THERE ARE DUPLICATES!!!!!!!!!
-        // Filtered on nationality because then the names get too hard :p
-        const apiParams = "?format=JSON&nat=CA,US&results=" + numOfRandomUsers
+        // Note: The api can sometimes return duplicate images in a set.
+        // To only show unique users, we get more users than needed.
+        // then we remove any duplicates and return the correct amount of unique users needed.
+        const apiParams = "?format=JSON&nat=CA,US&results=" + (numOfRandomUsers * 2)
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams)
             .then((data) => {
-                setRandomUsers(data.results);
+                setRandomUsers(getDistinctUsers(data.results))
             })
     }, [isLearningPhase, numOfRandomUsers])
 
@@ -82,6 +83,29 @@ export default function App() {
     function handleStartGame() {
         setIsGameStarted(true);
         handleGameRestart()
+    }
+
+    function getDistinctUsers(data) {
+        // Distinct user := unique user picture.
+
+        const userPictures = new Set()
+        const distinctUsers = []
+
+        for (const user of data) {
+            const picture = user.picture.thumbnail
+
+            // Only add a user to the list if there isn't already a user with that picture.
+            if (userPictures.has(picture)) {
+                continue;
+            }
+            distinctUsers.push(user)
+            userPictures.add(picture)
+
+            if (distinctUsers.length === numOfRandomUsers) {
+                break;
+            }
+        }
+        return distinctUsers
     }
 
     function handleTestCountdown() {
