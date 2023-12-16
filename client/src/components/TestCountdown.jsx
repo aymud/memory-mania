@@ -1,6 +1,7 @@
 import React from "react";
 import {tryFetchData} from "../utils/apiHelper.js";
 import styled from "styled-components";
+import Button from "./Button.jsx";
 
 const TestCountdownContainer = styled.div`
   text-align: center;
@@ -60,7 +61,7 @@ export default function TestCountdown(props) {
         <TestCountdownContainer>
             <CountdownText>Recall begins in {countdownTimeInSeconds} seconds</CountdownText>
             <FunFactText>Did you know ... {funFact}</FunFactText>
-            <button className="skip-button" onClick={props.handleTestCountdown}>Skip</button>
+            <Button className="skip-button" onClick={props.handleTestCountdown}>Skip</Button>
         </TestCountdownContainer>
     );
 }
