@@ -1,6 +1,6 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
-import AuthenticationService from "../utils/authentication.js";
+import { useNavigate } from 'react-router-dom';
+import AuthenticationService from '../utils/authentication.js';
 import './login.css'
 
 export default function Login() {
