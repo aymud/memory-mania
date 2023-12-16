@@ -12,6 +12,7 @@ const BodyWrapper = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
+  position: relative;
 `;
 
 const LoginContainer = styled.div`
@@ -62,6 +63,9 @@ const Tooltip = styled.div`
   padding: 8px;
   border-radius: 4px;
   margin-top: 5px;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export default function Login() {
