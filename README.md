@@ -27,6 +27,9 @@ This folder structure separates the client and server parts of the application:
 ├──── public/ - Contains the HTML template and any static assets
 ├──── src/ - Contains the source code for the React application
 │     └── components/ - Stores React components used in the application
+│     ├── pages/ - Different routes for the application
+│     │   ├── login.jsx  
+│     ├── utils/ - Helper functions and classes
 │     ├── App.jsx - Core component that manages the game's logic and user interface
 │     ├── App.css
 │     ├── index.html - Template file which is served up when script is run
@@ -34,7 +37,7 @@ This folder structure separates the client and server parts of the application:
 │     ├── index.css - Global styles for the entire application
 ├──── package.json - Configuration file for npm packages and project settings
 ├── server/
-├──── server.js -  Server-side JavaScript file that serves as the backend for the application.
+├──── server.js -  Server-side JavaScript file that serves as the backend for the application
 ├──── package.json - Configuration file for npm packages and project settings
 └── README.md
 ```
@@ -42,7 +45,7 @@ This folder structure separates the client and server parts of the application:
 ## Running the Application Locally
 Before you begin, ensure you have met the prerequisites, and then
 follow these steps to run the application locally.  
-**Because the project includes a client side and a server side, you need to install run each separately.**
+**Because the project includes a client side and a server side, you need to install & run each separately.**
 
 1. **Clone the repository**: Start by cloning the repository to your local machine.
 2. **Navigate to the client/server directory**: Go to each folder within the project's root directory.
