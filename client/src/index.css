@@ -1,7 +1,6 @@
 body {
     margin: 0;
     background-color: #0B2434;
-    padding: 20px;
     height: 100vh;
     overflow: hidden; /* Hide vertical overflow */
 }
