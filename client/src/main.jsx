@@ -1,17 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import App from './App.jsx'
 import Login from './pages/Login.jsx';
+import PrivateRoutes from "./pages/PrivateRoute.jsx";
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path="/app" element={<App/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="*" element={<Navigate to="/login"/>}/>
+                <Route element={<PrivateRoutes/>}>
+                    <Route element={<App/>} path="/app" exact/>
+                </Route>
+                <Route element={<Login/>} path="*"/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
