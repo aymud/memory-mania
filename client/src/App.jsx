@@ -3,7 +3,6 @@ import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
-import StartMenu from "./components/StartMenu.jsx";
 // import Leaderboard from "./components/Leaderboard.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
 import {shuffleArray} from "./utils/manipulation.js";
@@ -24,8 +23,7 @@ export default function App() {
     const [currentLevel, setCurrentLevel] = React.useState(1)
     const [isLevelOver, setIsLevelOver] = React.useState(false)
     const [randomUsers, setRandomUsers] = React.useState([])
-    const [isGameStarted, setIsGameStarted] = React.useState(false)
-    const [isLearningPhase, setIsLearningPhase] = React.useState(false)
+    const [isLearningPhase, setIsLearningPhase] = React.useState(true)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     // const [showHighScore, setShowHighScore] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState([])
@@ -78,11 +76,6 @@ export default function App() {
         setNumOfRandomUsers(NUM_OF_USERS_TO_SHOW)
         setIsLevelOver(false)
         setCurrentLevel(1)
-    }
-
-    function handleStartGame() {
-        setIsGameStarted(true);
-        handleGameRestart()
     }
 
     function getDistinctUsers(data) {
@@ -154,8 +147,7 @@ export default function App() {
     }
 
     function getScore() {
-        const correctCount = enteredNames.filter((user) => user.isCorrect).length
-        return correctCount
+        return enteredNames.filter((user) => user.isCorrect).length
     }
 
     // function toggleHighScores() {
@@ -173,7 +165,6 @@ export default function App() {
 
     return (
         <main>
-            {!isGameStarted && <StartMenu onStartGame={handleStartGame}/>}
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
                 <div className="user-cards-container">
                     {randomUserElements}
@@ -182,7 +173,7 @@ export default function App() {
                 <p className="test-countdown-container"> {learningPhaseTimeRemainingInSeconds} seconds remaining</p>
             }
             {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
-            {isGameStarted && !isLearningPhase && !isWaitingTestStart && !isLevelOver &&
+            {!isLearningPhase && !isWaitingTestStart && !isLevelOver &&
                 <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>
             }
             {isLevelOver && <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length} level={currentLevel}/>}
