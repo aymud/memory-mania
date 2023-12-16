@@ -14,49 +14,12 @@ main {
     padding: 20px;
 }
 
-.user-card {
-    grid-gap: 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.user-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px 10px 10px 10px;
-}
-
-.user-card .user-name {
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 18px;
-}
-
 .user-card input[type="text"] {
     width: 80%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 14px;
-}
-
-.names-dropdown {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
-    transition: border-color 0.3s;
-}
-
-.names-dropdown:focus {
-    outline: none;
-    border-color: #007bff;
 }
 
 .custom-dropdown.disabled {
@@ -105,14 +68,6 @@ main {
     font-size: 18px;
     font-weight: bold;
     color: #333;
-}
-
-.name-correct {
-    color: green;
-}
-
-.name-incorrect {
-    color: red;
 }
 
 .test-countdown-container {
