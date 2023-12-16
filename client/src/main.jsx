@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import App from './App.jsx'
-import Login from './pages/Login.jsx';
+import StartMenu from "./components/StartMenu.jsx";
+import Login from "./pages/Login.jsx";
 import PrivateRoutes from "./pages/PrivateRoute.jsx";
 import './index.css'
 
@@ -13,7 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route element={<PrivateRoutes/>}>
                     <Route element={<App/>} path="/app" exact/>
                 </Route>
-                <Route element={<Login/>} path="*"/>
+                <Route element={<Login/>} path="/login"/>
+                <Route element={<StartMenu/>} path="*"/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
