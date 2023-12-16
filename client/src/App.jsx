@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from "styled-components";
 import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
@@ -6,12 +7,33 @@ import TestCountdown from "./components/TestCountdown.jsx";
 // import Leaderboard from "./components/Leaderboard.jsx";
 import {tryFetchData} from "./utils/apiHelper.js";
 import {shuffleArray} from "./utils/manipulation.js";
+import Button from "./components/Button.jsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 3
 const LEARNING_PHASE_DURATION_IN_SECONDS = 180
 const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6
 const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2
+
+const TestCountdownText = styled.div`
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+`
+
+const UserCardsContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+`
 
 export default function App() {
 
@@ -166,23 +188,24 @@ export default function App() {
     return (
         <main>
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
-                <div className="user-cards-container">
+                <UserCardsContainer>
                     {randomUserElements}
-                </div>}
+                </UserCardsContainer>}
             {isLearningPhase &&
-                <p className="test-countdown-container"> {learningPhaseTimeRemainingInSeconds} seconds remaining</p>
+                <TestCountdownText> {learningPhaseTimeRemainingInSeconds} seconds remaining</TestCountdownText>
             }
-            {isLearningPhase && <button className="test-button" onClick={handleTestStart}>Test</button>}
+            {isLearningPhase && <Button onClick={handleTestStart}>Test</Button>}
             {!isLearningPhase && !isWaitingTestStart && !isLevelOver &&
-                <button className="submit-button" onClick={handleTestSubmit}>Finish Test</button>
+                <Button onClick={handleTestSubmit}>Finish Test</Button>
             }
-            {isLevelOver && <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length} level={currentLevel}/>}
+            {isLevelOver &&
+                <ScoreMessage correctAnswersCount={getScore()} totalUsers={randomUsers.length} level={currentLevel}/>}
             {isLevelOver && getScore() / numOfRandomUsers >= MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE &&
-                <button className="next-button" onClick={handleGameNextLevel}>Next Level</button>
+                <Button onClick={handleGameNextLevel}>Next Level</Button>
             }
             {isLevelOver && getScore() / numOfRandomUsers < MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE &&
                 <React.Fragment>
-                    <button className="restart-button" onClick={handleGameRestart}>Restart Test</button>
+                    <Button onClick={handleGameRestart}>Restart Test</Button>
                     {/*<button className="highscore-button" onClick={toggleHighScores}>View/Submit High Scores</button>*/}
                     {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
                 </React.Fragment>
