@@ -35,6 +35,13 @@ const UserCardsContainer = styled.div`
   padding: 20px;
 `
 
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
 export default function App() {
 
     /* The game is divided into a learning phase and a testing phase.
@@ -186,7 +193,7 @@ export default function App() {
     }
 
     return (
-        <main>
+        <Main>
             {isWaitingTestStart ? <TestCountdown handleTestCountdown={handleTestCountdown}/> :
                 <UserCardsContainer>
                     {randomUserElements}
@@ -210,6 +217,6 @@ export default function App() {
                     {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
                 </React.Fragment>
             }
-        </main>
+        </Main>
     )
 }
