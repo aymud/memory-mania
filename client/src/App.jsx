@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from "styled-components";
-import './App.css'
 import UserCard from "./components/UserCard.jsx";
 import ScoreMessage from "./components/ScoreMessage.jsx";
 import TestCountdown from "./components/TestCountdown.jsx";
