@@ -2,7 +2,10 @@ interface ErrorType {
     message: string
 }
 
-export async function tryFetchData(apiUrl: string, options: {} = {}) {
+export async function tryFetchData(
+    apiUrl: string,
+    options: NonNullable<unknown> = {}
+) {
     try {
         const response = await fetch(apiUrl, options)
         if (!response.ok) {
