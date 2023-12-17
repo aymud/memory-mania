@@ -16,8 +16,21 @@ const NamesDropdownSelect = styled.select`
     border-color: #007bff;
   }
 `
+interface User {
+    id: {
+        value: string;
+    };
+}
 
-export default function NameDropdown(props) {
+interface NameDropdownProps {
+    allNames: string[];
+    isLevelOver: boolean;
+    setCurrentName: (name: string) => void;
+    handleOnChange: (name: string, id: string) => void;
+    user: User;
+}
+
+export default function NameDropdown(props: NameDropdownProps) {
     const [selectedName, setSelectedName] = React.useState('');
 
     // Sort the names in asc order, so it's not the same order as what the images were in originally.

@@ -22,11 +22,35 @@ const UserName = styled.div`
   font-size: 18px;
 `
 
-const ResultText = styled.div`
-  color: ${(props) => (props.isCorrect ? "green" : "red")};
+interface ResultTextProps {
+    isCorrect: boolean;
+}
+
+const ResultText = styled.div<ResultTextProps>`
+  color: ${(props) => props.isCorrect ? "green" : "red"};
 `;
 
-export default function UserCard(props) {
+interface User {
+    name: {
+        first: string;
+    };
+    picture: {
+        large: string;
+    };
+    id: {
+        value: string;
+    };
+}
+
+interface UserCardProps {
+    user: User;
+    allUserNames: string[];
+    handleOnChange: (name: string, id: string) => void;
+    isLevelOver: boolean;
+    isLearning: boolean;
+}
+
+export default function UserCard(props: UserCardProps) {
 
     const [currentName, setCurrentName] = React.useState('')
 
