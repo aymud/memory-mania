@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import AuthenticationService from '../utils/authentication.js'
+import AuthenticationService from '../utils/authentication.ts'
 import styled from 'styled-components'
 
 const BodyWrapper = styled.div`
