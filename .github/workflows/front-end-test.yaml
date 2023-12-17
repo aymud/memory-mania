@@ -1,0 +1,27 @@
+name: Front-End Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 🛠 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install Project Dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: 🚀 Run tests
+        run: npm test
+        working-directory: ./client
