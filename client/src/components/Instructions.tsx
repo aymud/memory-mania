@@ -32,7 +32,11 @@ const CloseButton = styled.button`
   padding: 0;
 `
 
-export default function Instructions(props) {
+interface InstructionsProps {
+    OnToggle: () => void;
+}
+
+export default function Instructions(props: InstructionsProps) {
     return (
         <InstructionsModal>
             <Card>

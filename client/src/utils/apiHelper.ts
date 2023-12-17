@@ -1,4 +1,8 @@
-export async function tryFetchData(apiUrl, options = {}) {
+interface ErrorType {
+    message: string;
+}
+
+export async function tryFetchData(apiUrl: string, options:{} = {}) {
     try {
         const response = await fetch(apiUrl, options);
         if (!response.ok) {
@@ -6,6 +10,7 @@ export async function tryFetchData(apiUrl, options = {}) {
         }
         return await response.json();
     } catch (error) {
-        throw new Error(`Error fetching data: ${error.message}`);
+        const typedError = error as ErrorType;
+        throw new Error(`Error fetching data: ${typedError.message}`);
     }
 }

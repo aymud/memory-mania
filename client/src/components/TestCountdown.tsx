@@ -1,7 +1,7 @@
 import React from "react";
 import {tryFetchData} from "../utils/apiHelper.js";
 import styled from "styled-components";
-import Button from "./Button.jsx";
+import Button from "./Button.tsx";
 
 const TestCountdownContainer = styled.div`
   text-align: center;
@@ -24,9 +24,13 @@ const FunFactText = styled.p`
   margin-top: 10px;
 `
 
+interface TestCountdownProps {
+    handleTestCountdown: () => void;
+}
+
 const RANDOM_FACT_API_URL = "https://api.api-ninjas.com/v1/facts?limit=1"
 
-export default function TestCountdown(props) {
+export default function TestCountdown(props: TestCountdownProps) {
     const [countdownTimeInSeconds, setCountdownTimeInSeconds] = React.useState(10)
     const [funFact, setFunFact] = React.useState("");
 
@@ -36,7 +40,7 @@ export default function TestCountdown(props) {
             method: 'GET',
             headers: {'X-Api-Key': apiKey}
         }
-        tryFetchData(RANDOM_FACT_API_URL, options).then((data) => {
+        tryFetchData(RANDOM_FACT_API_URL, options).then(data => {
             setFunFact(data[0].fact)
         })
     }, []);

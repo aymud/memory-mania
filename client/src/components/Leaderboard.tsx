@@ -1,13 +1,23 @@
 import React from "react";
 
-const fakeHighScores = [
-    {Name: "Thi", score: 9},
-    {Name: "Tamer", score: 8},
-    {Name: "boggie Man", score: 7},
-    {Name: "phill", score: 6}
+interface HighScore {
+    Name: string;
+    score: number;
+}
+
+interface LeaderboardProps {
+    toggleHighScores: () => void;
+    userScore: number;
+}
+
+const fakeHighScores: HighScore[] = [
+    { Name: "Thi", score: 9 },
+    { Name: "Tamer", score: 8 },
+    { Name: "boggie Man", score: 7 },
+    { Name: "phill", score: 6 },
 ];
 
-export default function Leaderboard(props) {
+export default function Leaderboard(props: LeaderboardProps) {
     const [playerName, setPlayerName] = React.useState("");
 
     const handleScoreSubmit = () => {
@@ -45,7 +55,7 @@ export default function Leaderboard(props) {
                     <label>
                         <input
                             type="text"
-                            size="9"
+                            size={9}
                             placeholder="Enter Name"
                             value={playerName}
                             onChange={(e) => setPlayerName(e.target.value)}
@@ -53,7 +63,7 @@ export default function Leaderboard(props) {
                     </label>
                     <span>{props.userScore}</span>
                     <p></p>
-                    <button type='Submit' onClick={handleScoreSubmit}>Submit</button>
+                    <button type='submit' onClick={handleScoreSubmit}>Submit</button>
                 </div>
             </div>
         </div>

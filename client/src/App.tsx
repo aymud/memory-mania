@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from "styled-components";
-import UserCard from "./components/UserCard.jsx";
-import ScoreMessage from "./components/ScoreMessage.jsx";
-import TestCountdown from "./components/TestCountdown.jsx";
-// import Leaderboard from "./components/Leaderboard.jsx";
-import {tryFetchData} from "./utils/apiHelper.js";
-import {shuffleArray} from "./utils/manipulation.js";
-import Button from "./components/Button.jsx";
+import UserCard from "./components/UserCard.tsx";
+import ScoreMessage from "./components/ScoreMessage.tsx";
+import TestCountdown from "./components/TestCountdown.tsx";
+// import Leaderboard from "./components/Leaderboard.tsx";
+import {tryFetchData} from "./utils/apiHelper.ts";
+import {shuffleArray} from "./utils/manipulation.ts";
+import Button from "./components/Button.tsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 3
@@ -42,6 +42,25 @@ const Main = styled.main`
     padding: 20px;
 `
 
+interface UserType {
+    name: {
+        first: string;
+    };
+    picture: {
+        large: string;
+        thumbnail: string;
+    };
+    id: {
+        value: string;
+    };
+}
+
+interface EnteredNamesType {
+    id: string;
+    name: string;
+    isCorrect?: boolean;
+}
+
 export default function App() {
 
     /* The game is divided into a learning phase and a testing phase.
@@ -51,11 +70,11 @@ export default function App() {
     const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(NUM_OF_USERS_TO_SHOW)
     const [currentLevel, setCurrentLevel] = React.useState(1)
     const [isLevelOver, setIsLevelOver] = React.useState(false)
-    const [randomUsers, setRandomUsers] = React.useState([])
+    const [randomUsers, setRandomUsers] = React.useState<UserType[]>([])
     const [isLearningPhase, setIsLearningPhase] = React.useState(true)
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     // const [showHighScore, setShowHighScore] = React.useState(false)
-    const [enteredNames, setEnteredNames] = React.useState([])
+    const [enteredNames, setEnteredNames] = React.useState<EnteredNamesType[]>([])
     const userNames = randomUsers.map(user => user.name.first)
     const [learningPhaseTimeRemainingInSeconds, setLearningPhaseTimeRemainingInSeconds] = React.useState(LEARNING_PHASE_DURATION_IN_SECONDS)
 
@@ -88,7 +107,7 @@ export default function App() {
             })
     }, [isLearningPhase, numOfRandomUsers])
 
-    const randomUserElements = randomUsers.map(user =>
+    const randomUserElements = randomUsers.map((user: UserType) =>
         (<UserCard key={user.id.value}
                    handleOnChange={handleNameEntered}
                    user={user}
@@ -107,11 +126,11 @@ export default function App() {
         setCurrentLevel(1)
     }
 
-    function getDistinctUsers(data) {
+    function getDistinctUsers(data: UserType[]) {
         // Distinct user := unique user picture.
 
         const userPictures = new Set()
-        const distinctUsers = []
+        const distinctUsers: UserType[] = []
 
         for (const user of data) {
             const picture = user.picture.thumbnail
@@ -144,8 +163,8 @@ export default function App() {
 
     function handleTestSubmit() {
         // Iterate over randomUsers and check if the entered names match, and update score.
-        const namesValidated = enteredNames.map((actualUser) => {
-            const expectedUser = randomUsers.find((user) => user.id.value === actualUser.id);
+        const namesValidated = enteredNames.map(actualUser => {
+            const expectedUser = randomUsers.find((user: UserType) => user.id.value === actualUser.id);
             if (expectedUser) {
                 const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
                 return {
@@ -154,14 +173,14 @@ export default function App() {
                 }
             } else {
                 // User did not enter a name for this person.
-                return {actualUser, isCorrect: false}
+                return {...actualUser, isCorrect: false}
             }
         })
         setEnteredNames(namesValidated)
         setIsLevelOver(true)
     }
 
-    function handleNameEntered(name, id) {
+    function handleNameEntered(name: string, id: string) {
         setEnteredNames((prevEnteredNames) => {
             // Check if the user with the same ID already exists in the array.
             // If the user exists, update their name, else add a new user to the array.
@@ -169,7 +188,7 @@ export default function App() {
             if (userIndex !== -1) {
                 prevEnteredNames[userIndex].name = name;
             } else {
-                prevEnteredNames.push({id: id, name: name});
+                prevEnteredNames.push({id, name});
             }
             return [...prevEnteredNames];
         });
