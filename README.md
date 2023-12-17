@@ -35,6 +35,9 @@ This folder structure separates the client and server parts of the application:
 │     ├── index.html - Template file which is served up when script is run
 │     ├── main.tsx - Entry point for rendering the React app into the HTML template
 │     ├── index.css - Global styles for the entire application
+├──── .eslintrc.cjs - ESLint configuration for linting code
+├──── .prettierrc - Prettier configuration for code formatting rules
+├──── tsconfig.json - TypeScript configuration for compiler and linting options
 ├──── package.json - Configuration file for npm packages and project settings
 ├── server/
 ├──── server.js -  Server-side JavaScript file that serves as the backend for the application
