@@ -22,7 +22,7 @@ export default function Leaderboard(props: LeaderboardProps) {
 
     const handleScoreSubmit = () => {
         // Store name and props.userScore in the database once implemented
-        console.log(playerName)
+        // console.log(playerName)
         props.toggleHighScores()
     }
 
