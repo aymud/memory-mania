@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Instructions from "./Instructions.jsx";
+import Instructions from "./Instructions.tsx";
 import {useNavigate} from "react-router-dom";
 
 const StyledStartMenu = styled.div`

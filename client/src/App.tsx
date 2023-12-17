@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from "styled-components";
-import UserCard from "./components/UserCard.jsx";
-import ScoreMessage from "./components/ScoreMessage.jsx";
-import TestCountdown from "./components/TestCountdown.jsx";
-// import Leaderboard from "./components/Leaderboard.jsx";
-import {tryFetchData} from "./utils/apiHelper.js";
-import {shuffleArray} from "./utils/manipulation.js";
-import Button from "./components/Button.jsx";
+import UserCard from "./components/UserCard.tsx";
+import ScoreMessage from "./components/ScoreMessage.tsx";
+import TestCountdown from "./components/TestCountdown.tsx";
+// import Leaderboard from "./components/Leaderboard.tsx";
+import {tryFetchData} from "./utils/apiHelper.ts";
+import {shuffleArray} from "./utils/manipulation.ts";
+import Button from "./components/Button.tsx";
 
 const RANDOM_USER_GENERATOR_API_URL = "https://randomuser.me/api/"
 const NUM_OF_USERS_TO_SHOW = 3

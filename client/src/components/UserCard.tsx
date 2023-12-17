@@ -1,5 +1,5 @@
 import React from "react";
-import NameDropdown from "./NameDropdown.jsx";
+import NameDropdown from "./NameDropdown.tsx";
 import styled from "styled-components";
 
 const UserCardWrapper = styled.div`

@@ -1,7 +1,7 @@
 import React from "react";
 import {tryFetchData} from "../utils/apiHelper.js";
 import styled from "styled-components";
-import Button from "./Button.jsx";
+import Button from "./Button.tsx";
 
 const TestCountdownContainer = styled.div`
   text-align: center;

@@ -30,10 +30,10 @@ This folder structure separates the client and server parts of the application:
 │     ├── pages/ - Different routes for the application
 │     │   ├── login.jsx  
 │     ├── utils/ - Helper functions and classes
-│     ├── App.jsx - Core component that manages the game's logic and user interface
+│     ├── App.tsx - Core component that manages the game's logic and user interface
 │     ├── App.css
 │     ├── index.html - Template file which is served up when script is run
-│     ├── main.jsx - Entry point for rendering the React app into the HTML template
+│     ├── main.tsx - Entry point for rendering the React app into the HTML template
 │     ├── index.css - Global styles for the entire application
 ├──── package.json - Configuration file for npm packages and project settings
 ├── server/
