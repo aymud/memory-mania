@@ -7,12 +7,14 @@ import Login from "./pages/Login.tsx";
 import PrivateRoute from "./pages/PrivateRoute.tsx";
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root:HTMLElement = document.getElementById('root') ?? document.createElement('div');
+
+ReactDOM.createRoot(root).render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
                 <Route element={<PrivateRoute/>}>
-                    <Route element={<App/>} path="/app" exact/>
+                    <Route element={<App/>} path="/app"/>
                 </Route>
                 <Route element={<Login/>} path="/login"/>
                 <Route element={<StartMenu/>} path="*"/>
