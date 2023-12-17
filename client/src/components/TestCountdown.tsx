@@ -1,5 +1,5 @@
 import React from 'react'
-import { tryFetchData } from '../utils/apiHelper.js'
+import { tryFetchData } from '../utils/apiHelper.ts'
 import styled from 'styled-components'
 import Button from './Button.tsx'
 
