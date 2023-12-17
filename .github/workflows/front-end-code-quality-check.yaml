@@ -1,0 +1,27 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ESLint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 🛠 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install Project Dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: 🚀 Run Code Linting
+        run: npm run lint
+        working-directory: ./client
