@@ -1,4 +1,5 @@
 import React from 'react'
+import Timer from './Timer.tsx'
 import { tryFetchData } from '../utils/apiHelper.ts'
 import styled from 'styled-components'
 import Button from './Button.tsx'
@@ -62,12 +63,13 @@ export default function TestCountdown(props: TestCountdownProps) {
         return () => {
             clearInterval(timer)
         }
-    }, [countdownTimeInSeconds])
+    }, [countdownTimeInSeconds, props])
 
     return (
         <TestCountdownContainer>
             <CountdownText>
-                Recall begins in {countdownTimeInSeconds} seconds
+                Recall begins in
+                <Timer timeInSeconds={countdownTimeInSeconds} />
             </CountdownText>
             <FunFactText>Did you know ... {funFact}</FunFactText>
             <Button className="skip-button" onClick={props.handleTestCountdown}>
