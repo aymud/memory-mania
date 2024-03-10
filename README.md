@@ -1,5 +1,5 @@
 <h1 align="center">Memory Mania</h1>
-<h2 align="center"><a href="https://memory-mania.netlify.app//">View Live</a></h2>
+<h2 align="center"><a href="https://memorymania.netlify.app//">View Live</a></h2>
 <h2 align="center">A Memory Testing Game with React</h2>
 
 <div align="center">
