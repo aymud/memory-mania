@@ -17,21 +17,21 @@ const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6
 const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2
 
 const UserCardsContainer = styled.div`
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
-    padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
 `
 
 const Main = styled.main`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 50px;
 `
 
 interface UserType {
@@ -67,7 +67,7 @@ export default function App() {
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false)
     // const [showHighScore, setShowHighScore] = React.useState(false)
     const [enteredNames, setEnteredNames] = React.useState<EnteredNamesType[]>(
-        []
+        [],
     )
     const userNames = randomUsers.map((user) => user.name.first)
     const [
@@ -142,7 +142,7 @@ export default function App() {
         setIsLearningPhase(true)
         setEnteredNames([])
         setLearningPhaseTimeRemainingInSeconds(
-            LEARNING_PHASE_DURATION_IN_SECONDS
+            LEARNING_PHASE_DURATION_IN_SECONDS,
         )
         setNumOfRandomUsers(NUM_OF_USERS_TO_SHOW)
         setIsLevelOver(false)
@@ -165,7 +165,7 @@ export default function App() {
         // Iterate over randomUsers and check if the entered names match, and update score.
         const namesValidated = enteredNames.map((actualUser) => {
             const expectedUser = randomUsers.find(
-                (user: UserType) => user.id.value === actualUser.id
+                (user: UserType) => user.id.value === actualUser.id,
             )
             if (expectedUser) {
                 const isNameCorrect =
@@ -188,7 +188,7 @@ export default function App() {
             // Check if the user with the same ID already exists in the array.
             // If the user exists, update their name, else add a new user to the array.
             const userIndex = prevEnteredNames.findIndex(
-                (user) => user.id === id
+                (user) => user.id === id,
             )
             if (userIndex !== -1) {
                 prevEnteredNames[userIndex].name = name
@@ -211,12 +211,12 @@ export default function App() {
         setIsLearningPhase(true)
         setEnteredNames([])
         setLearningPhaseTimeRemainingInSeconds(
-            LEARNING_PHASE_DURATION_IN_SECONDS
+            LEARNING_PHASE_DURATION_IN_SECONDS,
         )
         setIsLevelOver(false)
         setNumOfRandomUsers(
             (prevNumOfRandomUsers) =>
-                prevNumOfRandomUsers + NUM_OF_USERS_TO_ADD_PER_LEVEL
+                prevNumOfRandomUsers + NUM_OF_USERS_TO_ADD_PER_LEVEL,
         )
         setCurrentLevel((prevLevel) => prevLevel + 1)
     }
@@ -252,14 +252,14 @@ export default function App() {
                 )}
                 {isLevelOver &&
                     getScore() / numOfRandomUsers >=
-                        MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
+                    MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
                         <Button onClick={handleGameNextLevel}>
                             Next Level
                         </Button>
                     )}
                 {isLevelOver &&
                     getScore() / numOfRandomUsers <
-                        MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
+                    MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
                         <React.Fragment>
                             <Button onClick={handleGameRestart}>
                                 Restart Test
