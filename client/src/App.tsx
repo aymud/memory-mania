@@ -8,6 +8,7 @@ import Timer from './components/Timer.tsx'
 import { tryFetchData } from './utils/apiHelper.ts'
 import { shuffleArray } from './utils/manipulation.ts'
 import Button from './components/Button.tsx'
+import Navbar from './components/Navbar.tsx'
 
 const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/'
 const NUM_OF_USERS_TO_SHOW = 3
@@ -30,6 +31,7 @@ const Main = styled.main`
     justify-content: center;
     align-items: center;
     padding: 20px;
+    margin-top: 50px;
 `
 
 interface UserType {
@@ -220,42 +222,53 @@ export default function App() {
     }
 
     return (
-        <Main>
-            {isWaitingTestStart ? (
-                <TestCountdown handleTestCountdown={handleTestCountdown} />
-            ) : (
-                <UserCardsContainer>{randomUserElements}</UserCardsContainer>
-            )}
-            {isLearningPhase && (
-                <Timer timeInSeconds={learningPhaseTimeRemainingInSeconds} />
-            )}
-            {isLearningPhase && <Button onClick={handleTestStart}>Test</Button>}
-            {!isLearningPhase && !isWaitingTestStart && !isLevelOver && (
-                <Button onClick={handleTestSubmit}>Finish Test</Button>
-            )}
-            {isLevelOver && (
-                <ScoreMessage
-                    correctAnswersCount={getScore()}
-                    totalUsers={randomUsers.length}
-                    level={currentLevel}
-                />
-            )}
-            {isLevelOver &&
-                getScore() / numOfRandomUsers >=
-                    MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
-                    <Button onClick={handleGameNextLevel}>Next Level</Button>
+        <React.Fragment>
+            <Navbar level={currentLevel} />
+            <Main>
+                {isWaitingTestStart ? (
+                    <TestCountdown handleTestCountdown={handleTestCountdown} />
+                ) : (
+                    <UserCardsContainer>
+                        {randomUserElements}
+                    </UserCardsContainer>
                 )}
-            {isLevelOver &&
-                getScore() / numOfRandomUsers <
-                    MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
-                    <React.Fragment>
-                        <Button onClick={handleGameRestart}>
-                            Restart Test
+                {isLearningPhase && (
+                    <Timer
+                        timeInSeconds={learningPhaseTimeRemainingInSeconds}
+                    />
+                )}
+                {isLearningPhase && (
+                    <Button onClick={handleTestStart}>Test</Button>
+                )}
+                {!isLearningPhase && !isWaitingTestStart && !isLevelOver && (
+                    <Button onClick={handleTestSubmit}>Finish Test</Button>
+                )}
+                {isLevelOver && (
+                    <ScoreMessage
+                        correctAnswersCount={getScore()}
+                        totalUsers={randomUsers.length}
+                        level={currentLevel}
+                    />
+                )}
+                {isLevelOver &&
+                    getScore() / numOfRandomUsers >=
+                        MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
+                        <Button onClick={handleGameNextLevel}>
+                            Next Level
                         </Button>
-                        {/*<button className="highscore-button" onClick={toggleHighScores}>View/Submit High Scores</button>*/}
-                        {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
-                    </React.Fragment>
-                )}
-        </Main>
+                    )}
+                {isLevelOver &&
+                    getScore() / numOfRandomUsers <
+                        MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
+                        <React.Fragment>
+                            <Button onClick={handleGameRestart}>
+                                Restart Test
+                            </Button>
+                            {/*<button className="highscore-button" onClick={toggleHighScores}>View/Submit High Scores</button>*/}
+                            {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
+                        </React.Fragment>
+                    )}
+            </Main>
+        </React.Fragment>
     )
 }
