@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import UserCard from './components/UserCard.tsx'
 import ScoreMessage from './components/ScoreMessage.tsx'
 import TestCountdown from './components/TestCountdown.tsx'
+import Timer from './components/Timer.tsx'
 // import Leaderboard from "./components/Leaderboard.tsx";
 import { tryFetchData } from './utils/apiHelper.ts'
 import { shuffleArray } from './utils/manipulation.ts'
@@ -13,17 +14,6 @@ const NUM_OF_USERS_TO_SHOW = 3
 const LEARNING_PHASE_DURATION_IN_SECONDS = 180
 const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6
 const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2
-
-const TestCountdownText = styled.div`
-    text-align: center;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
-    margin: 0 auto;
-`
 
 const UserCardsContainer = styled.div`
     max-width: 800px;
@@ -102,6 +92,29 @@ export default function App() {
     React.useEffect(() => {
         if (!isLearningPhase) return
 
+        function getDistinctUsers(data: UserType[]) {
+            // Distinct user := unique user picture.
+
+            const userPictures = new Set()
+            const distinctUsers: UserType[] = []
+
+            for (const user of data) {
+                const picture = user.picture.thumbnail
+
+                // Only add a user to the list if there isn't already a user with that picture.
+                if (userPictures.has(picture)) {
+                    continue
+                }
+                distinctUsers.push(user)
+                userPictures.add(picture)
+
+                if (distinctUsers.length === numOfRandomUsers) {
+                    break
+                }
+            }
+            return distinctUsers
+        }
+
         // Note: The api can sometimes return duplicate images in a set.
         // To only show unique users, we get more users than needed.
         // then we remove any duplicates and return the correct amount of unique users needed.
@@ -132,29 +145,6 @@ export default function App() {
         setNumOfRandomUsers(NUM_OF_USERS_TO_SHOW)
         setIsLevelOver(false)
         setCurrentLevel(1)
-    }
-
-    function getDistinctUsers(data: UserType[]) {
-        // Distinct user := unique user picture.
-
-        const userPictures = new Set()
-        const distinctUsers: UserType[] = []
-
-        for (const user of data) {
-            const picture = user.picture.thumbnail
-
-            // Only add a user to the list if there isn't already a user with that picture.
-            if (userPictures.has(picture)) {
-                continue
-            }
-            distinctUsers.push(user)
-            userPictures.add(picture)
-
-            if (distinctUsers.length === numOfRandomUsers) {
-                break
-            }
-        }
-        return distinctUsers
     }
 
     function handleTestCountdown() {
@@ -237,10 +227,7 @@ export default function App() {
                 <UserCardsContainer>{randomUserElements}</UserCardsContainer>
             )}
             {isLearningPhase && (
-                <TestCountdownText>
-                    {' '}
-                    {learningPhaseTimeRemainingInSeconds} seconds remaining
-                </TestCountdownText>
+                <Timer timeInSeconds={learningPhaseTimeRemainingInSeconds} />
             )}
             {isLearningPhase && <Button onClick={handleTestStart}>Test</Button>}
             {!isLearningPhase && !isWaitingTestStart && !isLevelOver && (
