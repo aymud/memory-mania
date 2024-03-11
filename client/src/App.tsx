@@ -57,7 +57,7 @@ interface EnteredNamesType {
 export default function App() {
     /* The game is divided into a learning phase and a testing phase.
        In the learning phase, the player will memorize the faces and names.
-       Then there is a small wait before the test begins.
+       Then there is a wait before the test begins.
      */
     const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(NUM_OF_USERS_TO_SHOW);
     const [currentLevel, setCurrentLevel] = React.useState(1);
