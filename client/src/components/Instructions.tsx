@@ -36,23 +36,32 @@ interface InstructionsProps {
     OnToggle: () => void
 }
 
-export default function Instructions(props: InstructionsProps) {
+export default function Instructions(
+    props: InstructionsProps
+) {
     return (
         <InstructionsModal>
             <Card>
-                <CloseButton onClick={props.OnToggle}>Close</CloseButton>
+                <CloseButton onClick={props.OnToggle}>
+                    Close
+                </CloseButton>
                 <h2>Game Instructions</h2>
-                <p>Look at each person and try to memorize their name.</p>
                 <p>
-                    When ready, start the test. There will be a short waiting
-                    period before recall begins.
+                    Look at each person and try to memorize
+                    their name.
                 </p>
                 <p>
-                    When the test starts, click the input box below the photo
-                    and type the name.
+                    When ready, start the test. There will
+                    be a short waiting period before recall
+                    begins.
                 </p>
                 <p>
-                    <b>Note</b>: Spelling counts, but not case sensitivity.
+                    When the test starts, click the input
+                    box below the photo and type the name.
+                </p>
+                <p>
+                    <b>Note</b>: Spelling counts, but not
+                    case sensitivity.
                 </p>
             </Card>
         </InstructionsModal>

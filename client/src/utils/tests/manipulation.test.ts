@@ -1,4 +1,7 @@
-import { getDistinctUsers, shuffleArray } from '../manipulation.ts'
+import {
+    getDistinctUsers,
+    shuffleArray,
+} from '../manipulation.ts'
 
 describe('shuffleArray', () => {
     it('should shuffle the array randomly', () => {
@@ -9,8 +12,12 @@ describe('shuffleArray', () => {
         expect(shuffledArray).not.toEqual(inputArray)
 
         // Check if the shuffled array has the same elements
-        expect(shuffledArray).toHaveLength(inputArray.length)
-        expect(shuffledArray.sort()).toEqual(inputArray.sort())
+        expect(shuffledArray).toHaveLength(
+            inputArray.length
+        )
+        expect(shuffledArray.sort()).toEqual(
+            inputArray.sort()
+        )
     })
 })
 
@@ -40,13 +47,20 @@ describe('getDistinctUsers', () => {
         ]
 
         const numOfRandomUsers = 3
-        const distinctUsers = getDistinctUsers(inputUsers, numOfRandomUsers)
+        const distinctUsers = getDistinctUsers(
+            inputUsers,
+            numOfRandomUsers
+        )
 
         expect(distinctUsers).toHaveLength(numOfRandomUsers)
 
         const uniqueThumbnailSet = new Set(
-            distinctUsers.map(user => user.picture.thumbnail)
+            distinctUsers.map(
+                user => user.picture.thumbnail
+            )
         )
-        expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length)
+        expect(uniqueThumbnailSet.size).toEqual(
+            distinctUsers.length
+        )
     })
 })

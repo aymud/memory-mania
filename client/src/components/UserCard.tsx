@@ -65,7 +65,10 @@ export default function UserCard(props: UserCardProps) {
 
     const gameResults = props.isLevelOver && (
         <ResultText
-            isCorrect={currentName === props.user.name.first.toLowerCase()}
+            isCorrect={
+                currentName ===
+                props.user.name.first.toLowerCase()
+            }
         >
             {props.user.name.first}
         </ResultText>
@@ -73,7 +76,10 @@ export default function UserCard(props: UserCardProps) {
 
     return (
         <UserCardWrapper>
-            <UserImg src={props.user.picture.large} alt='User' />
+            <UserImg
+                src={props.user.picture.large}
+                alt='User'
+            />
             {props.isLearning ? (
                 <UserName>{props.user.name.first}</UserName>
             ) : (

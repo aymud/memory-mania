@@ -31,8 +31,11 @@ interface NameDropdownProps {
     user: User
 }
 
-export default function NameDropdown(props: NameDropdownProps) {
-    const [selectedName, setSelectedName] = React.useState('')
+export default function NameDropdown(
+    props: NameDropdownProps
+) {
+    const [selectedName, setSelectedName] =
+        React.useState('')
 
     // Sort the names in asc order, so it's not the same order as what the images were in originally.
     // Just so the players don't memorize the order.
@@ -53,7 +56,10 @@ export default function NameDropdown(props: NameDropdownProps) {
                 // Clean up name input before saving it for future validation.
                 name = name.trim().toLowerCase()
                 props.setCurrentName(name)
-                props.handleOnChange(name, props.user.id.value)
+                props.handleOnChange(
+                    name,
+                    props.user.id.value
+                )
             }}
         >
             <option value=''>Select a name</option>

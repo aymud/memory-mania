@@ -21,7 +21,9 @@ interface ScoreMessageProps {
     level: number
 }
 
-export default function ScoreMessage(props: ScoreMessageProps) {
+export default function ScoreMessage(
+    props: ScoreMessageProps
+) {
     const message = `${props.correctAnswersCount} / ${props.totalUsers}`
     return (
         <ScoreContainer>

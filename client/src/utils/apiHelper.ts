@@ -9,11 +9,15 @@ export async function tryFetchData(
     try {
         const response = await fetch(apiUrl, options)
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`)
+            throw new Error(
+                `HTTP error! Status: ${response.status}`
+            )
         }
         return await response.json()
     } catch (error) {
         const typedError = error as ErrorType
-        throw new Error(`Error fetching data: ${typedError.message}`)
+        throw new Error(
+            `Error fetching data: ${typedError.message}`
+        )
     }
 }

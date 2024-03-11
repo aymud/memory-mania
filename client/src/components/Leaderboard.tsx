@@ -17,7 +17,9 @@ const fakeHighScores: HighScore[] = [
     { Name: 'phill', score: 6 },
 ]
 
-export default function Leaderboard(props: LeaderboardProps) {
+export default function Leaderboard(
+    props: LeaderboardProps
+) {
     const [playerName, setPlayerName] = React.useState('')
 
     const handleScoreSubmit = () => {
@@ -26,12 +28,14 @@ export default function Leaderboard(props: LeaderboardProps) {
         props.toggleHighScores()
     }
 
-    const playerNamesAndScores = fakeHighScores.map((player, index) => (
-        <tr key={index}>
-            <td>{player.Name}</td>
-            <td>{player.score}</td>
-        </tr>
-    ))
+    const playerNamesAndScores = fakeHighScores.map(
+        (player, index) => (
+            <tr key={index}>
+                <td>{player.Name}</td>
+                <td>{player.score}</td>
+            </tr>
+        )
+    )
 
     return (
         <div className='instructions-card-overlay'>
@@ -59,12 +63,19 @@ export default function Leaderboard(props: LeaderboardProps) {
                             size={9}
                             placeholder='Enter Name'
                             value={playerName}
-                            onChange={e => setPlayerName(e.target.value)}
+                            onChange={e =>
+                                setPlayerName(
+                                    e.target.value
+                                )
+                            }
                         />
                     </label>
                     <span>{props.userScore}</span>
                     <p></p>
-                    <button type='submit' onClick={handleScoreSubmit}>
+                    <button
+                        type='submit'
+                        onClick={handleScoreSubmit}
+                    >
                         Submit
                     </button>
                 </div>

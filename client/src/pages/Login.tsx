@@ -70,16 +70,22 @@ const Tooltip = styled.div`
 
 export default function Login() {
     const navigate = useNavigate()
-    const [isTooltipDisplayed, setIsTooltipDisplayed] = React.useState(false)
+    const [isTooltipDisplayed, setIsTooltipDisplayed] =
+        React.useState(false)
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
 
     const handleTooltipToggle = () => {
-        setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed)
+        setIsTooltipDisplayed(
+            prevIsTooltipDisplayed =>
+                !prevIsTooltipDisplayed
+        )
     }
 
     const handleLogin = () => {
-        if (AuthenticationService.login(username, password)) {
+        if (
+            AuthenticationService.login(username, password)
+        ) {
             navigate('/app')
         }
     }
@@ -97,7 +103,9 @@ export default function Login() {
                         autoComplete='on'
                         onFocus={handleTooltipToggle}
                         onBlur={handleTooltipToggle}
-                        onChange={event => setUsername(event.target.value)}
+                        onChange={event =>
+                            setUsername(event.target.value)
+                        }
                     />
                     <FormInput
                         type='password'
@@ -107,7 +115,9 @@ export default function Login() {
                         autoComplete='on'
                         onFocus={handleTooltipToggle}
                         onBlur={handleTooltipToggle}
-                        onChange={event => setPassword(event.target.value)}
+                        onChange={event =>
+                            setPassword(event.target.value)
+                        }
                     />
                     <FormSubmit
                         onClick={handleLogin}
@@ -120,8 +130,10 @@ export default function Login() {
                 {isTooltipDisplayed && (
                     <Tooltip>
                         <p>
-                            Use &quot;user&quot; for the username and
-                            &quot;password&quot; for the password.
+                            Use &quot;user&quot; for the
+                            username and
+                            &quot;password&quot; for the
+                            password.
                         </p>
                     </Tooltip>
                 )}

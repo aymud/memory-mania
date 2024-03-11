@@ -29,22 +29,30 @@ interface TestCountdownProps {
     handleTestCountdown: () => void
 }
 
-const RANDOM_FACT_API_URL = 'https://api.api-ninjas.com/v1/facts?limit=1'
+const RANDOM_FACT_API_URL =
+    'https://api.api-ninjas.com/v1/facts?limit=1'
 
-export default function TestCountdown(props: TestCountdownProps) {
-    const [countdownTimeInSeconds, setCountdownTimeInSeconds] =
-        React.useState(10)
+export default function TestCountdown(
+    props: TestCountdownProps
+) {
+    const [
+        countdownTimeInSeconds,
+        setCountdownTimeInSeconds,
+    ] = React.useState(10)
     const [funFact, setFunFact] = React.useState('')
 
     React.useEffect(() => {
-        const apiKey = 'JZDgzZNFXjQ2o7glprpbPg==kRpmEoxXi5UALX0e'
+        const apiKey =
+            'JZDgzZNFXjQ2o7glprpbPg==kRpmEoxXi5UALX0e'
         const options = {
             method: 'GET',
             headers: { 'X-Api-Key': apiKey },
         }
-        tryFetchData(RANDOM_FACT_API_URL, options).then(data => {
-            setFunFact(data[0].fact)
-        })
+        tryFetchData(RANDOM_FACT_API_URL, options).then(
+            data => {
+                setFunFact(data[0].fact)
+            }
+        )
     }, [])
 
     React.useEffect(() => {
@@ -52,7 +60,8 @@ export default function TestCountdown(props: TestCountdownProps) {
         const timer = setInterval(() => {
             if (countdownTimeInSeconds > 0) {
                 setCountdownTimeInSeconds(
-                    prevCountdownTime => prevCountdownTime - 1
+                    prevCountdownTime =>
+                        prevCountdownTime - 1
                 )
             } else {
                 clearInterval(timer)
@@ -69,10 +78,17 @@ export default function TestCountdown(props: TestCountdownProps) {
         <TestCountdownContainer>
             <CountdownText>
                 Recall begins in
-                <Timer timeInSeconds={countdownTimeInSeconds} />
+                <Timer
+                    timeInSeconds={countdownTimeInSeconds}
+                />
             </CountdownText>
-            <FunFactText>Did you know ... {funFact}</FunFactText>
-            <Button className='skip-button' onClick={props.handleTestCountdown}>
+            <FunFactText>
+                Did you know ... {funFact}
+            </FunFactText>
+            <Button
+                className='skip-button'
+                onClick={props.handleTestCountdown}
+            >
                 Skip
             </Button>
         </TestCountdownContainer>

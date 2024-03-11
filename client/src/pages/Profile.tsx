@@ -51,15 +51,23 @@ export default function Profile() {
             <ProfileContainer>
                 <Title>User Profile</Title>
                 <ProfileInfo>
-                    <InfoItem>Username: {profileData.username}</InfoItem>
                     <InfoItem>
-                        Total Levels Played: {profileData.totalLevels}
+                        Username: {profileData.username}
                     </InfoItem>
                     <InfoItem>
-                        Highest Score: {profileData.highestScore}
+                        Total Levels Played:{' '}
+                        {profileData.totalLevels}
                     </InfoItem>
-                    <InfoItem>Play Time: {profileData.playTime}</InfoItem>
-                    <InfoItem>Accuracy: {profileData.accuracy}</InfoItem>
+                    <InfoItem>
+                        Highest Score:{' '}
+                        {profileData.highestScore}
+                    </InfoItem>
+                    <InfoItem>
+                        Play Time: {profileData.playTime}
+                    </InfoItem>
+                    <InfoItem>
+                        Accuracy: {profileData.accuracy}
+                    </InfoItem>
                 </ProfileInfo>
             </ProfileContainer>
         </ProfileWrapper>

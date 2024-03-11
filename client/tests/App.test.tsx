@@ -6,7 +6,8 @@ import App from '../src/App.tsx'
 
 it('renders without crashing', () => {
     const root: HTMLElement =
-        document.getElementById('root') ?? document.createElement('div')
+        document.getElementById('root') ??
+        document.createElement('div')
 
     ReactDOM.createRoot(root).render(<App />)
 })

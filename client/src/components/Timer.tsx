@@ -26,12 +26,14 @@ export default function Timer(props: ITimerProps) {
         seconds: props.timeInSeconds % 60,
     }
 
-    const formatTime = (value: number) => (value < 10 ? `0${value}` : value)
+    const formatTime = (value: number) =>
+        value < 10 ? `0${value}` : value
 
     return (
         <TimerContainer>
             <Time>
-                {formatTime(duration.minutes)}:{formatTime(duration.seconds)}
+                {formatTime(duration.minutes)}:
+                {formatTime(duration.seconds)}
             </Time>
         </TimerContainer>
     )

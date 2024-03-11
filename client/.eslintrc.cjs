@@ -10,7 +10,10 @@ module.exports = {
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+    parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+    },
     settings: { react: { version: '18.2' } },
     plugins: ['react-refresh', 'prettier'],
     rules: {
@@ -18,6 +21,9 @@ module.exports = {
             'warn',
             { allowConstantExport: true },
         ],
-        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'no-console': [
+            'error',
+            { allow: ['warn', 'error'] },
+        ],
     },
 }

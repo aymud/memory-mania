@@ -36,10 +36,13 @@ const MenuButton = styled.button`
 
 export default function StartMenu() {
     const navigate = useNavigate()
-    const [showInstructions, setShowInstructions] = React.useState(false)
+    const [showInstructions, setShowInstructions] =
+        React.useState(false)
 
     function toggleInstructions() {
-        setShowInstructions(prevShowInstructions => !prevShowInstructions)
+        setShowInstructions(
+            prevShowInstructions => !prevShowInstructions
+        )
     }
 
     function handleStartGame() {
@@ -49,9 +52,17 @@ export default function StartMenu() {
     return (
         <StyledStartMenu>
             <GameTitle>Memory Mania</GameTitle>
-            <MenuButton onClick={handleStartGame}>Start Game</MenuButton>
-            <MenuButton onClick={toggleInstructions}>Instructions</MenuButton>
-            {showInstructions && <Instructions OnToggle={toggleInstructions} />}
+            <MenuButton onClick={handleStartGame}>
+                Start Game
+            </MenuButton>
+            <MenuButton onClick={toggleInstructions}>
+                Instructions
+            </MenuButton>
+            {showInstructions && (
+                <Instructions
+                    OnToggle={toggleInstructions}
+                />
+            )}
         </StyledStartMenu>
     )
 }
