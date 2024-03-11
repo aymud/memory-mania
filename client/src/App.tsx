@@ -210,41 +210,28 @@ export default function App() {
                     </UserCardsContainer>
                 )}
                 {isLearningPhase && (
-                    <Timer
-                        timeInSeconds={learningPhaseTimeRemainingInSeconds}
-                    />
-                )}
-                {isLearningPhase && (
-                    <Button onClick={handleTestStart}>Test</Button>
+                    <React.Fragment>
+                        <Timer timeInSeconds={learningPhaseTimeRemainingInSeconds} />
+                        <Button onClick={handleTestStart}>Test</Button>
+                    </React.Fragment>
                 )}
                 {!isLearningPhase && !isWaitingTestStart && !isLevelOver && (
                     <Button onClick={handleTestSubmit}>Finish Test</Button>
                 )}
                 {isLevelOver && (
-                    <ScoreMessage
-                        correctAnswersCount={getScore()}
-                        totalUsers={randomUsers.length}
-                        level={currentLevel}
-                    />
+                    <React.Fragment>
+                        <ScoreMessage
+                            correctAnswersCount={getScore()}
+                            totalUsers={randomUsers.length}
+                            level={currentLevel}
+                        />
+                        {getScore() / numOfRandomUsers >= MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE ? (
+                            <Button onClick={handleGameNextLevel}>Next Level</Button>
+                        ) : (
+                            <Button onClick={handleGameRestart}>Restart Test</Button>
+                        )}
+                    </React.Fragment>
                 )}
-                {isLevelOver &&
-                    getScore() / numOfRandomUsers >=
-                    MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
-                        <Button onClick={handleGameNextLevel}>
-                            Next Level
-                        </Button>
-                    )}
-                {isLevelOver &&
-                    getScore() / numOfRandomUsers <
-                    MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE && (
-                        <React.Fragment>
-                            <Button onClick={handleGameRestart}>
-                                Restart Test
-                            </Button>
-                            {/*<button className="highscore-button" onClick={toggleHighScores}>View/Submit High Scores</button>*/}
-                            {/*{showHighScore && <Leaderboard toggleHighScores={toggleHighScores} userScore={getScore()} />}*/}
-                        </React.Fragment>
-                    )}
             </Main>
         </React.Fragment>
     )
