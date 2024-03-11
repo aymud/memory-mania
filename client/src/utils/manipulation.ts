@@ -8,3 +8,39 @@ export function shuffleArray(array: any[]) {
     }
     return shuffled
 }
+
+interface UserType {
+    name: {
+        first: string
+    }
+    picture: {
+        large: string
+        thumbnail: string
+    }
+    id: {
+        value: string
+    }
+}
+
+export function getDistinctUsers(data: UserType[], numOfRandomUsers: number) {
+    // Distinct user := unique user picture.
+
+    const userPictures = new Set()
+    const distinctUsers: UserType[] = []
+
+    for (const user of data) {
+        const picture = user.picture.thumbnail
+
+        // Only add a user to the list if there isn't already a user with that picture.
+        if (userPictures.has(picture)) {
+            continue
+        }
+        distinctUsers.push(user)
+        userPictures.add(picture)
+
+        if (distinctUsers.length === numOfRandomUsers) {
+            break
+        }
+    }
+    return distinctUsers
+}

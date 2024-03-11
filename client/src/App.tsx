@@ -6,7 +6,7 @@ import TestCountdown from './components/TestCountdown.tsx'
 import Timer from './components/Timer.tsx'
 // import Leaderboard from "./components/Leaderboard.tsx";
 import { tryFetchData } from './utils/apiHelper.ts'
-import { shuffleArray } from './utils/manipulation.ts'
+import { getDistinctUsers, shuffleArray } from './utils/manipulation.ts'
 import Button from './components/Button.tsx'
 import Navbar from './components/Navbar.tsx'
 
@@ -94,36 +94,13 @@ export default function App() {
     React.useEffect(() => {
         if (!isLearningPhase) return
 
-        function getDistinctUsers(data: UserType[]) {
-            // Distinct user := unique user picture.
-
-            const userPictures = new Set()
-            const distinctUsers: UserType[] = []
-
-            for (const user of data) {
-                const picture = user.picture.thumbnail
-
-                // Only add a user to the list if there isn't already a user with that picture.
-                if (userPictures.has(picture)) {
-                    continue
-                }
-                distinctUsers.push(user)
-                userPictures.add(picture)
-
-                if (distinctUsers.length === numOfRandomUsers) {
-                    break
-                }
-            }
-            return distinctUsers
-        }
-
         // Note: The api can sometimes return duplicate images in a set.
         // To only show unique users, we get more users than needed.
         // then we remove any duplicates and return the correct amount of unique users needed.
         const apiParams =
             '?format=JSON&nat=CA,US&results=' + numOfRandomUsers * 2
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then((data) => {
-            setRandomUsers(getDistinctUsers(data.results))
+            setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers))
         })
     }, [isLearningPhase, numOfRandomUsers])
 
