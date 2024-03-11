@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const ProfileWrapper = styled.div`
     font-family: 'Arial', sans-serif;
@@ -10,7 +10,7 @@ const ProfileWrapper = styled.div`
     height: 100vh;
     width: 100vw;
     position: relative;
-`
+`;
 
 const ProfileContainer = styled.div`
     background-color: #fff;
@@ -19,22 +19,22 @@ const ProfileContainer = styled.div`
     padding: 20px;
     width: 300px;
     text-align: center;
-`
+`;
 
 const Title = styled.h2`
     color: #333;
-`
+`;
 
 const ProfileInfo = styled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
-`
+`;
 
 const InfoItem = styled.div`
     color: #333;
     font-size: 16px;
-`
+`;
 
 export default function Profile() {
     // Dummy profile data.
@@ -43,33 +43,21 @@ export default function Profile() {
         totalLevels: 20,
         highestScore: 1500,
         playTime: '10 hours',
-        accuracy: '80%',
-    }
+        accuracy: '80%'
+    };
 
     return (
         <ProfileWrapper>
             <ProfileContainer>
                 <Title>User Profile</Title>
                 <ProfileInfo>
-                    <InfoItem>
-                        Username: {profileData.username}
-                    </InfoItem>
-                    <InfoItem>
-                        Total Levels Played:{' '}
-                        {profileData.totalLevels}
-                    </InfoItem>
-                    <InfoItem>
-                        Highest Score:{' '}
-                        {profileData.highestScore}
-                    </InfoItem>
-                    <InfoItem>
-                        Play Time: {profileData.playTime}
-                    </InfoItem>
-                    <InfoItem>
-                        Accuracy: {profileData.accuracy}
-                    </InfoItem>
+                    <InfoItem>Username: {profileData.username}</InfoItem>
+                    <InfoItem>Total Levels Played: {profileData.totalLevels}</InfoItem>
+                    <InfoItem>Highest Score: {profileData.highestScore}</InfoItem>
+                    <InfoItem>Play Time: {profileData.playTime}</InfoItem>
+                    <InfoItem>Accuracy: {profileData.accuracy}</InfoItem>
                 </ProfileInfo>
             </ProfileContainer>
         </ProfileWrapper>
-    )
+    );
 }

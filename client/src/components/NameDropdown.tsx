@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const NamesDropdownSelect = styled.select`
     width: 100%;
@@ -15,55 +15,48 @@ const NamesDropdownSelect = styled.select`
         outline: none;
         border-color: #007bff;
     }
-`
+`;
 
 interface User {
     id: {
-        value: string
-    }
+        value: string;
+    };
 }
 
 interface NameDropdownProps {
-    allNames: string[]
-    isLevelOver: boolean
-    setCurrentName: (name: string) => void
-    handleOnChange: (name: string, id: string) => void
-    user: User
+    allNames: string[];
+    isLevelOver: boolean;
+    setCurrentName: (name: string) => void;
+    handleOnChange: (name: string, id: string) => void;
+    user: User;
 }
 
-export default function NameDropdown(
-    props: NameDropdownProps
-) {
-    const [selectedName, setSelectedName] =
-        React.useState('')
+export default function NameDropdown(props: NameDropdownProps) {
+    const [selectedName, setSelectedName] = React.useState('');
 
     // Sort the names in asc order, so it's not the same order as what the images were in originally.
     // Just so the players don't memorize the order.
-    const sortedNames = props.allNames.slice().sort()
+    const sortedNames = props.allNames.slice().sort();
     const dropdownNames = sortedNames.map((name, index) => (
         <option key={index} value={name}>
             {name}
         </option>
-    ))
+    ));
 
     return (
         <NamesDropdownSelect
             disabled={props.isLevelOver}
             value={selectedName}
             onChange={event => {
-                let name = event.target.value
-                setSelectedName(name)
+                let name = event.target.value;
+                setSelectedName(name);
                 // Clean up name input before saving it for future validation.
-                name = name.trim().toLowerCase()
-                props.setCurrentName(name)
-                props.handleOnChange(
-                    name,
-                    props.user.id.value
-                )
-            }}
-        >
+                name = name.trim().toLowerCase();
+                props.setCurrentName(name);
+                props.handleOnChange(name, props.user.id.value);
+            }}>
             <option value=''>Select a name</option>
             {dropdownNames}
         </NamesDropdownSelect>
-    )
+    );
 }

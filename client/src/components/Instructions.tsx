@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const InstructionsModal = styled.div`
     position: fixed;
@@ -11,7 +11,7 @@ const InstructionsModal = styled.div`
     align-items: center;
     justify-content: center;
     z-index: 999; /*  Ensure overlay appears on top of other elements on the page. */
-`
+`;
 
 const Card = styled.div`
     background-color: white;
@@ -19,7 +19,7 @@ const Card = styled.div`
     max-width: 80%;
     border-radius: 8px;
     position: relative;
-`
+`;
 
 const CloseButton = styled.button`
     position: absolute;
@@ -30,40 +30,25 @@ const CloseButton = styled.button`
     border: none;
     background: none;
     padding: 0;
-`
+`;
 
 interface InstructionsProps {
-    OnToggle: () => void
+    OnToggle: () => void;
 }
 
-export default function Instructions(
-    props: InstructionsProps
-) {
+export default function Instructions(props: InstructionsProps) {
     return (
         <InstructionsModal>
             <Card>
-                <CloseButton onClick={props.OnToggle}>
-                    Close
-                </CloseButton>
+                <CloseButton onClick={props.OnToggle}>Close</CloseButton>
                 <h2>Game Instructions</h2>
+                <p>Look at each person and try to memorize their name.</p>
+                <p>When ready, start the test. There will be a short waiting period before recall begins.</p>
+                <p>When the test starts, click the input box below the photo and type the name.</p>
                 <p>
-                    Look at each person and try to memorize
-                    their name.
-                </p>
-                <p>
-                    When ready, start the test. There will
-                    be a short waiting period before recall
-                    begins.
-                </p>
-                <p>
-                    When the test starts, click the input
-                    box below the photo and type the name.
-                </p>
-                <p>
-                    <b>Note</b>: Spelling counts, but not
-                    case sensitivity.
+                    <b>Note</b>: Spelling counts, but not case sensitivity.
                 </p>
             </Card>
         </InstructionsModal>
-    )
+    );
 }
