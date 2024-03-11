@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Running pre-push hook..."
+
+npm run lint
+npm run prettier
+
+# Check if any changes were made
+git diff --exit-code || {
+  echo "Some files were formatted. Please commit the changes before pushing."
+  exit 1
+}
+
+echo "Pre-push hook completed successfully."
