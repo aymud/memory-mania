@@ -68,7 +68,7 @@ export default function App() {
     const [enteredNames, setEnteredNames] = React.useState<EnteredNamesType[]>([])
     const userNames = randomUsers.map(user => user.name.first)
     const {
-        timeRemaining: learningPhaseTimeRemainingInSeconds,
+        timeRemainingInSeconds: learningPhaseTimeRemainingInSeconds,
         resetTimer: resetLearningPhaseTimer,
     } = useTimer(LEARNING_PHASE_DURATION_IN_SECONDS, handleTestStart)
 

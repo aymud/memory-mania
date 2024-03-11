@@ -1,26 +1,27 @@
 import { useEffect, useState } from 'react'
 
 export default function useTimer(initialTimeInSeconds: number, callback: () => void) {
-    const [timeRemaining, setTimeRemaining] = useState(initialTimeInSeconds)
+    const [timeRemainingInSeconds, setTimeRemainingInSeconds] = useState(initialTimeInSeconds)
 
     useEffect(() => {
-        let interval: NodeJS.Timeout | undefined = undefined
+        let timer: NodeJS.Timeout | undefined = undefined
+        const timerIntervalInMilliSeconds = 1000
 
-        if (timeRemaining > 0) {
-            interval = setInterval(() => {
-                setTimeRemaining((prevTime: number) => (prevTime > 0 ? prevTime - 1 : 0))
-            }, 1000)
+        if (timeRemainingInSeconds > 0) {
+            timer = setInterval(() => {
+                setTimeRemainingInSeconds((prevTime: number) => (prevTime > 0 ? prevTime - 1 : 0))
+            }, timerIntervalInMilliSeconds)
         } else {
-            clearInterval(interval)
+            clearInterval(timer)
             callback()
         }
 
-        return () => clearInterval(interval)
-    }, [timeRemaining, callback])
+        return () => clearInterval(timer)
+    }, [timeRemainingInSeconds, callback])
 
     const resetTimer = () => {
-        setTimeRemaining(initialTimeInSeconds)
+        setTimeRemainingInSeconds(initialTimeInSeconds)
     }
 
-    return { timeRemaining, resetTimer }
+    return { timeRemainingInSeconds, resetTimer }
 }
