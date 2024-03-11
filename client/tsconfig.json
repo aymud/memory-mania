@@ -26,6 +26,6 @@
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "strictFunctionTypes": true,
-        "strictNullChecks": true,
+        "strictNullChecks": true
     }
 }

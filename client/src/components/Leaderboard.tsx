@@ -34,10 +34,10 @@ export default function Leaderboard(props: LeaderboardProps) {
     ))
 
     return (
-        <div className="instructions-card-overlay">
-            <div className="instructions-card">
+        <div className='instructions-card-overlay'>
+            <div className='instructions-card'>
                 <button
-                    className="instructions-close-button"
+                    className='instructions-close-button'
                     onClick={props.toggleHighScores}
                 >
                     Close
@@ -55,16 +55,16 @@ export default function Leaderboard(props: LeaderboardProps) {
                 <div>
                     <label>
                         <input
-                            type="text"
+                            type='text'
                             size={9}
-                            placeholder="Enter Name"
+                            placeholder='Enter Name'
                             value={playerName}
-                            onChange={(e) => setPlayerName(e.target.value)}
+                            onChange={e => setPlayerName(e.target.value)}
                         />
                     </label>
                     <span>{props.userScore}</span>
                     <p></p>
-                    <button type="submit" onClick={handleScoreSubmit}>
+                    <button type='submit' onClick={handleScoreSubmit}>
                         Submit
                     </button>
                 </div>

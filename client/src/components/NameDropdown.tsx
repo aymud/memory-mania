@@ -2,19 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const NamesDropdownSelect = styled.select`
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #333;
-  font-size: 14px;
-  transition: border-color 0.3s;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    transition: border-color 0.3s;
 
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
+    &:focus {
+        outline: none;
+        border-color: #007bff;
+    }
 `
 
 interface User {
@@ -47,7 +47,7 @@ export default function NameDropdown(props: NameDropdownProps) {
         <NamesDropdownSelect
             disabled={props.isLevelOver}
             value={selectedName}
-            onChange={(event) => {
+            onChange={event => {
                 let name = event.target.value
                 setSelectedName(name)
                 // Clean up name input before saving it for future validation.

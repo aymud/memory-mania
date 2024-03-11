@@ -1,18 +1,18 @@
 import styled from 'styled-components'
 
 const ScoreContainer = styled.div`
-  text-align: center;
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 `
 
 const ScoreText = styled.p`
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
 `
 
 interface ScoreMessageProps {

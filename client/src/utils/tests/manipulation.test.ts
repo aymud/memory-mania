@@ -17,10 +17,26 @@ describe('shuffleArray', () => {
 describe('getDistinctUsers', () => {
     it('should return an array of distinct users', () => {
         const inputUsers = [
-            { name: { first: '' }, picture: { large: '', thumbnail: '1' }, id: { value: '' } },
-            { name: { first: '' }, picture: { large: '', thumbnail: '2' }, id: { value: '' } },
-            { name: { first: '' }, picture: { large: '', thumbnail: '1' }, id: { value: '' } },
-            { name: { first: '' }, picture: { large: '', thumbnail: '3' }, id: { value: '' } },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '1' },
+                id: { value: '' },
+            },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '2' },
+                id: { value: '' },
+            },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '1' },
+                id: { value: '' },
+            },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '3' },
+                id: { value: '' },
+            },
         ]
 
         const numOfRandomUsers = 3
@@ -28,7 +44,9 @@ describe('getDistinctUsers', () => {
 
         expect(distinctUsers).toHaveLength(numOfRandomUsers)
 
-        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.thumbnail))
+        const uniqueThumbnailSet = new Set(
+            distinctUsers.map(user => user.picture.thumbnail)
+        )
         expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length)
     })
 })

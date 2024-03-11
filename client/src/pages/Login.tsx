@@ -75,9 +75,7 @@ export default function Login() {
     const [password, setPassword] = React.useState('')
 
     const handleTooltipToggle = () => {
-        setIsTooltipDisplayed(
-            (prevIsTooltipDisplayed) => !prevIsTooltipDisplayed
-        )
+        setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed)
     }
 
     const handleLogin = () => {
@@ -92,29 +90,29 @@ export default function Login() {
                 <Title>Login</Title>
                 <LoginForm>
                     <FormInput
-                        type="text"
-                        className="form-input"
-                        placeholder="Username"
+                        type='text'
+                        className='form-input'
+                        placeholder='Username'
                         required
-                        autoComplete="on"
+                        autoComplete='on'
                         onFocus={handleTooltipToggle}
                         onBlur={handleTooltipToggle}
-                        onChange={(event) => setUsername(event.target.value)}
+                        onChange={event => setUsername(event.target.value)}
                     />
                     <FormInput
-                        type="password"
-                        className="form-input"
-                        placeholder="Password"
+                        type='password'
+                        className='form-input'
+                        placeholder='Password'
                         required
-                        autoComplete="on"
+                        autoComplete='on'
                         onFocus={handleTooltipToggle}
                         onBlur={handleTooltipToggle}
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={event => setPassword(event.target.value)}
                     />
                     <FormSubmit
                         onClick={handleLogin}
-                        type="submit"
-                        className="form-submit"
+                        type='submit'
+                        className='form-submit'
                     >
                         Login
                     </FormSubmit>

@@ -5,7 +5,7 @@ const PrivateRoute = () => {
     return AuthenticationService.isAuthenticated ? (
         <Outlet />
     ) : (
-        <Navigate to="/login" />
+        <Navigate to='/login' />
     )
 }
 

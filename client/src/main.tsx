@@ -23,5 +23,5 @@ ReactDOM.createRoot(root).render(
                 <Route element={<StartMenu />} path='*' />
             </Routes>
         </BrowserRouter>
-    </React.StrictMode>,
+    </React.StrictMode>
 )

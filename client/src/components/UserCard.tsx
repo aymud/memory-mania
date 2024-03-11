@@ -27,7 +27,7 @@ interface ResultTextProps {
 }
 
 const ResultText = styled.div<ResultTextProps>`
-    color: ${(props) => (props.isCorrect ? 'green' : 'red')};
+    color: ${props => (props.isCorrect ? 'green' : 'red')};
 `
 
 interface User {
@@ -73,7 +73,7 @@ export default function UserCard(props: UserCardProps) {
 
     return (
         <UserCardWrapper>
-            <UserImg src={props.user.picture.large} alt="User" />
+            <UserImg src={props.user.picture.large} alt='User' />
             {props.isLearning ? (
                 <UserName>{props.user.name.first}</UserName>
             ) : (

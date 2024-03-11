@@ -39,7 +39,7 @@ export default function StartMenu() {
     const [showInstructions, setShowInstructions] = React.useState(false)
 
     function toggleInstructions() {
-        setShowInstructions((prevShowInstructions) => !prevShowInstructions)
+        setShowInstructions(prevShowInstructions => !prevShowInstructions)
     }
 
     function handleStartGame() {

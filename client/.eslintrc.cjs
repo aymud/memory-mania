@@ -6,7 +6,7 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
-        "plugin:@typescript-eslint/recommended"
+        'plugin:@typescript-eslint/recommended',
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
@@ -18,6 +18,6 @@ module.exports = {
             'warn',
             { allowConstantExport: true },
         ],
-        "no-console": ["error", { "allow": ["warn", "error"] }],
+        'no-console': ['error', { allow: ['warn', 'error'] }],
     },
 }

@@ -42,7 +42,7 @@ export default function TestCountdown(props: TestCountdownProps) {
             method: 'GET',
             headers: { 'X-Api-Key': apiKey },
         }
-        tryFetchData(RANDOM_FACT_API_URL, options).then((data) => {
+        tryFetchData(RANDOM_FACT_API_URL, options).then(data => {
             setFunFact(data[0].fact)
         })
     }, [])
@@ -52,7 +52,7 @@ export default function TestCountdown(props: TestCountdownProps) {
         const timer = setInterval(() => {
             if (countdownTimeInSeconds > 0) {
                 setCountdownTimeInSeconds(
-                    (prevCountdownTime) => prevCountdownTime - 1
+                    prevCountdownTime => prevCountdownTime - 1
                 )
             } else {
                 clearInterval(timer)
@@ -72,7 +72,7 @@ export default function TestCountdown(props: TestCountdownProps) {
                 <Timer timeInSeconds={countdownTimeInSeconds} />
             </CountdownText>
             <FunFactText>Did you know ... {funFact}</FunFactText>
-            <Button className="skip-button" onClick={props.handleTestCountdown}>
+            <Button className='skip-button' onClick={props.handleTestCountdown}>
                 Skip
             </Button>
         </TestCountdownContainer>
