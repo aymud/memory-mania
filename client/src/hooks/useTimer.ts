@@ -1,27 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function useTimer(initialTimeInSeconds: number, callback: () => void) {
     const [timeRemainingInSeconds, setTimeRemainingInSeconds] = useState(initialTimeInSeconds);
+    const [isRunning, setIsRunning] = useState(false);
+
+    const startTimer = useCallback(() => {
+        setIsRunning(true);
+    }, []);
+
+    const resetTimer = useCallback(() => {
+        setIsRunning(false);
+        setTimeRemainingInSeconds(initialTimeInSeconds);
+    }, [initialTimeInSeconds]);
 
     useEffect(() => {
-        let timer: NodeJS.Timeout | undefined = undefined;
-        const timerIntervalInMilliSeconds = 1000;
+        if (!isRunning) return;
 
-        if (timeRemainingInSeconds > 0) {
-            timer = setInterval(() => {
-                setTimeRemainingInSeconds((prevTime: number) => (prevTime > 0 ? prevTime - 1 : 0));
-            }, timerIntervalInMilliSeconds);
-        } else {
-            clearInterval(timer);
-            callback();
-        }
+        const timerIntervalInMilliSeconds = 1000;
+        const timer = setInterval(() => {
+            if (timeRemainingInSeconds > 0) {
+                setTimeRemainingInSeconds(prevTime => prevTime - 1);
+            } else {
+                clearInterval(timer);
+                callback();
+            }
+        }, timerIntervalInMilliSeconds);
 
         return () => clearInterval(timer);
-    }, [timeRemainingInSeconds, callback]);
+    }, [isRunning, timeRemainingInSeconds, callback]);
 
-    const resetTimer = () => {
-        setTimeRemainingInSeconds(initialTimeInSeconds);
-    };
-
-    return { timeRemainingInSeconds, resetTimer };
+    return { timeRemainingInSeconds, startTimer, resetTimer };
 }

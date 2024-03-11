@@ -13,6 +13,7 @@ import useTimer from './hooks/useTimer.ts';
 const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
 const NUM_OF_USERS_TO_SHOW = 3;
 const LEARNING_PHASE_DURATION_IN_SECONDS = 180;
+const TESTING_PHASE_DURATION_IN_SECONDS = 180;
 const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
 const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2;
 
@@ -55,8 +56,8 @@ interface EnteredNamesType {
 
 export default function App() {
     /* The game is divided into a learning phase and a testing phase.
+       Each phase has a time limit.
        In the learning phase, the player will memorize the faces and names.
-       Then there is a small wait before the test begins.
      */
     const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(NUM_OF_USERS_TO_SHOW);
     const [currentLevel, setCurrentLevel] = React.useState(1);
@@ -67,8 +68,22 @@ export default function App() {
     const isTestingPhase = !isLearningPhase && !isWaitingTestStart && !isLevelOver;
     const [enteredNames, setEnteredNames] = React.useState<EnteredNamesType[]>([]);
     const userNames = randomUsers.map(user => user.name.first);
-    const { timeRemainingInSeconds: learningPhaseTimeRemainingInSeconds, resetTimer: resetLearningPhaseTimer } =
-        useTimer(LEARNING_PHASE_DURATION_IN_SECONDS, handleTestStart);
+    const {
+        timeRemainingInSeconds: learningPhaseTimeRemainingInSeconds,
+        startTimer: startLearningPhaseTimer,
+        resetTimer: resetLearningPhaseTimer
+    } = useTimer(LEARNING_PHASE_DURATION_IN_SECONDS, handleTestStart);
+    const {
+        timeRemainingInSeconds: testingPhaseTimeRemainingInSeconds,
+        startTimer: startTestingPhaseTimer,
+        resetTimer: resetTestingPhaseTimer
+    } = useTimer(TESTING_PHASE_DURATION_IN_SECONDS, handleTestSubmit);
+
+    React.useEffect(() => {
+        if (!isTestingPhase) return;
+
+        startTestingPhaseTimer();
+    }, [isTestingPhase, startTestingPhaseTimer]);
 
     React.useEffect(() => {
         if (!isLearningPhase) return;
@@ -79,8 +94,9 @@ export default function App() {
         const apiParams = '?format=JSON&nat=CA,US&results=' + numOfRandomUsers * 2;
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
             setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
+            startLearningPhaseTimer();
         });
-    }, [isLearningPhase, numOfRandomUsers]);
+    }, [isLearningPhase, numOfRandomUsers, startLearningPhaseTimer]);
 
     const randomUserElements = randomUsers.map((user: UserType) => (
         <UserCard
@@ -97,13 +113,14 @@ export default function App() {
         setIsLearningPhase(true);
         setEnteredNames([]);
         resetLearningPhaseTimer();
+        resetTestingPhaseTimer();
         setNumOfRandomUsers(NUM_OF_USERS_TO_SHOW);
         setIsLevelOver(false);
         setCurrentLevel(1);
     }
 
     function handleTestCountdown() {
-        // Shuffling the array, to make the test harder and display the users is a random order.
+        // Shuffling the array, to make the test harder and display the users in a random order.
         const shuffledRandomUsers = shuffleArray([...randomUsers]);
         setRandomUsers(shuffledRandomUsers);
         setIsWaitingTestStart(false);
@@ -158,6 +175,7 @@ export default function App() {
         setIsLearningPhase(true);
         setEnteredNames([]);
         resetLearningPhaseTimer();
+        resetTestingPhaseTimer();
         setIsLevelOver(false);
         setNumOfRandomUsers(prevNumOfRandomUsers => prevNumOfRandomUsers + NUM_OF_USERS_TO_ADD_PER_LEVEL);
         setCurrentLevel(prevLevel => prevLevel + 1);
@@ -178,7 +196,12 @@ export default function App() {
                         <Button onClick={handleTestStart}>Test</Button>
                     </React.Fragment>
                 )}
-                {isTestingPhase && <Button onClick={handleTestSubmit}>Finish Test</Button>}
+                {isTestingPhase && (
+                    <React.Fragment>
+                        <Timer timeInSeconds={testingPhaseTimeRemainingInSeconds} />
+                        <Button onClick={handleTestSubmit}>Finish Test</Button>
+                    </React.Fragment>
+                )}
                 {isLevelOver && (
                     <React.Fragment>
                         <ScoreMessage

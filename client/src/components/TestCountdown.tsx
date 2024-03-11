@@ -34,7 +34,7 @@ const RANDOM_FACT_API_URL = 'https://api.api-ninjas.com/v1/facts?limit=1';
 
 export default function TestCountdown(props: TestCountdownProps) {
     const [funFact, setFunFact] = React.useState('');
-    const { timeRemainingInSeconds } = useTimer(10, props.handleTestCountdown);
+    const { timeRemainingInSeconds, startTimer } = useTimer(10, props.handleTestCountdown);
 
     React.useEffect(() => {
         const apiKey = 'JZDgzZNFXjQ2o7glprpbPg==kRpmEoxXi5UALX0e';
@@ -44,8 +44,9 @@ export default function TestCountdown(props: TestCountdownProps) {
         };
         tryFetchData(RANDOM_FACT_API_URL, options).then(data => {
             setFunFact(data[0].fact);
+            startTimer();
         });
-    }, []);
+    }, [startTimer]);
 
     return (
         <TestCountdownContainer>
