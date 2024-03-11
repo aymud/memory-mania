@@ -1,23 +1,16 @@
 interface ErrorType {
-    message: string
+    message: string;
 }
 
-export async function tryFetchData(
-    apiUrl: string,
-    options: NonNullable<unknown> = {},
-) {
+export async function tryFetchData(apiUrl: string, options: NonNullable<unknown> = {}) {
     try {
-        const response = await fetch(apiUrl, options)
+        const response = await fetch(apiUrl, options);
         if (!response.ok) {
-            throw new Error(
-                `HTTP error! Status: ${response.status}`,
-            )
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return await response.json()
+        return await response.json();
     } catch (error) {
-        const typedError = error as ErrorType
-        throw new Error(
-            `Error fetching data: ${typedError.message}`,
-        )
+        const typedError = error as ErrorType;
+        throw new Error(`Error fetching data: ${typedError.message}`);
     }
 }

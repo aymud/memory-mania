@@ -1,8 +1,8 @@
-import type { Config } from 'jest'
+import type { Config } from 'jest';
 
 const config: Config = {
     verbose: true,
-    testEnvironment: 'jsdom',
-}
+    testEnvironment: 'jsdom'
+};
 
-export default config
+export default config;

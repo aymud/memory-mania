@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const ScoreContainer = styled.div`
     text-align: center;
@@ -7,27 +7,25 @@ const ScoreContainer = styled.div`
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
-`
+`;
 
 const ScoreText = styled.p`
     font-size: 18px;
     font-weight: bold;
     color: #333;
-`
+`;
 
 interface ScoreMessageProps {
-    correctAnswersCount: number
-    totalUsers: number
-    level: number
+    correctAnswersCount: number;
+    totalUsers: number;
+    level: number;
 }
 
-export default function ScoreMessage(
-    props: ScoreMessageProps
-) {
-    const message = `${props.correctAnswersCount} / ${props.totalUsers}`
+export default function ScoreMessage(props: ScoreMessageProps) {
+    const message = `${props.correctAnswersCount} / ${props.totalUsers}`;
     return (
         <ScoreContainer>
             <ScoreText> {message} </ScoreText>
         </ScoreContainer>
-    )
+    );
 }
