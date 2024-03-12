@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthenticationService from '../utils/authentication.ts';
 import styled from 'styled-components';
+
+import AuthenticationService from '../utils/authentication.ts';
 
 const BodyWrapper = styled.div`
     font-family: 'Arial', sans-serif;

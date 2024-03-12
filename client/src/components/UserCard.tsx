@@ -1,6 +1,7 @@
 import React from 'react';
-import NameDropdown from './NameDropdown.tsx';
 import styled from 'styled-components';
+
+import NameDropdown from './NameDropdown.tsx';
 
 const UserCardWrapper = styled.div`
     grid-gap: 10px;

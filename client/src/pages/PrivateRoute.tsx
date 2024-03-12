@@ -1,4 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom';
+
 import AuthenticationService from '../utils/authentication.ts';
 
 const PrivateRoute = () => {

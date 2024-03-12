@@ -1,9 +1,11 @@
 import React from 'react';
-import Timer from './Timer.tsx';
-import { tryFetchData } from '../utils/apiHelper.ts';
 import styled from 'styled-components';
-import Button from './Button.tsx';
+
+import { tryFetchData } from '../utils/apiHelper.ts';
 import useTimer from '../hooks/useTimer.ts';
+
+import Timer from './Timer.tsx';
+import Button from './Button.tsx';
 
 const TestCountdownContainer = styled.div`
     text-align: center;

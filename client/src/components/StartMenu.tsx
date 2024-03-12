@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Instructions from './Instructions.tsx';
 import { useNavigate } from 'react-router-dom';
+
+import Instructions from './Instructions.tsx';
 
 const StyledStartMenu = styled.div`
     height: 100vh;

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import App from './App.tsx';
 import StartMenu from './components/StartMenu.tsx';
 import Profile from './pages/Profile.tsx';
