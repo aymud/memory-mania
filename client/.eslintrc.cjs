@@ -7,6 +7,7 @@ module.exports = {
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
         'plugin:@typescript-eslint/recommended',
+        'plugin:import/errors',
         'prettier'
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
@@ -15,9 +16,16 @@ module.exports = {
         project: './tsconfig.json'
     },
     settings: { react: { version: '18.2' } },
-    plugins: ['react-refresh', 'prettier'],
+    plugins: ['react-refresh', 'prettier', 'import'],
     rules: {
         'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-        'no-console': ['error', { allow: ['warn', 'error'] }]
+        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'import/order': [
+            'error',
+            {
+                'newlines-between': 'always',
+                groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index']
+            }
+        ]
     }
 };
