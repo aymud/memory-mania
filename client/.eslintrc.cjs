@@ -12,8 +12,7 @@ module.exports = {
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
+        project: './tsconfig.json'
     },
     settings: { react: { version: '18.2' } },
     plugins: ['react-refresh', 'prettier'],
