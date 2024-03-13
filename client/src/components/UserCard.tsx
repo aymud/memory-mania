@@ -23,12 +23,8 @@ const UserName = styled.div`
     font-size: 18px;
 `;
 
-interface ResultTextProps {
-    isCorrect: boolean;
-}
-
-const ResultText = styled.div<ResultTextProps>`
-    color: ${props => (props.isCorrect ? 'green' : 'red')};
+const ResultText = styled.div<{ $isCorrect: boolean }>`
+    color: ${props => (props.$isCorrect ? 'green' : 'red')};
 `;
 
 interface User {
@@ -65,7 +61,9 @@ export default function UserCard(props: UserCardProps) {
     );
 
     const gameResults = props.isLevelOver && (
-        <ResultText isCorrect={currentName === props.user.name.first.toLowerCase()}>{props.user.name.first}</ResultText>
+        <ResultText $isCorrect={currentName === props.user.name.first.toLowerCase()}>
+            {props.user.name.first}
+        </ResultText>
     );
 
     return (

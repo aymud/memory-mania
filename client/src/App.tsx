@@ -143,7 +143,7 @@ export default function App() {
 
     function handleTestSubmit() {
         // Iterate over randomUsers and check if the entered names match, and update score.
-        const namesValidated = enteredNames.map(actualUser => {
+        const namesValidated: EnteredNamesType[] = enteredNames.map(actualUser => {
             const expectedUser = randomUsers.find((user: UserType) => user.id.value === actualUser.id);
             if (expectedUser) {
                 const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
