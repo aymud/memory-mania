@@ -79,7 +79,10 @@ export default function Login() {
         setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed);
     };
 
-    const handleLogin = () => {
+    const handleLogin = (event: { preventDefault: () => void }) => {
+        // Prevent the browser from submitting the form and reloading the page.
+        event.preventDefault();
+
         if (AuthenticationService.login(username, password)) {
             navigate('/app');
         }
