@@ -15,7 +15,8 @@ const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
 const STARTING_LEVEL = 1;
 const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2;
 const NUM_OF_USERS_TO_SHOW = NUM_OF_USERS_TO_ADD_PER_LEVEL + STARTING_LEVEL;
-const LEARNING_PHASE_DURATION_IN_SECONDS = 180;
+const LEARNING_PHASE_DURATION_IN_SECONDS = 5;
+const TEST_WAITING_TIME_IN_SECONDS = 2;
 const TESTING_PHASE_DURATION_IN_SECONDS = 180;
 const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
 
@@ -196,7 +197,10 @@ export default function App() {
             <Navbar level={currentLevel} />
             <Main>
                 {isWaitingTestStart ? (
-                    <TestCountdown handleTestCountdown={handleTestCountdown} />
+                    <TestCountdown
+                        handleTestCountdown={handleTestCountdown}
+                        duration_seconds={TEST_WAITING_TIME_IN_SECONDS}
+                    />
                 ) : (
                     <UserCardsContainer>{randomUserElements}</UserCardsContainer>
                 )}

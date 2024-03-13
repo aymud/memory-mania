@@ -28,15 +28,20 @@ const FunFactText = styled.p`
     margin-top: 10px;
 `;
 
+interface FactData {
+    fact: string;
+}
+
 interface TestCountdownProps {
     handleTestCountdown: () => void;
+    duration_seconds: number;
 }
 
 const RANDOM_FACT_API_URL = 'https://api.api-ninjas.com/v1/facts?limit=1';
 
 export default function TestCountdown(props: TestCountdownProps) {
     const [funFact, setFunFact] = React.useState('');
-    const { timeRemainingInSeconds, startTimer } = useTimer(10, props.handleTestCountdown);
+    const { timeRemainingInSeconds, startTimer } = useTimer(props.duration_seconds, props.handleTestCountdown);
 
     React.useEffect(() => {
         const apiKey = 'JZDgzZNFXjQ2o7glprpbPg==kRpmEoxXi5UALX0e';
@@ -44,7 +49,7 @@ export default function TestCountdown(props: TestCountdownProps) {
             method: 'GET',
             headers: { 'X-Api-Key': apiKey }
         };
-        tryFetchData(RANDOM_FACT_API_URL, options).then(data => {
+        tryFetchData(RANDOM_FACT_API_URL, options).then((data: FactData[]) => {
             setFunFact(data[0].fact);
             startTimer();
         });
