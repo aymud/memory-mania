@@ -99,6 +99,8 @@ export default function App() {
     }, [isTestingPhase, startTestingPhaseTimer]);
 
     React.useEffect(() => {
+        if (!isLearningPhase) return;
+
         // Note: The api can sometimes return duplicate images in a set.
         // To only show unique users, we get more users than needed.
         // then we remove any duplicates and return the correct amount of unique users needed.
@@ -107,7 +109,7 @@ export default function App() {
             setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
             startLearningPhaseTimer();
         });
-    }, [currentLevel, numOfRandomUsers, startLearningPhaseTimer]);
+    }, [isLearningPhase, numOfRandomUsers, startLearningPhaseTimer]);
 
     const randomUserElements = randomUsers.map((user: UserType) => (
         <UserCard
