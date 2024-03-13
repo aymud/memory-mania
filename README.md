@@ -16,7 +16,7 @@
 A single page application created using React.
 It generates random names and faces.
 The objective of the game is to memorize the names and then test your memory by entering the correct names for the displayed images.
-It's a fun and challenging way to improve your memory skills!
+It's a fun and challenging way to test your memory skills!
 
 ## Folder Structure
 This React project was bootstrapped using [Vite](https://vitejs.dev/guide/).  
@@ -61,7 +61,8 @@ follow these steps to run the application locally.
     ```shell
     npm run dev
     ```
-   The `npm run dev` command starts the development server provided by Vite. It automatically compiles and serves the React application.
+   The `npm run dev` command is defined in "scripts" in `package.json` and starts the development server provided by
+   Vite. It automatically compiles and serves the React application.
 5. Once the development server starts,
    it will display the actual URL in the terminal. You can access the application by navigating to the URL shown in your terminal.  
    There will be a separate URL for the server that is running.
@@ -75,6 +76,20 @@ follow these steps to run the application locally.
 - An Integrated Development Environment (IDE)
   - WebStorm
   - Visual Studio Code
+- This project utilizes TypeScript for type checking, ESLint for
+  linting code, and Prettier for code formatting. This is to
+  enforce coding standards, maintain code consistency, and catch potential issues
+  early in the development process.
+    - Configure your code editor to automatically format code using the ESLint and Prettier config files.
+
+## Continuous Integration (CI) and Continuous Deployment (CD)
+
+The project employs GitHub Actions workflows:
+
+1. **CI Workflow**: Runs tests and checks code formatting on every push to the repository, ensuring the codebase remains
+   robust and well-formatted.
+2. **CD Workflow**: Deploys the application to Netlify automatically after a successful push to the main branch, keeping
+   the live version up-to-date with the latest changes.
 
 ## Why React?
 To enhance my proficiency in React.  
