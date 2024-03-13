@@ -18,16 +18,17 @@ export default function useTimer(initialTimeInSeconds: number, callback: () => v
 
         const timerIntervalInMilliSeconds = 1000;
         const timer = setInterval(() => {
-            if (timeRemainingInSeconds > 0) {
+            if (isRunning && timeRemainingInSeconds > 0) {
                 setTimeRemainingInSeconds(prevTime => prevTime - 1);
             } else {
                 clearInterval(timer);
+                resetTimer();
                 callback();
             }
         }, timerIntervalInMilliSeconds);
 
         return () => clearInterval(timer);
-    }, [isRunning, timeRemainingInSeconds, callback]);
+    }, [isRunning, timeRemainingInSeconds, callback, resetTimer]);
 
     return { timeRemainingInSeconds, startTimer, resetTimer };
 }

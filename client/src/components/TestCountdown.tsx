@@ -41,7 +41,10 @@ const RANDOM_FACT_API_URL = 'https://api.api-ninjas.com/v1/facts?limit=1';
 
 export default function TestCountdown(props: TestCountdownProps) {
     const [funFact, setFunFact] = React.useState('');
-    const { timeRemainingInSeconds, startTimer } = useTimer(props.duration_seconds, props.handleTestCountdown);
+    const { timeRemainingInSeconds, startTimer, resetTimer } = useTimer(
+        props.duration_seconds,
+        props.handleTestCountdown
+    );
 
     React.useEffect(() => {
         const apiKey = 'JZDgzZNFXjQ2o7glprpbPg==kRpmEoxXi5UALX0e';
@@ -62,7 +65,12 @@ export default function TestCountdown(props: TestCountdownProps) {
                 <Timer timeInSeconds={timeRemainingInSeconds} />
             </CountdownText>
             <FunFactText>Did you know ... {funFact}</FunFactText>
-            <Button className='skip-button' onClick={props.handleTestCountdown}>
+            <Button
+                className='skip-button'
+                onClick={() => {
+                    resetTimer();
+                    props.handleTestCountdown();
+                }}>
                 Skip
             </Button>
         </TestCountdownContainer>
