@@ -60,8 +60,10 @@ export default function App() {
        Each phase has a time limit.
        In the learning phase, the player will memorize the faces and names.
      */
-    const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(NUM_OF_USERS_TO_SHOW);
-    const [currentLevel, setCurrentLevel] = React.useState(1);
+    const storedCurrentLevel = sessionStorage.getItem('currentLevel');
+    const parsedCurrentLevel = storedCurrentLevel ? parseInt(storedCurrentLevel) : 1;
+    const [currentLevel, setCurrentLevel] = React.useState(parsedCurrentLevel);
+    const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(2 * currentLevel + 1);
     const [isLevelOver, setIsLevelOver] = React.useState(false);
     const [randomUsers, setRandomUsers] = React.useState<UserType[]>([]);
     const [isLearningPhase, setIsLearningPhase] = React.useState(true);
@@ -80,24 +82,30 @@ export default function App() {
         resetTimer: resetTestingPhaseTimer
     } = useTimer(TESTING_PHASE_DURATION_IN_SECONDS, handleTestSubmit);
 
+    const saveGameState = (currentLevel: number) => {
+        sessionStorage.setItem('currentLevel', String(currentLevel));
+    };
+
+    const updateCurrentLevel = (level: number) => {
+        setCurrentLevel(level);
+        saveGameState(level);
+    };
+
     React.useEffect(() => {
         if (!isTestingPhase) return;
-
         startTestingPhaseTimer();
     }, [isTestingPhase, startTestingPhaseTimer]);
 
     React.useEffect(() => {
-        if (!isLearningPhase) return;
-
         // Note: The api can sometimes return duplicate images in a set.
         // To only show unique users, we get more users than needed.
         // then we remove any duplicates and return the correct amount of unique users needed.
-        const apiParams = '?format=JSON&nat=CA,US&results=' + numOfRandomUsers * 2;
+        const apiParams = `?format=JSON&nat=CA,US&results=${numOfRandomUsers * 2}`;
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
             setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
             startLearningPhaseTimer();
         });
-    }, [isLearningPhase, numOfRandomUsers, startLearningPhaseTimer]);
+    }, [currentLevel, numOfRandomUsers, startLearningPhaseTimer]);
 
     const randomUserElements = randomUsers.map((user: UserType) => (
         <UserCard
@@ -117,7 +125,7 @@ export default function App() {
         resetTestingPhaseTimer();
         setNumOfRandomUsers(NUM_OF_USERS_TO_SHOW);
         setIsLevelOver(false);
-        setCurrentLevel(1);
+        updateCurrentLevel(1);
     }
 
     function handleTestCountdown() {
@@ -179,7 +187,7 @@ export default function App() {
         resetTestingPhaseTimer();
         setIsLevelOver(false);
         setNumOfRandomUsers(prevNumOfRandomUsers => prevNumOfRandomUsers + NUM_OF_USERS_TO_ADD_PER_LEVEL);
-        setCurrentLevel(prevLevel => prevLevel + 1);
+        updateCurrentLevel(currentLevel + 1);
     }
 
     return (
