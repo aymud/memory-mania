@@ -72,8 +72,8 @@ const Tooltip = styled.div`
 export default function Login() {
     const navigate = useNavigate();
     const [isTooltipDisplayed, setIsTooltipDisplayed] = React.useState(false);
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [username, setUsername] = React.useState('user');
+    const [password, setPassword] = React.useState('password');
 
     const handleTooltipToggle = () => {
         setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed);
@@ -85,6 +85,8 @@ export default function Login() {
 
         if (AuthenticationService.login(username, password)) {
             navigate('/app');
+        } else {
+            setIsTooltipDisplayed(true);
         }
     };
 
