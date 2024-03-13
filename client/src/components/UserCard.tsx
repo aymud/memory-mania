@@ -61,7 +61,7 @@ export default function UserCard(props: UserCardProps) {
     );
 
     const gameResults = props.isLevelOver && (
-        <ResultText $isCorrect={currentName === props.user.name.first.toLowerCase()}>
+        <ResultText $isCorrect={currentName === props.user.name.first.toLowerCase()} data-testid='result-text'>
             {props.user.name.first}
         </ResultText>
     );
