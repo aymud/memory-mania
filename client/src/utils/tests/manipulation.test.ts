@@ -47,4 +47,37 @@ describe('getDistinctUsers', () => {
         const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.thumbnail));
         expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length);
     });
+
+    it('should return a smaller array than requested of distinct users', () => {
+        const inputUsers = [
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '1' },
+                id: { value: '' }
+            },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '2' },
+                id: { value: '' }
+            },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '1' },
+                id: { value: '' }
+            },
+            {
+                name: { first: '' },
+                picture: { large: '', thumbnail: '2' },
+                id: { value: '' }
+            }
+        ];
+
+        const numOfRandomUsers = 3;
+        const distinctUsers = getDistinctUsers(inputUsers, numOfRandomUsers);
+
+        expect(distinctUsers).toHaveLength(2);
+
+        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.thumbnail));
+        expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length);
+    });
 });
