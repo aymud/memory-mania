@@ -12,11 +12,12 @@ import Navbar from './components/Navbar.tsx';
 import useTimer from './hooks/useTimer.ts';
 
 const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
-const NUM_OF_USERS_TO_SHOW = 3;
+const STARTING_LEVEL = 1;
+const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2;
+const NUM_OF_USERS_TO_SHOW = NUM_OF_USERS_TO_ADD_PER_LEVEL + STARTING_LEVEL;
 const LEARNING_PHASE_DURATION_IN_SECONDS = 180;
 const TESTING_PHASE_DURATION_IN_SECONDS = 180;
 const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
-const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2;
 
 const UserCardsContainer = styled.div`
     max-width: 800px;
@@ -61,7 +62,7 @@ export default function App() {
        In the learning phase, the player will memorize the faces and names.
      */
     const storedCurrentLevel = sessionStorage.getItem('currentLevel');
-    const parsedCurrentLevel = storedCurrentLevel ? parseInt(storedCurrentLevel) : 1;
+    const parsedCurrentLevel = storedCurrentLevel ? parseInt(storedCurrentLevel) : STARTING_LEVEL;
     const [currentLevel, setCurrentLevel] = React.useState(parsedCurrentLevel);
     const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(2 * currentLevel + 1);
     const [isLevelOver, setIsLevelOver] = React.useState(false);
