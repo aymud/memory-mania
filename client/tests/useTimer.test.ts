@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import useTimer from '../src/hooks/useTimer.ts';
 
@@ -49,32 +49,20 @@ describe('useTimer hook', () => {
         expect(result.current.timeRemainingInSeconds).toBe(5);
     });
 
-    test('should call callback when timer reaches 0', () => {
-        const startTimeInSeconds = 1;
+    test('should call callback when timer reaches 0', async () => {
+        const startTimeInSeconds = 5;
         const { result } = renderHook(() => useTimer(startTimeInSeconds, mockCallback));
-        const testDurationInMilliSeconds = 1000;
+        const testDurationInMilliSeconds = startTimeInSeconds * 1000 + 1000; // After 0 it will call the callback.
 
         // At this point in time, the callback should not have been called yet.
         expect(mockCallback).not.toHaveBeenCalled();
 
-        // TODO: Find another way to do this without having to make separate calls.
-        act(() => {
+        await act(async () => {
             result.current.startTimer();
             // Advance timer to reach 0.
             jest.advanceTimersByTime(testDurationInMilliSeconds);
         });
-
-        act(() => {
-            // Wait for the next tick of the event loop to allow the timer to update.
-            jest.advanceTimersByTime(1000);
-        });
-
-        act(() => {
-            jest.advanceTimersByTime(1000);
-        });
-
-        expect(mockCallback).toHaveBeenCalled();
-        expect(mockCallback).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(mockCallback).toHaveBeenCalledTimes(1), { timeout: 6500 });
     });
 
     test('should clear interval on unmount', () => {
@@ -84,12 +72,9 @@ describe('useTimer hook', () => {
         act(() => {
             result.current.startTimer();
         });
-
         unmount();
-
         // Ensure clearInterval is called after unmount.
         expect(clearIntervalSpy).toHaveBeenCalled();
-
         // Clean up the spy.
         clearIntervalSpy.mockRestore();
     });
