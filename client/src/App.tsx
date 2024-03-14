@@ -10,6 +10,7 @@ import { getDistinctUsers, shuffleArray } from './utils/manipulation.ts';
 import Button from './components/Button.tsx';
 import Navbar from './components/Navbar.tsx';
 import useTimer from './hooks/useTimer.ts';
+import LoadingSpinner from './components/LoadingSpinner.tsx';
 
 const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
 const STARTING_LEVEL = 1;
@@ -62,6 +63,7 @@ export default function App() {
        Each phase has a time limit.
        In the learning phase, the player will memorize the faces and names.
      */
+    const [isLoading, setIsLoading] = React.useState(true);
     const storedCurrentLevel = sessionStorage.getItem('currentLevel');
     const parsedCurrentLevel = storedCurrentLevel ? parseInt(storedCurrentLevel) : STARTING_LEVEL;
     const [currentLevel, setCurrentLevel] = React.useState(parsedCurrentLevel);
@@ -111,6 +113,7 @@ export default function App() {
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
             setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
             startLearningPhaseTimer();
+            setIsLoading(false);
         });
     }, [isLearningPhase, numOfRandomUsers, startLearningPhaseTimer]);
 
@@ -127,6 +130,7 @@ export default function App() {
 
     function handleGameRestart() {
         setIsLearningPhase(true);
+        setIsLoading(true);
         setEnteredNames([]);
         resetLearningPhaseTimer();
         resetTestingPhaseTimer();
@@ -189,12 +193,17 @@ export default function App() {
 
     function handleGameNextLevel() {
         setIsLearningPhase(true);
+        setIsLoading(true);
         setEnteredNames([]);
         resetLearningPhaseTimer();
         resetTestingPhaseTimer();
         setIsLevelOver(false);
         setNumOfRandomUsers(prevNumOfRandomUsers => prevNumOfRandomUsers + NUM_OF_USERS_TO_ADD_PER_LEVEL);
         updateCurrentLevel(currentLevel + 1);
+    }
+
+    if (isLoading) {
+        return <LoadingSpinner />;
     }
 
     return (
