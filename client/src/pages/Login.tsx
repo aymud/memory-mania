@@ -96,6 +96,7 @@ export default function Login() {
                 <Title>Login</Title>
                 <LoginForm>
                     <FormInput
+                        id={'login-username-field'}
                         value={username}
                         type='text'
                         className='form-input'
@@ -107,6 +108,7 @@ export default function Login() {
                         onChange={event => setUsername(event.target.value)}
                     />
                     <FormInput
+                        id={'login-password-field'}
                         value={password}
                         type='password'
                         className='form-input'
