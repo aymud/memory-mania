@@ -108,7 +108,7 @@ export default function App() {
         // then we remove any duplicates and return the correct amount of unique users needed.
         const fields = 'id,name,gender,nat,picture';
         const format = 'JSON';
-        const nationality = 'CA,US,US,AU';
+        const nationality = 'CA,US,AU';
         const apiParams = `?inc=${fields}&format=${format}&nat=${nationality}&results=${numOfRandomUsers * 2}`;
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
             setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
