@@ -104,7 +104,10 @@ export default function App() {
         // Note: The api can sometimes return duplicate images in a set.
         // To only show unique users, we get more users than needed.
         // then we remove any duplicates and return the correct amount of unique users needed.
-        const apiParams = `?inc=id,name,gender,nat,picture&format=JSON&nat=CA,US,US&results=${numOfRandomUsers * 2}`;
+        const fields = 'id,name,gender,nat,picture';
+        const format = 'JSON';
+        const nationality = 'CA,US,US,AU';
+        const apiParams = `?inc=${fields}&format=${format}&nat=${nationality}&results=${numOfRandomUsers * 2}`;
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
             setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
             startLearningPhaseTimer();
