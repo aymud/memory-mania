@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -74,7 +74,13 @@ export default function Login() {
     const [isTooltipDisplayed, setIsTooltipDisplayed] = React.useState(false);
     const [username, setUsername] = React.useState('user');
     const [password, setPassword] = React.useState('password');
-    const { login } = useAuthState();
+    const { isAuthenticated, login } = useAuthState();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/app');
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleTooltipToggle = () => {
         setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed);
@@ -84,9 +90,7 @@ export default function Login() {
         // Prevent the browser from submitting the form and reloading the page.
         event.preventDefault();
 
-        if (login(username, password)) {
-            navigate('/app');
-        } else {
+        if (!login(username, password)) {
             setIsTooltipDisplayed(true);
         }
     };
