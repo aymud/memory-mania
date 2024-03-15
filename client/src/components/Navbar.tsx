@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState } from '../hooks/useAuthState.ts';
 
 interface NavbarProps {
-    level: number;
+    level?: number;
 }
 
 const NavbarList = styled.ul`
@@ -76,7 +76,7 @@ export default function Navbar(props: NavbarProps) {
                     <MenuIcon>
                         <FiMenu />
                     </MenuIcon>
-                    <LevelInfo>Level {props.level}</LevelInfo>
+                    {props.level && <LevelInfo>Level {props.level}</LevelInfo>}
                     {isAuthenticated ? (
                         <NavbarItem $isRight>
                             <ProfileContainer onClick={handleProfile}>

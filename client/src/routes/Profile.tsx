@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import React from 'react';
+
+import Navbar from '../components/Navbar.tsx';
 
 const ProfileWrapper = styled.div`
     font-family: 'Arial', sans-serif;
@@ -47,17 +50,20 @@ export default function Profile() {
     };
 
     return (
-        <ProfileWrapper>
-            <ProfileContainer>
-                <Title>User Profile</Title>
-                <ProfileInfo>
-                    <InfoItem>Username: {profileData.username}</InfoItem>
-                    <InfoItem>Total Levels Played: {profileData.totalLevels}</InfoItem>
-                    <InfoItem>Highest Score: {profileData.highestScore}</InfoItem>
-                    <InfoItem>Play Time: {profileData.playTime}</InfoItem>
-                    <InfoItem>Accuracy: {profileData.accuracy}</InfoItem>
-                </ProfileInfo>
-            </ProfileContainer>
-        </ProfileWrapper>
+        <React.Fragment>
+            <Navbar />
+            <ProfileWrapper>
+                <ProfileContainer>
+                    <Title>User Profile</Title>
+                    <ProfileInfo>
+                        <InfoItem>Username: {profileData.username}</InfoItem>
+                        <InfoItem>Total Levels Played: {profileData.totalLevels}</InfoItem>
+                        <InfoItem>Highest Score: {profileData.highestScore}</InfoItem>
+                        <InfoItem>Play Time: {profileData.playTime}</InfoItem>
+                        <InfoItem>Accuracy: {profileData.accuracy}</InfoItem>
+                    </ProfileInfo>
+                </ProfileContainer>
+            </ProfileWrapper>
+        </React.Fragment>
     );
 }
