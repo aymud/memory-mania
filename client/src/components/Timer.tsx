@@ -1,6 +1,7 @@
 // @ts-expect-error: React is needed for rendering in Test files.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+
 import styled from 'styled-components';
 
 const TimerContainer = styled.div`

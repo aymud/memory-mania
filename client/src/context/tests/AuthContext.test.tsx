@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/';
 import { act, renderHook } from '@testing-library/react';
 
-import AuthProvider from '../AuthContext.tsx';
 import { useAuthState } from '../../hooks/useAuthState.ts';
+import AuthProvider from '../AuthContext.tsx';
 
 let sessionStorageMock: Record<string, string | null> = {};
 

@@ -1,6 +1,7 @@
 // @ts-expect-error: React is needed for the App component.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';

@@ -1,14 +1,15 @@
 import React from 'react';
+
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import App from './App.tsx';
-import StartMenu from './routes/StartMenu.tsx';
-import Profile from './routes/Profile.tsx';
+import AuthProvider from './context/AuthContext.tsx';
 import Login from './routes/Login.tsx';
 import PrivateRoute from './routes/PrivateRoute.tsx';
+import Profile from './routes/Profile.tsx';
+import StartMenu from './routes/StartMenu.tsx';
 import './index.css';
-import AuthProvider from './context/AuthContext.tsx';
 
 const root: HTMLElement = document.getElementById('root') ?? document.createElement('div');
 

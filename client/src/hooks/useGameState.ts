@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { useRandomUsers } from './useRandomUsers.ts';
+import useTimer from './useTimer.ts';
 import { shuffleArray } from '../utils/manipulation.ts';
 
-import useTimer from './useTimer.ts';
-import { useRandomUsers } from './useRandomUsers.ts';
 
 interface EnteredNamesType {
     id: string;

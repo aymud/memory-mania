@@ -1,13 +1,14 @@
 import React from 'react';
+
 import styled from 'styled-components';
 
-import UserCard from './components/UserCard.tsx';
+import Button from './components/Button.tsx';
+import LoadingSpinner from './components/LoadingSpinner.tsx';
+import Navbar from './components/Navbar.tsx';
 import ScoreMessage from './components/ScoreMessage.tsx';
 import TestCountdown from './components/TestCountdown.tsx';
 import Timer from './components/Timer.tsx';
-import Button from './components/Button.tsx';
-import Navbar from './components/Navbar.tsx';
-import LoadingSpinner from './components/LoadingSpinner.tsx';
+import UserCard from './components/UserCard.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 
 const UserCardsContainer = styled.div`
