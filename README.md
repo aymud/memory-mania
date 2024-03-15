@@ -26,7 +26,7 @@ This folder structure separates the client and server parts of the application:
 ├── client/
 ├──── public/ - Contains the HTML template and any static assets
 ├──── src/ - Contains the source code for the React application
-│     └── components/ - Stores React components used in the application
+│     └── components/ - Stores React components and their tests used in the application
 │     ├── pages/ - Different routes for the application
 │     │   ├── login.jsx  
 │     ├── utils/ - Helper functions and classes
@@ -82,7 +82,24 @@ follow these steps to run the application locally.
   early in the development process.
     - Configure your code editor to automatically format code using the ESLint and Prettier config files.
 
-## Continuous Integration (CI) and Continuous Deployment (CD)
+## Technologies and Concepts Used
+
+### React Ecosystem
+
+The React ecosystem comprises a set of libraries and tools built around React.js
+to streamline the development of web applications.
+This project utilizes various aspects of the React ecosystem, including:
+
+- React Router: For handling routing and navigation within the application.
+- Styled Components: A CSS-in-JS library used for styling React components.
+- React Context API: Used for managing global state and passing data through the component tree without having to pass
+  props manually at every level.
+- React Hooks: Built in and custom hooks for managing state and side effects within functional components.
+- React Testing Library / Jest: For writing unit tests for React components and ensuring their behavior as expected.
+- Authentication: Simulated authentication using mock data and local storage for storing user credentials.
+- API Requests: Utilizing Fetch API for making HTTP requests to fetch data from external APIs.
+
+### Continuous Integration (CI) and Continuous Deployment (CD)
 
 The project employs GitHub Actions workflows:
 
