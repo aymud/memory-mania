@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import AuthenticationService from '../utils/authentication.ts';
+import { useAuthState } from '../hooks/useAuthState.ts';
 
 const BodyWrapper = styled.div`
     font-family: 'Arial', sans-serif;
@@ -74,6 +74,13 @@ export default function Login() {
     const [isTooltipDisplayed, setIsTooltipDisplayed] = React.useState(false);
     const [username, setUsername] = React.useState('user');
     const [password, setPassword] = React.useState('password');
+    const { isAuthenticated, login } = useAuthState();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/app');
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleTooltipToggle = () => {
         setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed);
@@ -83,9 +90,7 @@ export default function Login() {
         // Prevent the browser from submitting the form and reloading the page.
         event.preventDefault();
 
-        if (AuthenticationService.login(username, password)) {
-            navigate('/app');
-        } else {
+        if (!login(username, password)) {
             setIsTooltipDisplayed(true);
         }
     };
