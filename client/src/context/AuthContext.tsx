@@ -1,6 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
-
-import AuthenticationService from '../utils/authentication.ts';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -25,8 +23,16 @@ export const AuthContext = createContext(DEFAULT_STATE);
 export default function AuthProvider(props: AuthProviderProps) {
     const [state, setState] = useState<AuthContextType>({ ...DEFAULT_STATE });
 
+    useEffect(() => {
+        const token = sessionStorage.getItem('access_token');
+        if (token) {
+            setState(prevState => ({ ...prevState, isAuthenticated: true }));
+        }
+    }, []);
+
     const login = (username: string, password: string) => {
-        if (AuthenticationService.login(username, password)) {
+        if (username === 'user' && password === 'password') {
+            sessionStorage.setItem('access_token', '123');
             setState({ ...state, user: username, isAuthenticated: true });
             return true;
         } else {
@@ -35,7 +41,7 @@ export default function AuthProvider(props: AuthProviderProps) {
     };
 
     const logout = () => {
-        AuthenticationService.logout();
+        sessionStorage.removeItem('access_token');
         setState(prevState => ({ ...prevState, isAuthenticated: false }));
     };
 
