@@ -4,7 +4,6 @@ import { useRandomUsers } from './useRandomUsers.ts';
 import useTimer from './useTimer.ts';
 import { shuffleArray } from '../utils/manipulation.ts';
 
-
 interface EnteredNamesType {
     id: string;
     name: string;

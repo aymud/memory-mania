@@ -23,16 +23,16 @@ module.exports = {
         'import/order': [
             'error',
             {
-                'groups': ['builtin', 'external', 'internal'],
-                'pathGroups': [
+                groups: ['builtin', 'external', 'internal'],
+                pathGroups: [
                     {
-                        'pattern': 'react',
-                        'group': 'external',
-                        'position': 'before'
+                        pattern: 'react',
+                        group: 'external',
+                        position: 'before'
                     }
                 ],
-                'pathGroupsExcludedImportTypes': ['react'],
-                'newlines-between': 'always',
+                pathGroupsExcludedImportTypes: ['react'],
+                'newlines-between': 'always'
             }
         ]
     }

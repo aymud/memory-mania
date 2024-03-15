@@ -7,7 +7,6 @@ import Timer from './Timer.tsx';
 import useTimer from '../hooks/useTimer.ts';
 import { tryFetchData } from '../utils/apiHelper.ts';
 
-
 const TestCountdownContainer = styled.div`
     text-align: center;
     padding: 20px;
