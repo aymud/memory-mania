@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Instructions from '../components/Instructions.tsx';
+import ThemeSwitcher from '../components/ThemeSwitcher.tsx';
 
 const StyledStartMenu = styled.div`
     height: 100vh;
@@ -55,6 +56,7 @@ export default function StartMenu() {
 
     return (
         <StyledStartMenu>
+            <ThemeSwitcher />
             <GameTitle>Memory Mania</GameTitle>
             <MenuButton onClick={handleStartGame}>Start Game</MenuButton>
             <MenuButton onClick={toggleInstructions}>Instructions</MenuButton>
