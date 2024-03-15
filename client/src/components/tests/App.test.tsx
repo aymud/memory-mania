@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from '../src/App.tsx';
+import App from '../../App.tsx';
 
 it('renders without crashing', () => {
     const root: HTMLElement = document.getElementById('root') ?? document.createElement('div');

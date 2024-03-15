@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import useTimer from '../src/hooks/useTimer.ts';
+import useTimer from '../useTimer.ts';
 
 // Mock callback function for testing.
 const mockCallback = jest.fn();

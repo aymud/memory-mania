@@ -4,7 +4,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
-import UserCard from '../src/components/UserCard.tsx';
+import UserCard from '../UserCard.tsx';
 
 describe('UserCard Component', () => {
     const mockUser = {

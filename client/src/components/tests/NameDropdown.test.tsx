@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
-import NameDropdown from '../src/components/NameDropdown.tsx';
+import NameDropdown from '../NameDropdown.tsx';
 
 describe('NameDropdown Component', () => {
     const mockNames = ['John', 'Jane', 'Doe'];

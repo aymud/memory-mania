@@ -4,7 +4,7 @@ import React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
-import TestCountdown from '../src/components/TestCountdown.tsx';
+import TestCountdown from '../TestCountdown.tsx';
 
 jest.mock('../src/utils/apiHelper.ts', () => ({
     tryFetchData: jest.fn().mockResolvedValue([{ fact: 'Mock fact' }])
