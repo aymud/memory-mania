@@ -24,15 +24,20 @@ export default function AuthProvider(props: AuthProviderProps) {
     const [state, setState] = useState<AuthContextType>({ ...DEFAULT_STATE });
 
     useEffect(() => {
-        const token = sessionStorage.getItem('access_token');
-        if (token) {
-            setState(prevState => ({ ...prevState, isAuthenticated: true }));
+        const storedData = sessionStorage.getItem('auth_data');
+        if (storedData) {
+            const { user, token } = JSON.parse(storedData);
+            if (token) {
+                setState(prevState => ({ ...prevState, user, isAuthenticated: true }));
+            }
         }
     }, []);
 
     const login = (username: string, password: string) => {
         if (username === 'user' && password === 'password') {
-            sessionStorage.setItem('access_token', '123');
+            const token = '123';
+            const authData = JSON.stringify({ user: username, token });
+            sessionStorage.setItem('auth_data', authData);
             setState({ ...state, user: username, isAuthenticated: true });
             return true;
         } else {
