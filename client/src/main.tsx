@@ -17,11 +17,12 @@ ReactDOM.createRoot(root).render(
         <BrowserRouter>
             <AuthProvider>
                 <Routes>
+                    <Route element={<StartMenu />} path='/' />
+                    <Route element={<Login />} path='/login' />
                     <Route element={<PrivateRoute />}>
                         <Route element={<App />} path='/app' />
+                        <Route element={<Profile />} path='/profile' />
                     </Route>
-                    <Route element={<Login />} path='/login' />
-                    <Route element={<Profile />} path='/profile' />
                     <Route element={<StartMenu />} path='*' />
                 </Routes>
             </AuthProvider>

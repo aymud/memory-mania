@@ -29,6 +29,7 @@ const MenuButton = styled.button`
     margin-top: 20px;
     font-size: 20px;
     transition: background-color 0.3s;
+    width: 150px;
 
     &:hover {
         background-color: #0056b3;
@@ -43,8 +44,12 @@ export default function StartMenu() {
         setShowInstructions(prevShowInstructions => !prevShowInstructions);
     }
 
+    function handleProfile() {
+        navigate('/profile');
+    }
+
     function handleStartGame() {
-        navigate('/login');
+        navigate('/app');
     }
 
     return (
@@ -52,6 +57,7 @@ export default function StartMenu() {
             <GameTitle>Memory Mania</GameTitle>
             <MenuButton onClick={handleStartGame}>Start Game</MenuButton>
             <MenuButton onClick={toggleInstructions}>Instructions</MenuButton>
+            <MenuButton onClick={handleProfile}>Profile</MenuButton>
             {showInstructions && <Instructions OnToggle={toggleInstructions} />}
         </StyledStartMenu>
     );
