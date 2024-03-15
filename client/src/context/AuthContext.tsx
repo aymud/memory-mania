@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -23,7 +23,7 @@ export const AuthContext = createContext(DEFAULT_STATE);
 export default function AuthProvider(props: AuthProviderProps) {
     const [state, setState] = useState<AuthContextType>({ ...DEFAULT_STATE });
 
-    useEffect(() => {
+    React.useEffect(() => {
         const storedData = sessionStorage.getItem('auth_data');
         if (storedData) {
             const { user, token } = JSON.parse(storedData);
@@ -46,8 +46,8 @@ export default function AuthProvider(props: AuthProviderProps) {
     };
 
     const logout = () => {
-        sessionStorage.removeItem('access_token');
-        setState(prevState => ({ ...prevState, isAuthenticated: false }));
+        sessionStorage.removeItem('auth_data');
+        setState(prevState => ({ ...prevState, user: null, isAuthenticated: false }));
     };
 
     return <AuthContext.Provider value={{ ...state, login, logout }}>{props.children}</AuthContext.Provider>;
