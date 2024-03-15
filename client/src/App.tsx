@@ -5,14 +5,13 @@ import UserCard from './components/UserCard.tsx';
 import ScoreMessage from './components/ScoreMessage.tsx';
 import TestCountdown from './components/TestCountdown.tsx';
 import Timer from './components/Timer.tsx';
-import { tryFetchData } from './utils/apiHelper.ts';
-import { getDistinctUsers, shuffleArray } from './utils/manipulation.ts';
+import { shuffleArray } from './utils/manipulation.ts';
 import Button from './components/Button.tsx';
 import Navbar from './components/Navbar.tsx';
 import useTimer from './hooks/useTimer.ts';
 import LoadingSpinner from './components/LoadingSpinner.tsx';
+import { useRandomUsers } from './hooks/useRandomUsers.ts';
 
-const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
 const STARTING_LEVEL = 1;
 const NUM_OF_USERS_TO_ADD_PER_LEVEL = 2;
 const NUM_OF_USERS_TO_SHOW = NUM_OF_USERS_TO_ADD_PER_LEVEL + STARTING_LEVEL;
@@ -63,18 +62,15 @@ export default function App() {
        Each phase has a time limit.
        In the learning phase, the player will memorize the faces and names.
      */
-    const [isLoading, setIsLoading] = React.useState(true);
     const storedCurrentLevel = sessionStorage.getItem('currentLevel');
     const parsedCurrentLevel = storedCurrentLevel ? parseInt(storedCurrentLevel) : STARTING_LEVEL;
     const [currentLevel, setCurrentLevel] = React.useState(parsedCurrentLevel);
     const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(2 * currentLevel + 1);
     const [isLevelOver, setIsLevelOver] = React.useState(false);
-    const [randomUsers, setRandomUsers] = React.useState<UserType[]>([]);
     const [isLearningPhase, setIsLearningPhase] = React.useState(true);
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false);
     const isTestingPhase = !isLearningPhase && !isWaitingTestStart && !isLevelOver;
     const [enteredNames, setEnteredNames] = React.useState<EnteredNamesType[]>([]);
-    const userNames = randomUsers.map(user => user.name.first);
     const {
         timeRemainingInSeconds: learningPhaseTimeRemainingInSeconds,
         startTimer: startLearningPhaseTimer,
@@ -85,6 +81,23 @@ export default function App() {
         startTimer: startTestingPhaseTimer,
         resetTimer: resetTestingPhaseTimer
     } = useTimer(TESTING_PHASE_DURATION_IN_SECONDS, handleTestSubmit);
+    const {
+        randomUsers,
+        setRandomUsers,
+        isLoading: isRandomUsersLoading,
+        setIsLoading
+    } = useRandomUsers(numOfRandomUsers, isLearningPhase, startLearningPhaseTimer);
+    const userNames = randomUsers.map(user => user.name.first);
+    const randomUserElements = randomUsers.map((user: UserType) => (
+        <UserCard
+            key={user.id.value}
+            handleOnChange={handleNameEntered}
+            user={user}
+            allUserNames={userNames}
+            isLearning={isLearningPhase}
+            isLevelOver={isLevelOver}
+        />
+    ));
 
     const saveGameState = (currentLevel: number) => {
         sessionStorage.setItem('currentLevel', String(currentLevel));
@@ -99,34 +112,6 @@ export default function App() {
         if (!isTestingPhase) return;
         startTestingPhaseTimer();
     }, [isTestingPhase, startTestingPhaseTimer]);
-
-    React.useEffect(() => {
-        if (!isLearningPhase) return;
-
-        // Note: The api can sometimes return duplicate images in a set.
-        // To only show unique users, we get more users than needed.
-        // then we remove any duplicates and return the correct amount of unique users needed.
-        const fields = 'id,name,gender,nat,picture';
-        const format = 'JSON';
-        const nationality = 'CA,US,AU';
-        const apiParams = `?inc=${fields}&format=${format}&nat=${nationality}&results=${numOfRandomUsers * 2}`;
-        tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
-            setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
-            startLearningPhaseTimer();
-            setIsLoading(false);
-        });
-    }, [isLearningPhase, numOfRandomUsers, startLearningPhaseTimer]);
-
-    const randomUserElements = randomUsers.map((user: UserType) => (
-        <UserCard
-            key={user.id.value}
-            handleOnChange={handleNameEntered}
-            user={user}
-            allUserNames={userNames}
-            isLearning={isLearningPhase}
-            isLevelOver={isLevelOver}
-        />
-    ));
 
     function handleGameRestart() {
         setIsLearningPhase(true);
@@ -202,7 +187,7 @@ export default function App() {
         updateCurrentLevel(currentLevel + 1);
     }
 
-    if (isLoading) {
+    if (isRandomUsersLoading) {
         return <LoadingSpinner />;
     }
 
