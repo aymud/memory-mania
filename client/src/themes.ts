@@ -1,4 +1,4 @@
-export interface Theme {
+export interface ITheme {
     backgroundColor: string;
     color: string;
     menuButtonBackgroundColor?: string;
@@ -7,7 +7,7 @@ export interface Theme {
     navbarBackgroundColor: string;
 }
 
-export const lightTheme: Theme = {
+export const lightTheme: ITheme = {
     backgroundColor: '#eee',
     color: 'black',
     menuButtonBackgroundColor: '#007bff',
@@ -15,7 +15,7 @@ export const lightTheme: Theme = {
     navbarBackgroundColor: 'black'
 };
 
-export const darkTheme: Theme = {
+export const darkTheme: ITheme = {
     backgroundColor: '#0b2434',
     color: '#fff',
     menuButtonBackgroundColor: '#007bff',

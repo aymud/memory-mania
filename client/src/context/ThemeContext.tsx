@@ -2,10 +2,10 @@ import { createContext, ReactNode, useState } from 'react';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
-import { darkTheme, lightTheme, Theme } from '../themes.ts';
+import { darkTheme, ITheme, lightTheme } from '../themes.ts';
 
 interface ThemeContextType {
-    theme: Theme;
+    theme: ITheme;
     toggleTheme: () => void;
 }
 
@@ -21,7 +21,7 @@ interface ThemeProviderProps {
 export const ThemeContext = createContext<ThemeContextType>({ ...DEFAULT_STATE });
 
 export default function ThemeProvider(props: ThemeProviderProps) {
-    const [theme, setTheme] = useState<Theme>(DEFAULT_STATE.theme);
+    const [theme, setTheme] = useState<ITheme>(DEFAULT_STATE.theme);
 
     const toggleTheme = () => {
         setTheme(theme === lightTheme ? darkTheme : lightTheme);
