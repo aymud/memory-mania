@@ -23,6 +23,10 @@ interface UserType {
     };
 }
 
+type GameState = {
+    currentLevel: number;
+};
+
 const STARTING_LEVEL = 1;
 const LEARNING_PHASE_DURATION_IN_SECONDS = 180;
 const TESTING_PHASE_DURATION_IN_SECONDS = 180;
@@ -34,8 +38,9 @@ const NUM_OF_USERS_TO_SHOW = NUM_OF_USERS_TO_ADD_PER_LEVEL + STARTING_LEVEL;
    In the learning phase, the player will memorize the faces and names.
  */
 export const useGameState = () => {
-    const storedCurrentLevel = sessionStorage.getItem('currentLevel');
-    const parsedCurrentLevel = storedCurrentLevel ? parseInt(storedCurrentLevel) : STARTING_LEVEL;
+    const storedGameState = sessionStorage.getItem('game_state');
+    const parsedGameState = storedGameState ? JSON.parse(storedGameState) : { currentLevel: STARTING_LEVEL };
+    const parsedCurrentLevel = parsedGameState.currentLevel;
     const [currentLevel, setCurrentLevel] = React.useState(parsedCurrentLevel);
     const [numOfRandomUsers, setNumOfRandomUsers] = React.useState(2 * currentLevel + 1);
     const [enteredNames, setEnteredNames] = React.useState<EnteredNamesType[]>([]);
@@ -59,13 +64,21 @@ export const useGameState = () => {
         isLoading: isRandomUsersLoading,
         setIsLoading
     } = useRandomUsers(numOfRandomUsers, isLearningPhase, startLearningPhaseTimer);
-    const saveGameStateToBrowserStorage = (currentLevel: number) => {
-        sessionStorage.setItem('currentLevel', String(currentLevel));
+
+    React.useEffect(() => {
+        saveGameStateToBrowserStorage({
+            currentLevel
+        });
+    }, [currentLevel]);
+
+    const saveGameStateToBrowserStorage = (gameState: GameState) => {
+        const gameStateStr = JSON.stringify(gameState);
+        sessionStorage.setItem('game_state', gameStateStr);
     };
 
     const updateCurrentLevel = (level: number) => {
         setCurrentLevel(level);
-        saveGameStateToBrowserStorage(level);
+        saveGameStateToBrowserStorage({ currentLevel: level });
     };
 
     function handleGameRestart() {
