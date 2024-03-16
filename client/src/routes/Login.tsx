@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
 
 import { useAuthState } from '../hooks/useAuthState.ts';
 
@@ -71,17 +72,25 @@ const Tooltip = styled.div`
 `;
 
 export default function Login() {
+    const toast = useToast();
     const navigate = useNavigate();
     const [isTooltipDisplayed, setIsTooltipDisplayed] = React.useState(false);
-    const [username, setUsername] = React.useState('user');
+    const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('password');
-    const { isAuthenticated, login } = useAuthState();
+    const { isAuthenticated, user, login } = useAuthState();
 
     useEffect(() => {
         if (isAuthenticated) {
+            toast({
+                title: `Successfully logged in as ${user}`,
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top'
+            });
             navigate('/');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, toast, user]);
 
     const handleTooltipToggle = () => {
         setIsTooltipDisplayed(prevIsTooltipDisplayed => !prevIsTooltipDisplayed);
@@ -131,7 +140,7 @@ export default function Login() {
                 </LoginForm>
                 {isTooltipDisplayed && (
                     <Tooltip>
-                        <p>Use &quot;user&quot; for the username and &quot;password&quot; for the password.</p>
+                        <p>Enter a username and use &quot;password&quot; for the password.</p>
                     </Tooltip>
                 )}
             </LoginContainer>
