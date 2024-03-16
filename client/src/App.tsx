@@ -48,8 +48,9 @@ export default function App() {
     ));
 
     React.useEffect(() => {
-        if (!isTestingPhase) return;
-        gameState.startTestingPhaseTimer();
+        if (isTestingPhase) {
+            gameState.startTestingPhaseTimer();
+        }
     }, [isTestingPhase, gameState.startTestingPhaseTimer, gameState]);
 
     if (gameState.isRandomUsersLoading) {

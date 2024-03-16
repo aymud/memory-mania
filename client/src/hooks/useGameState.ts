@@ -59,13 +59,13 @@ export const useGameState = () => {
         isLoading: isRandomUsersLoading,
         setIsLoading
     } = useRandomUsers(numOfRandomUsers, isLearningPhase, startLearningPhaseTimer);
-    const saveGameState = (currentLevel: number) => {
+    const saveGameStateToBrowserStorage = (currentLevel: number) => {
         sessionStorage.setItem('currentLevel', String(currentLevel));
     };
 
     const updateCurrentLevel = (level: number) => {
         setCurrentLevel(level);
-        saveGameState(level);
+        saveGameStateToBrowserStorage(level);
     };
 
     function handleGameRestart() {
@@ -144,25 +144,15 @@ export const useGameState = () => {
 
     return {
         currentLevel,
-        setCurrentLevel,
         numOfRandomUsers,
-        setNumOfRandomUsers,
-        enteredNames,
-        setEnteredNames,
         isLevelOver,
-        setIsLevelOver,
         isLearningPhase,
-        setIsLearningPhase,
         isWaitingTestStart,
-        setIsWaitingTestStart,
         learningPhaseTimeRemainingInSeconds,
         testingPhaseTimeRemainingInSeconds,
         startTestingPhaseTimer,
         randomUsers,
-        setRandomUsers,
         isRandomUsersLoading,
-        saveGameState,
-        updateCurrentLevel,
         handleGameRestart,
         handleTestCountdown,
         handleTestStart,
