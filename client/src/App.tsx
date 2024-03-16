@@ -10,6 +10,7 @@ import TestCountdown from './components/TestCountdown.tsx';
 import Timer from './components/Timer.tsx';
 import UserCard from './components/UserCard.tsx';
 import { useGameState } from './hooks/useGameState.ts';
+import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
 
 const UserCardsContainer = styled.div`
     max-width: 800px;
@@ -57,7 +58,7 @@ export default function App() {
     }
 
     return (
-        <React.Fragment>
+        <ThemedAppContainer>
             <Navbar level={gameState.currentLevel} />
             <Main>
                 {gameState.isWaitingTestStart ? (
@@ -96,6 +97,6 @@ export default function App() {
                     </React.Fragment>
                 )}
             </Main>
-        </React.Fragment>
+        </ThemedAppContainer>
     );
 }

@@ -4,13 +4,15 @@ export interface Theme {
     menuButtonBackgroundColor?: string;
     menuButtonHoverBackgroundColor?: string;
     buttonBorderColor: string;
+    navbarBackgroundColor: string;
 }
 
 export const lightTheme: Theme = {
     backgroundColor: '#eee',
     color: 'black',
     menuButtonBackgroundColor: '#007bff',
-    buttonBorderColor: 'black'
+    buttonBorderColor: 'black',
+    navbarBackgroundColor: 'black'
 };
 
 export const darkTheme: Theme = {
@@ -18,5 +20,6 @@ export const darkTheme: Theme = {
     color: '#fff',
     menuButtonBackgroundColor: '#007bff',
     menuButtonHoverBackgroundColor: '#0056b3',
-    buttonBorderColor: 'white'
+    buttonBorderColor: 'white',
+    navbarBackgroundColor: '#0b2434'
 };

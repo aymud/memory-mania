@@ -12,7 +12,7 @@ const NavbarList = styled.ul`
     display: flex;
     align-items: center;
     padding: 15px;
-    background-color: #0b2434;
+    background: ${props => props.theme.navbarBackgroundColor};
     color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     list-style: none;
