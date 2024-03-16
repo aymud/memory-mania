@@ -15,8 +15,14 @@
     },
     "husky": {
         "hooks": {
-            "pre-push": "echo '[Husky] Linting and formatting code before pushing...' && npm run lint-fix && npm run prettier"
+            "pre-commit": "lint-staged"
         }
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ]
     },
     "dependencies": {
         "@chakra-ui/react": "^2.8.2",
