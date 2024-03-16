@@ -13,6 +13,11 @@
         "format": "npm run prettier",
         "test": "jest"
     },
+    "husky": {
+        "hooks": {
+            "pre-push": "echo '[Husky] Linting and formatting code before pushing...' && npm run lint-fix && npm run prettier"
+        }
+    },
     "dependencies": {
         "@chakra-ui/react": "^2.8.2",
         "@emotion/styled": "^11.11.0",
