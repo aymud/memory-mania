@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 import { UseTheme } from '../hooks/useTheme.ts';
-import { lightTheme, Theme } from '../themes.ts';
+import { ITheme, lightTheme } from '../themes.ts';
 
 const StyledButton = styled.button<{
-    $theme: Theme;
+    $theme: ITheme;
 }>`
     background-color: ${props => props.$theme.backgroundColor};
     color: ${props => props.$theme.color};
