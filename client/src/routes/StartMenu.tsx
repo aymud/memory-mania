@@ -59,7 +59,7 @@ export default function StartMenu() {
     return (
         <StyledStartMenu>
             <ThemeSwitcher />
-            <GameTitle>Memory Mania</GameTitle>
+            <GameTitle data-testid='cypress-main-title'>Memory Mania</GameTitle>
             <MenuButton onClick={handleStartGame}>Start Game</MenuButton>
             <MenuButton onClick={toggleInstructions}>Instructions</MenuButton>
             <MenuButton onClick={handleProfile}>Profile</MenuButton>
