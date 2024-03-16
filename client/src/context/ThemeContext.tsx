@@ -1,30 +1,35 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 
-const THEME_TYPE = {
-    DARK: 'DARK',
-    LIGHT: 'LIGHT'
-} as const;
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
-type ThemeType = (typeof THEME_TYPE)[keyof typeof THEME_TYPE];
+import { darkTheme, lightTheme, Theme } from '../themes.ts';
 
 interface ThemeContextType {
-    theme: ThemeType;
-    setTheme: React.Dispatch<React.SetStateAction<ThemeType>>;
+    theme: Theme;
+    toggleTheme: () => void;
 }
 
 const DEFAULT_STATE: ThemeContextType = {
-    theme: THEME_TYPE.DARK,
-    setTheme: () => {}
+    theme: darkTheme,
+    toggleTheme: () => {}
 };
 
 interface ThemeProviderProps {
     children: ReactNode;
 }
 
-export const ThemeContext = createContext<ThemeContextType>(DEFAULT_STATE);
+export const ThemeContext = createContext<ThemeContextType>({ ...DEFAULT_STATE });
 
 export default function ThemeProvider(props: ThemeProviderProps) {
-    const [theme, setTheme] = useState<ThemeType>('DARK');
+    const [theme, setTheme] = useState<Theme>(DEFAULT_STATE.theme);
 
-    return <ThemeContext.Provider value={{ theme, setTheme }}>{props.children}</ThemeContext.Provider>;
+    const toggleTheme = () => {
+        setTheme(theme === lightTheme ? darkTheme : lightTheme);
+    };
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <StyledThemeProvider theme={theme}>{props.children}</StyledThemeProvider>
+        </ThemeContext.Provider>
+    );
 }

@@ -1,13 +1,14 @@
-import { useContext } from 'react';
-
 import styled from 'styled-components';
 
-import { ThemeContext } from '../context/ThemeContext.tsx';
+import { UseTheme } from '../hooks/useTheme.ts';
+import { lightTheme, Theme } from '../themes.ts';
 
-const StyledButton = styled.button<{ $theme: string }>`
-    background-color: ${props => (props.$theme === 'DARK' ? '#333' : '#eee')};
-    color: ${props => (props.$theme === 'DARK' ? '#fff' : '#333')};
-    border: none;
+const StyledButton = styled.button<{
+    $theme: Theme;
+}>`
+    background-color: ${props => props.$theme.backgroundColor};
+    color: ${props => props.$theme.color};
+    border: 1px solid ${props => props.$theme.buttonBorderColor};
     padding: 8px 16px;
     cursor: pointer;
     transition:
@@ -19,19 +20,16 @@ const StyledButton = styled.button<{ $theme: string }>`
     white-space: nowrap;
 
     &:hover {
-        background-color: ${props => (props.$theme === 'DARK' ? '#444' : '#ddd')};
+        background-color: ${props => props.$theme.backgroundColor};
     }
 `;
 
 export default function ThemeSwitcher() {
-    const { theme, setTheme } = useContext(ThemeContext);
-    const toggleTheme = () => {
-        setTheme(theme === 'DARK' ? 'LIGHT' : 'DARK');
-    };
+    const { theme, toggleTheme } = UseTheme();
 
     return (
         <StyledButton $theme={theme} onClick={toggleTheme}>
-            Switch to {theme === 'DARK' ? 'LIGHT' : 'DARK'} mode
+            Switch to {theme === lightTheme ? 'DARK' : 'LIGHT'} mode
         </StyledButton>
     );
 }
