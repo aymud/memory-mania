@@ -75,7 +75,7 @@ export default function Login() {
     const toast = useToast();
     const navigate = useNavigate();
     const [isTooltipDisplayed, setIsTooltipDisplayed] = React.useState(false);
-    const [username, setUsername] = React.useState('user');
+    const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('password');
     const { isAuthenticated, user, login } = useAuthState();
 
@@ -140,7 +140,7 @@ export default function Login() {
                 </LoginForm>
                 {isTooltipDisplayed && (
                     <Tooltip>
-                        <p>Use &quot;user&quot; for the username and &quot;password&quot; for the password.</p>
+                        <p>Enter a username and use &quot;password&quot; for the password.</p>
                     </Tooltip>
                 )}
             </LoginContainer>
