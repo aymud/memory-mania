@@ -68,7 +68,7 @@ export default function UserCard(props: UserCardProps) {
     );
 
     return (
-        <UserCardWrapper>
+        <UserCardWrapper data-testid='cypress-user-card'>
             <UserImg src={props.user.picture.large} alt='User' />
             {props.isLearning ? <UserName>{props.user.name.first}</UserName> : nameInput}
             {gameResults}

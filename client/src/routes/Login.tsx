@@ -134,7 +134,7 @@ export default function Login() {
                         onBlur={handleTooltipToggle}
                         onChange={event => setPassword(event.target.value)}
                     />
-                    <FormSubmit onClick={handleLogin} type='submit' className='form-submit'>
+                    <FormSubmit data-testid='cypress-login-form-submit' onClick={handleLogin} type='submit'>
                         Login
                     </FormSubmit>
                 </LoginForm>

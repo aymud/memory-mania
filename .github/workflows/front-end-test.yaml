@@ -1,4 +1,4 @@
-name: Front-End Tests
+name: Front-End Unit Tests
 
 on:
   pull_request:

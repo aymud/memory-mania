@@ -72,7 +72,9 @@ export default function App() {
                 {gameState.isLearningPhase && (
                     <React.Fragment>
                         <Timer timeInSeconds={gameState.learningPhaseTimeRemainingInSeconds} />
-                        <Button onClick={gameState.handleTestStart}>Test</Button>
+                        <Button data-testid='cypress-test-button' onClick={gameState.handleTestStart}>
+                            Test
+                        </Button>
                     </React.Fragment>
                 )}
                 {isTestingPhase && (
