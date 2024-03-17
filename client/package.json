@@ -41,6 +41,8 @@
         "@babel/preset-env": "^7.23.6",
         "@babel/preset-react": "^7.23.3",
         "@babel/preset-typescript": "^7.23.3",
+        "@cypress/code-coverage": "^3.12.29",
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@testing-library/jest-dom": "^6.1.5",
         "@testing-library/react": "^14.2.1",
         "@types/jest": "^29.5.11",
@@ -62,7 +64,13 @@
         "jsdom": "^23.0.1",
         "lint-staged": "^15.2.2",
         "prettier": "^3.2.5",
+        "source-map-support": "^0.5.21",
+        "ts-node": "^10.9.2",
         "typescript": "^5.3.3",
         "vite": "^4.4.5"
+    },
+    "nyc": {
+        "extends": "@istanbuljs/nyc-config-typescript",
+        "all": true
     }
 }
