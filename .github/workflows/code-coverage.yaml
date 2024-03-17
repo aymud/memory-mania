@@ -24,13 +24,20 @@ jobs:
         run: npm install
         working-directory: ./client
 
-      - name: Run Jest with coverage
-        run: npm run test -- --coverage
-        working-directory: ./client
-
-      - name: Upload coverage report
+      - name: Upload Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-script: npm run test -- --coverage
+          working-directory: ./client
+
+      - name: Generate Cypress coverage report
+        run: npx nyc report --reporter=text-summary
+        working-directory: ./client
+
+      - name: Comment Cypress coverage report on PR
+        uses: cypress-io/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          start: npm run cy:run
           working-directory: ./client
