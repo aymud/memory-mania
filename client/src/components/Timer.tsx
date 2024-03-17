@@ -33,7 +33,7 @@ export default function Timer(props: ITimerProps) {
     const formatTime = (value: number) => (value < 10 ? `0${value}` : value);
 
     return (
-        <TimerContainer>
+        <TimerContainer data-testid='cypress-timer'>
             <Time>
                 {formatTime(duration.minutes)}:{formatTime(duration.seconds)}
             </Time>

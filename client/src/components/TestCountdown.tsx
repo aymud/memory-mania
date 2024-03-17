@@ -59,13 +59,14 @@ export default function TestCountdown(props: TestCountdownProps) {
     }, [startTimer]);
 
     return (
-        <TestCountdownContainer>
+        <TestCountdownContainer data-testid='cypress-test-countdown-container'>
             <CountdownText>
                 Recall begins in
                 <Timer timeInSeconds={timeRemainingInSeconds} />
             </CountdownText>
             <FunFactText>Did you know ... {funFact}</FunFactText>
             <Button
+                data-testid='cypress-skip-button'
                 className='skip-button'
                 onClick={() => {
                     resetTimer();
