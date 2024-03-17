@@ -11,7 +11,8 @@
         "prettier": "prettier --write .",
         "lint-fix": "eslint --fix .",
         "format": "npm run prettier",
-        "test": "jest"
+        "test": "jest",
+        "cy:run": "nyc --reporter=lcov --reporter=text-summary cypress run"
     },
     "husky": {
         "hooks": {
@@ -51,6 +52,7 @@
         "@types/react-dom": "^18.2.18",
         "@typescript-eslint/parser": "^6.14.0",
         "@vitejs/plugin-react": "^4.0.3",
+        "babel-plugin-istanbul": "^6.1.1",
         "cypress": "^13.7.0",
         "eslint": "^8.57.0",
         "eslint-plugin-import": "^2.29.1",
