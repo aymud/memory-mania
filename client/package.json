@@ -73,6 +73,7 @@
     },
     "nyc": {
         "extends": "@istanbuljs/nyc-config-typescript",
-        "all": true
+      "all": true,
+      "report-dir": "cypress-coverage"
     }
 }
