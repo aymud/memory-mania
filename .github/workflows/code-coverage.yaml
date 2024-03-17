@@ -1,0 +1,33 @@
+name: Jest Coverage Report
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  jest-coverage-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: Run Jest with coverage
+        run: npm test -- --coverage
+        working-directory: ./client
+
+      - name: Upload coverage report
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          directory: coverage
