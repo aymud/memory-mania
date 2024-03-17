@@ -29,5 +29,8 @@
         "noImplicitReturns": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true
-    }
+    },
+    "include": [
+        "**/*.ts"
+    ]
 }
