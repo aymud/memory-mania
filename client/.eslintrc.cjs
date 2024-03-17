@@ -12,9 +12,6 @@ module.exports = {
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    parserOptions: {
-        project: './tsconfig.json'
-    },
     settings: { react: { version: '18.2' } },
     plugins: ['react-refresh', 'prettier', 'import'],
     rules: {
