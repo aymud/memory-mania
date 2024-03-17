@@ -60,9 +60,15 @@ export default function StartMenu() {
         <StyledStartMenu>
             <ThemeSwitcher />
             <GameTitle data-testid='cypress-main-title'>Memory Mania</GameTitle>
-            <MenuButton onClick={handleStartGame}>Start Game</MenuButton>
-            <MenuButton onClick={toggleInstructions}>Instructions</MenuButton>
-            <MenuButton onClick={handleProfile}>Profile</MenuButton>
+            <MenuButton data-testid='cypress-start-game-button' onClick={handleStartGame}>
+                Start Game
+            </MenuButton>
+            <MenuButton data-testid='cypress-instructions-button' onClick={toggleInstructions}>
+                Instructions
+            </MenuButton>
+            <MenuButton data-testid='cypress-profile-button' onClick={handleProfile}>
+                Profile
+            </MenuButton>
             {showInstructions && <Instructions OnToggle={toggleInstructions} />}
         </StyledStartMenu>
     );
