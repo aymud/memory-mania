@@ -32,7 +32,7 @@ jobs:
       #          working-directory: ./client
 
       - name: Generate Cypress coverage report
-        run: npx cypress run --env coverage=true
+        run: npx cypress open
         working-directory: ./client
 
       - name: Comment Cypress coverage report on PR
