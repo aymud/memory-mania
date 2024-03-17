@@ -29,6 +29,7 @@
         "strictNullChecks": true
     },
     "exclude": [
+        "./cypress.config.ts",
         "cypress"
     ]
 }
