@@ -27,5 +27,8 @@
         "noImplicitReturns": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true
-    }
+    },
+    "exclude": [
+        "**/*.spec.ts"
+    ]
 }
