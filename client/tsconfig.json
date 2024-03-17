@@ -27,5 +27,9 @@
         "noImplicitReturns": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true
-    }
+    },
+    "include": [
+        "cypress",
+        "src"
+    ]
 }
