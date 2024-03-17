@@ -31,13 +31,13 @@ jobs:
       #          test-script: npm run test -- --coverage
       #          working-directory: ./client
 
-      - name: Generate Cypress coverage report
-        run: npx cypress open
-        working-directory: ./client
+      #      - name: Generate Cypress coverage report
+      #        run: npx cypress open
+      #        working-directory: ./client
 
       - name: Comment Cypress coverage report on PR
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          start: npm run cy:run
+          start: npx nyc report --reporter=text-summary
           working-directory: ./client
