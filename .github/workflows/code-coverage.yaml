@@ -38,6 +38,9 @@ jobs:
       - name: Comment Cypress coverage report on PR
         uses: cypress-io/github-action@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          start: npx nyc report --reporter=text-summary
+          start: |
+            npm run build
+            npm run dev &
+            npx cypress run --headless --browser chrome
+            npx nyc report --reporter=text-summary
           working-directory: ./client
