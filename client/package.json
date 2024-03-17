@@ -71,5 +71,10 @@
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3",
         "vite": "^4.4.5"
+    },
+    "nyc": {
+        "extends": "@istanbuljs/nyc-config-typescript",
+        "all": true,
+        "report-dir": "cypress-coverage"
     }
 }
