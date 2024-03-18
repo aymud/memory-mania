@@ -28,12 +28,12 @@ jobs:
       #        run: npx cypress open
       #        working-directory: ./client
 
-      - name: Comment Cypress coverage report on PR
+      - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: |
-            npm run build
-            npm run dev &
-            npx cypress run --headless --browser chrome
-            npx nyc report --reporter=text-summary
+          build: npm run build
+          start: npm run dev
           working-directory: ./client
+
+      - run: npm run report:coverage:summary
+        working-directory: ./client
