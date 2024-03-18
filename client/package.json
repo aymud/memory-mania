@@ -11,9 +11,9 @@
         "prettier": "prettier --write .",
         "lint-fix": "eslint --fix .",
         "format": "npm run prettier",
-        "test": "jest",
-        "report:coverage:summary": "nyc report --reporter=text-summary",
-        "cy:run-e2e": "cypress run --e2e"
+        "jest:run": "jest",
+        "cy:run-e2e": "cypress run --e2e",
+        "report:coverage:summary": "nyc report --reporter=text-summary"
     },
     "husky": {
         "hooks": {

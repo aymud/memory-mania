@@ -12,30 +12,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: 🔄 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: 🛠 Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: 📦 Install Project Dependencies
         run: npm install
         working-directory: ./client
 
-      - name: Run Jest with coverage
-        run: npm test -- --coverage
+      - name: 🚀 Run Jest with coverage
+        run: npm run jest:run -- --coverage
         working-directory: ./client
 
-      - name: Upload Jest coverage report
+      - name: 📤 Upload Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-script: npm run test -- --coverage
+          test-script: npm run jest:run -- --coverage
           working-directory: ./client
 
-      - name: Cypress run
+  cypress-coverage-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🌲 Cypress run
         uses: cypress-io/github-action@v6
         with:
           build: npm run build
