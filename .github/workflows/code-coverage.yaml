@@ -59,6 +59,9 @@ jobs:
           badge: true
           format: markdown
 
+      - name: list files
+        run: cd client/cypress-coverage && ls
+
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
