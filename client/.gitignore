@@ -28,3 +28,4 @@ cypress-coverage
 cypress/videos
 instrumented
 cypress/screenshots
+jest-coverage
