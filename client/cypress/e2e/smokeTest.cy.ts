@@ -60,7 +60,7 @@ describe('Memory Mania Smoke Test', () => {
         cy.get('[data-testid="cypress-user-card"]').should('have.length', 3);
     });
 
-    it.only('goes to the next level', () => {
+    it('goes to the next level', () => {
         // Login
         const username = 'user';
         cy.get('[data-testid="cypress-start-game-button"]').click();

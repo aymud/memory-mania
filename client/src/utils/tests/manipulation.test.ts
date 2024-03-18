@@ -19,22 +19,22 @@ describe('getDistinctUsers', () => {
         const inputUsers = [
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '1' },
+                picture: { large: '1' },
                 id: { value: '' }
             },
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '2' },
+                picture: { large: '2' },
                 id: { value: '' }
             },
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '1' },
+                picture: { large: '1' },
                 id: { value: '' }
             },
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '3' },
+                picture: { large: '3' },
                 id: { value: '' }
             }
         ];
@@ -44,7 +44,7 @@ describe('getDistinctUsers', () => {
 
         expect(distinctUsers).toHaveLength(numOfRandomUsers);
 
-        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.thumbnail));
+        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.large));
         expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length);
     });
 
@@ -52,22 +52,22 @@ describe('getDistinctUsers', () => {
         const inputUsers = [
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '1' },
+                picture: { large: '1' },
                 id: { value: '' }
             },
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '2' },
+                picture: { large: '2' },
                 id: { value: '' }
             },
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '1' },
+                picture: { large: '1' },
                 id: { value: '' }
             },
             {
                 name: { first: '' },
-                picture: { large: '', thumbnail: '2' },
+                picture: { large: '2' },
                 id: { value: '' }
             }
         ];
@@ -77,7 +77,7 @@ describe('getDistinctUsers', () => {
 
         expect(distinctUsers).toHaveLength(2);
 
-        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.thumbnail));
+        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.large));
         expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length);
     });
 });
