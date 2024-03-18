@@ -58,6 +58,7 @@ jobs:
           filename: ./client/cypress-coverage/cobertura-coverage.xml
           badge: true
           format: markdown
+          output: both
 
       - name: list files
         run: cd client/cypress-coverage && ls
