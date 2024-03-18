@@ -12,7 +12,6 @@
         "lint-fix": "eslint --fix .",
         "format": "npm run prettier",
         "test": "jest",
-        "cy:run": "nyc --reporter=lcov --reporter=text-summary cypress run",
         "report:coverage:summary": "nyc report --reporter=text-summary",
         "cy:run-e2e": "cypress run --e2e"
     },

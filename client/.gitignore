@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 .nyc_output
-coverage
+cypress-coverage
 cypress/videos
 instrumented
 cypress/screenshots
