@@ -28,5 +28,8 @@
         "strictFunctionTypes": true,
         "strictNullChecks": true
     },
-    "exclude": ["./cypress.config.ts", "cypress"]
+    "exclude": [
+        "./cypress.config.cjs",
+        "cypress"
+    ]
 }

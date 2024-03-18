@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "@babel/preset-react"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  },
+  "plugins": [
+    "transform-class-properties"
+  ]
+}
