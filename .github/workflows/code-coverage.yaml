@@ -60,13 +60,12 @@ jobs:
           format: markdown
           output: both
 
-      - name: list files
-        run: cd client/cypress-coverage && ls
-
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
         with:
+          header: Cypress End to End Tests Code Coverage Summary
           recreate: true
-          path: ./client/code-coverage-results.md
-          message: Release ${{ github.sha }} to <https://deploy-preview-${{ github.event.number }}--memorymania.netlify.app/>
+          path: code-coverage-results.md
+          message:
+            ${{ github.event.pull_request.title }}, Release ${{ github.sha }} to <https://deploy-preview-${{ github.event.number }}--memorymania.netlify.app/>
