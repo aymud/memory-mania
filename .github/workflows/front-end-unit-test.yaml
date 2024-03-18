@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  jest-run:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +26,5 @@ jobs:
         working-directory: ./client
 
       - name: 🚀 Run tests
-        run: npm test
+        run: npm run jest:run
         working-directory: ./client
