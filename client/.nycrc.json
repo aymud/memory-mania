@@ -4,5 +4,6 @@
     "check-coverage": true,
     "include": ["src/**/*.ts", "src/**/*.tsx"],
     "exclude": ["cypress/**/*.*", "**/*.d.ts", "**/*.cy.tsx", "**/*.cy.ts"],
-    "report-dir": "cypress-coverage"
+    "report-dir": "cypress-coverage",
+    "lines": 40
 }
