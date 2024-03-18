@@ -64,6 +64,5 @@ jobs:
         if: github.event_name == 'pull_request'
         with:
           recreate: true
-          path: code-coverage-results.md
-
-#          message: Release ${{ github.sha }} to <https://deploy-preview-${{ github.event.number }}--memorymania.netlify.app/>
+          path: ./client/code-coverage-results.md
+          message: Release ${{ github.sha }} to <https://deploy-preview-${{ github.event.number }}--memorymania.netlify.app/>
