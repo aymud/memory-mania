@@ -25,7 +25,7 @@ export default function ScoreMessage(props: ScoreMessageProps) {
     const message = `${props.correctAnswersCount} / ${props.totalUsers}`;
     return (
         <ScoreContainer>
-            <ScoreText> {message} </ScoreText>
+            <ScoreText data-testid='cypress-score-text'>{message}</ScoreText>
         </ScoreContainer>
     );
 }

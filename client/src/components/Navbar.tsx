@@ -76,7 +76,7 @@ export default function Navbar(props: NavbarProps) {
                     <MenuIcon>
                         <FiMenu />
                     </MenuIcon>
-                    {props.level && <LevelInfo>Level {props.level}</LevelInfo>}
+                    {props.level && <LevelInfo data-testid='cypress-level-info'>Level {props.level}</LevelInfo>}
                     {isAuthenticated ? (
                         <NavbarItem $isRight>
                             <ProfileContainer onClick={handleProfile}>

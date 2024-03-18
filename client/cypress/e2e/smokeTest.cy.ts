@@ -59,4 +59,47 @@ describe('Memory Mania Smoke Test', () => {
         // Testing phase
         cy.get('[data-testid="cypress-user-card"]').should('have.length', 3);
     });
+
+    it.only('goes to the next level', () => {
+        // Login
+        const username = 'user';
+        cy.get('[data-testid="cypress-start-game-button"]').click();
+        cy.get('#login-username-field').type(username).type('{enter}');
+
+        // Spying and response stubbing.
+        // Note: The order of the faces can be different since its shuffled.
+        // So i will give them all the same name so i can 'force' all correct answers.
+        cy.intercept('GET', 'https://randomuser.me/api/*', {
+            results: [
+                { id: { value: '1' }, name: { first: 'A' }, picture: { large: 'PersonA.png' } },
+                { id: { value: '2' }, name: { first: 'A' }, picture: { large: 'PersonB.png' } },
+                { id: { value: '3' }, name: { first: 'A' }, picture: { large: 'PersonC.jpeg' } },
+                { id: { value: '4' }, name: { first: 'A' }, picture: { large: 'PersonD.png' } },
+                { id: { value: '5' }, name: { first: 'A' }, picture: { large: 'PersonE.jpeg' } },
+                { id: { value: '6' }, name: { first: 'A' }, picture: { large: 'PersonF.png' } }
+            ]
+        }).as('randomUserRequest');
+
+        // Start game (learning phase)
+        cy.get('[data-testid="cypress-start-game-button"]').click();
+        cy.get('[data-testid="cypress-test-button"]').click();
+        cy.get('[data-testid="cypress-skip-button"]').click();
+
+        // Testing phase
+        // Index 0 = 'Select a name'
+        cy.get('[data-testid="cypress-user-card"]').eq(0).find('select').select(1);
+        cy.get('[data-testid="cypress-user-card"]').eq(1).find('select').select(1);
+        cy.get('[data-testid="cypress-user-card"]').eq(2).find('select').select(1);
+
+        cy.get('[data-testid="cypress-finish-test-button"]').click();
+        cy.get('[data-testid="cypress-score-text"]').should('have.text', '3 / 3');
+
+        cy.get('[data-testid="cypress-user-card"]').eq(0).find('select').should('be.disabled');
+        cy.get('[data-testid="cypress-user-card"]').eq(1).find('select').should('be.disabled');
+        cy.get('[data-testid="cypress-user-card"]').eq(2).find('select').should('be.disabled');
+
+        cy.get('[data-testid="cypress-next-level-button"]').should('exist').and('have.text', 'Next Level').click();
+
+        cy.get('[data-testid="cypress-level-info"]').should('have.text', 'Level 2');
+    });
 });
