@@ -6,54 +6,56 @@
 
 ## Contents
 
-- [Overview](#overview)
-- [Folder Structure](#folder-structure)
-- [Running the Application Locally](#running-the-application-locally)
-- [Prerequisites](#prerequisites)
-- [Technologies and Concepts Used](#technologies-and-concepts-used)
-- [Why React?](#why-react)
-- [Contributing](#contributing)
+- [Overview](#1-overview)
+- [Folder Structure](#2-folder-structure)
+- [Running the Application Locally](#3-running-the-application-locally)
+- [Prerequisites](#4-prerequisites)
+- [Technologies and Concepts Used](#5--technologies-and-concepts-used)
+- [Contributing](#6-contributing)
 
-## Overview
+## `1` Overview
 
 Memory Mania is a single-page React Application designed to test memory skills
 in a fun and challenging way!
 It generates random names and faces.
 The objective of the game is to memorize the names and then test your memory by entering the correct names for the displayed images.
 
-## Folder Structure
+## `2` Folder Structure
 This React project was bootstrapped using [Vite](https://vitejs.dev/guide/).  
 This folder structure separates the client and server parts of the application:
 
 ```
 ├── client/
-├──── public/ - Contains the HTML template and any static assets
-├──── src/ - Contains the source code for the React application
-│     └── components/ - Stores React components and their tests used in the application
-│     ├── contexts/ - Contains context providers for global state management
-│     ├── hooks/ - Custom hooks used across application
-│     ├── routes/ - Different routes for the application
+├──── public/               - Contains the HTML template and any static assets
+├──── src/                  - Contains the source code for the React application
+│     └── components/       - Stores React components and their tests used in the application
+│     ├── contexts/         - Contains context providers for global state management
+│     ├── hooks/            - Custom hooks used across application
+│     ├── routes/           - Different routes for the application
 │     │   ├── login.jsx  
-│     ├── utils/ - Helper functions and classes
-│     ├── App.tsx - Core component that manages the game's logic and user interface
+│     ├── utils/            - Helper functions and classes
+│     ├── App.tsx           - Core component that manages the game's logic and user interface
 │     ├── App.css
-│     ├── index.html - Template file which is served up when script is run
-│     ├── main.tsx - Entry point for rendering the React app into the HTML template
-│     ├── themes.ts - Application themes that defines the colours
-├──── .eslintrc.cjs - ESLint configuration for linting code
-├──── .prettierrc - Prettier configuration for code formatting rules
-├──── tsconfig.json - TypeScript configuration for compiler and linting options
-├──── package.json - Configuration file for npm packages and project settings
+│     ├── index.html        - Template file which is served up when script is run
+│     ├── main.tsx          - Entry point for rendering the React app into the HTML template
+│     ├── themes.ts         - Application themes that defines the colours
+├──── .eslintrc.cjs         - ESLint configuration for linting code
+├──── .prettierrc           - Prettier configuration for code formatting rules
+├──── tsconfig.json         - TypeScript configuration for compiler and linting options
+├──── package.json          - Configuration file for npm packages and project settings
 ├── server/
-├──── server.js -  Server-side JavaScript file that serves as the backend for the application
-├──── package.json - Configuration file for npm packages and project settings
+├──── server.js             - Server-side JavaScript file that serves as the backend for the application
+├──── package.json          - Configuration file for npm packages and project settings
 └── README.md
 ```
 
-## Running the Application Locally
+## `3` Running the Application Locally
 Before you begin, ensure you have met the prerequisites, and then
 follow these steps to run the application locally.
-> **Because the project includes a client side and a server side, you need to install & run each separately.**
+> [!IMPORTANT]
+>
+> Because the project includes a client side and a server side, you need to install & run each separately.
+
 <details><summary><b>Show instructions</b></summary>
 
 1. **Clone the repository**: Start by cloning the repository to your local machine.
@@ -75,7 +77,7 @@ follow these steps to run the application locally.
 
 </details>
 
-## Prerequisites
+## `4` Prerequisites
 - Node.js: Make sure you have Node.js installed.
   Node.js includes npm (Node Package Manager) by default.  
   To confirm that Node.js is installed correctly, open your terminal or command prompt and run the following commands:
@@ -85,13 +87,15 @@ follow these steps to run the application locally.
   - WebStorm
   - Visual Studio Code
 
+> [!TIP]
+>
 > This project utilizes TypeScript for type checking, ESLint for
-linting code, and Prettier for code formatting. This is to
-enforce coding standards, maintain code consistency, and catch potential issues
+> linting code, and Prettier for code formatting. This is to
+> enforce coding standards, maintain code consistency, and catch potential issues
 > early in the development process.
 > You can configure your code editor to automatically format code using the ESLint and Prettier config files.
 
-## Technologies and Concepts Used
+## `5`  ✨ Technologies and Concepts Used
 
 ### Why React?
 
@@ -128,7 +132,14 @@ The project employs GitHub Actions workflows:
    branch, keeping
    the live version up-to-date with the latest changes.
 
-## Contributing
+### Testing & Code Coverage
+
+This project uses Jest & Cypress for testing. Unit tests are written in Jest and test individual components.
+To enhance product quality and ensure it's free from bugs, end-to-end testing is done with Cypress.
+Code coverage is generated after running each tests and is used to ensure tests are comprehensive
+and cover as much of the code as possible.
+
+## `6` Contributing
 
 Contributions are welcome and appreciated! If you'd like to contribute to this project, please follow these guidelines.
 
