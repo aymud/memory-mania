@@ -11,15 +11,7 @@ import Timer from './components/Timer.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
 import UserCard from './components/UserCard.tsx';
-
-const UserCardsContainer = styled.div`
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
-    padding: 20px;
-`;
+import UserCardContainer from './components/UserCardContainer.tsx';
 
 const Main = styled.main`
     display: flex;
@@ -60,7 +52,7 @@ export default function App() {
                         duration_seconds={TEST_WAITING_TIME_IN_SECONDS}
                     />
                 ) : (
-                    <UserCardsContainer>{randomUserElements}</UserCardsContainer>
+                    <UserCardContainer>{randomUserElements}</UserCardContainer>
                 )}
                 {gameState.isLearningPhase && (
                     <React.Fragment>
