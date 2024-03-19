@@ -12,7 +12,7 @@ const NavbarList = styled.ul`
     display: flex;
     align-items: center;
     padding: 15px;
-    background-color: #0b2434;
+    background: ${props => props.theme.navbarBackgroundColor};
     color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     list-style: none;
@@ -76,7 +76,7 @@ export default function Navbar(props: NavbarProps) {
                     <MenuIcon>
                         <FiMenu />
                     </MenuIcon>
-                    {props.level && <LevelInfo>Level {props.level}</LevelInfo>}
+                    {props.level && <LevelInfo data-testid='cypress-level-info'>Level {props.level}</LevelInfo>}
                     {isAuthenticated ? (
                         <NavbarItem $isRight>
                             <ProfileContainer onClick={handleProfile}>

@@ -34,7 +34,7 @@ export default function AuthProvider(props: AuthProviderProps) {
     }, []);
 
     const login = (username: string, password: string) => {
-        if (username === 'user' && password === 'password') {
+        if (username !== '' && password === 'password') {
             const token = '123';
             const authData = JSON.stringify({ user: username, token });
             sessionStorage.setItem('auth_data', authData);

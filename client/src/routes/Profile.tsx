@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Navbar from '../components/Navbar.tsx';
 import { useAuthState } from '../hooks/useAuthState.ts';
+import { ThemedAppContainer } from '../components/ThemedAppContainer.tsx';
 
 const ProfileWrapper = styled.div`
     font-family: 'Arial', sans-serif;
@@ -70,7 +71,7 @@ export default function Profile() {
     }, []);
 
     return (
-        <React.Fragment>
+        <ThemedAppContainer>
             <Navbar />
             <ProfileWrapper>
                 <ProfileContainer>
@@ -85,6 +86,6 @@ export default function Profile() {
                     </ProfileInfo>
                 </ProfileContainer>
             </ProfileWrapper>
-        </React.Fragment>
+        </ThemedAppContainer>
     );
 }
