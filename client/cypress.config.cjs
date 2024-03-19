@@ -3,7 +3,7 @@ const { defineConfig } = require('cypress');
 module.exports = defineConfig({
     env: {
         codeCoverage: {
-            exclude: 'cypress/**/*.*'
+            exclude: ['cypress/**/*.*', 'src/**/*.test.*']
         }
     },
     e2e: {
