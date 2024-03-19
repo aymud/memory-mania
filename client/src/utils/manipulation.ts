@@ -15,7 +15,6 @@ interface UserType {
     };
     picture: {
         large: string;
-        thumbnail: string;
     };
     id: {
         value: string;
@@ -29,7 +28,7 @@ export function getDistinctUsers(data: UserType[], numOfRandomUsers: number) {
     const distinctUsers: UserType[] = [];
 
     for (const user of data) {
-        const picture = user.picture.thumbnail;
+        const picture = user.picture.large;
 
         // Only add a user to the list if there isn't already a user with that picture.
         if (userPictures.has(picture)) {

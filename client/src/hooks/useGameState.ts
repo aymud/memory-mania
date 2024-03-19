@@ -16,7 +16,6 @@ interface UserType {
     };
     picture: {
         large: string;
-        thumbnail: string;
     };
     id: {
         value: string;

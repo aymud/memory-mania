@@ -80,7 +80,9 @@ export default function App() {
                 {isTestingPhase && (
                     <React.Fragment>
                         <Timer timeInSeconds={gameState.testingPhaseTimeRemainingInSeconds} />
-                        <Button onClick={gameState.handleTestSubmit}>Finish Test</Button>
+                        <Button data-testid='cypress-finish-test-button' onClick={gameState.handleTestSubmit}>
+                            Finish Test
+                        </Button>
                     </React.Fragment>
                 )}
                 {gameState.isLevelOver && (
@@ -92,7 +94,9 @@ export default function App() {
                         />
                         {gameState.getScore() / gameState.numOfRandomUsers >=
                         MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE ? (
-                            <Button onClick={gameState.handleGameNextLevel}>Next Level</Button>
+                            <Button data-testid='cypress-next-level-button' onClick={gameState.handleGameNextLevel}>
+                                Next Level
+                            </Button>
                         ) : (
                             <Button onClick={gameState.handleGameRestart}>Restart Test</Button>
                         )}
