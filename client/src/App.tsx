@@ -8,9 +8,9 @@ import Navbar from './components/Navbar.tsx';
 import ScoreMessage from './components/ScoreMessage.tsx';
 import TestCountdown from './components/TestCountdown.tsx';
 import Timer from './components/Timer.tsx';
-import UserCard from './components/UserCard.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
+import UserCard from './components/UserCard.tsx';
 
 const UserCardsContainer = styled.div`
     max-width: 800px;
@@ -35,23 +35,16 @@ const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
 
 export default function App() {
     const gameState = useGameState();
-    const isTestingPhase = !gameState.isLearningPhase && !gameState.isWaitingTestStart && !gameState.isLevelOver;
-    const userNames = gameState.randomUsers.map(user => user.name.first);
     const randomUserElements = gameState.randomUsers.map(user => (
         <UserCard
             key={user.id.value}
             handleOnChange={gameState.handleNameEntered}
             user={user}
-            allUserNames={userNames}
+            allUserNames={gameState.userNames}
             isLearning={gameState.isLearningPhase}
             isLevelOver={gameState.isLevelOver}
         />
     ));
-
-    React.useEffect(() => {
-        if (!isTestingPhase) return;
-        gameState.startTestingPhaseTimer();
-    }, [isTestingPhase, gameState.startTestingPhaseTimer, gameState]);
 
     if (gameState.isRandomUsersLoading) {
         return <LoadingSpinner />;
@@ -77,7 +70,7 @@ export default function App() {
                         </Button>
                     </React.Fragment>
                 )}
-                {isTestingPhase && (
+                {gameState.isTestingPhase && (
                     <React.Fragment>
                         <Timer timeInSeconds={gameState.testingPhaseTimeRemainingInSeconds} />
                         <Button data-testid='cypress-finish-test-button' onClick={gameState.handleTestSubmit}>

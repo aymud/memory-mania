@@ -41,7 +41,7 @@ export const useGameState = () => {
     const [isLevelOver, setIsLevelOver] = React.useState(false);
     const [isLearningPhase, setIsLearningPhase] = React.useState(true);
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false);
-
+    const isTestingPhase = !isLearningPhase && !isWaitingTestStart && !isLevelOver;
     const {
         timeRemainingInSeconds: learningPhaseTimeRemainingInSeconds,
         startTimer: startLearningPhaseTimer,
@@ -58,6 +58,13 @@ export const useGameState = () => {
         isLoading: isRandomUsersLoading,
         setIsLoading
     } = useRandomUsers(numOfRandomUsers, isLearningPhase, startLearningPhaseTimer);
+    const userNames = randomUsers.map(user => user.name.first);
+
+    React.useEffect(() => {
+        if (!isTestingPhase) return;
+        startTestingPhaseTimer();
+    }, [isTestingPhase, startTestingPhaseTimer]);
+
     const saveGameState = (currentLevel: number) => {
         sessionStorage.setItem('currentLevel', String(currentLevel));
     };
@@ -148,12 +155,14 @@ export const useGameState = () => {
         setNumOfRandomUsers,
         enteredNames,
         setEnteredNames,
+        userNames,
         isLevelOver,
         setIsLevelOver,
         isLearningPhase,
         setIsLearningPhase,
         isWaitingTestStart,
         setIsWaitingTestStart,
+        isTestingPhase,
         learningPhaseTimeRemainingInSeconds,
         testingPhaseTimeRemainingInSeconds,
         startTestingPhaseTimer,
