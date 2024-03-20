@@ -1,7 +1,21 @@
-import { ReactElement } from 'react';
+import React, { ReactElement, ReactNode, useCallback, useState } from 'react';
 
 import styled from 'styled-components';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import {
+    closestCenter,
+    DndContext,
+    DragEndEvent,
+    DragOverlay,
+    DragStartEvent,
+    MouseSensor,
+    TouchSensor,
+    useSensor,
+    useSensors
+} from '@dnd-kit/core';
+import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
+
+import Grid from './Grid.tsx';
+import SortableCard from './SortableCard.tsx';
 
 const StyledUserCardsContainer = styled.div`
     max-width: 800px;
@@ -12,45 +26,56 @@ const StyledUserCardsContainer = styled.div`
     padding: 20px;
 `;
 
-interface IDragEndResult {
-    source: {
-        index: number;
-    };
-    destination: {
-        index: number;
-    } | null;
-}
-
 interface UserCardContainerProps {
-    cards: ReactElement[];
-    handleDragEnd: (result: IDragEndResult) => void;
+    children: ReactNode;
 }
 
 export default function DragDropUserCardContainer(props: UserCardContainerProps) {
+    const [cards, setCards] = useState<ReactElement[]>(React.Children.toArray(props.children) as ReactElement[]);
+    const [activeId, setActiveId] = useState<string | null>(null);
+    const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+
+    const handleDragStart = useCallback((event: DragStartEvent) => {
+        setActiveId(event.active.id);
+    }, []);
+
+    const handleDragEnd = useCallback((event: DragEndEvent) => {
+        const { active, over } = event;
+        if (active.id !== over?.id) {
+            setCards(items => {
+                const newItems = [...items];
+                const oldIndex = newItems.findIndex(card => card.key === active.id);
+                const newIndex = newItems.findIndex(card => card.key === over?.id);
+
+                if (oldIndex !== -1 && newIndex !== -1) {
+                    const [removed] = newItems.splice(oldIndex, 1);
+                    newItems.splice(newIndex, 0, removed);
+                }
+
+                return newItems;
+            });
+        }
+
+        setActiveId(null);
+    }, []);
+
+    const handleDragCancel = useCallback(() => {
+        setActiveId(null);
+    }, []);
+
     return (
-        <DragDropContext onDragEnd={props.handleDragEnd}>
-            <Droppable droppableId='cards' direction='horizontal'>
-                {provided => (
-                    <StyledUserCardsContainer {...provided.droppableProps} ref={provided.innerRef}>
-                        {props.cards.map((card: ReactElement, index: number) => (
-                            <Draggable
-                                key={card.props.user.id.value}
-                                draggableId={card.props.user.id.value}
-                                index={index}>
-                                {provided => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}>
-                                        {card}
-                                    </div>
-                                )}
-                            </Draggable>
-                        ))}
-                        {provided.placeholder}
-                    </StyledUserCardsContainer>
-                )}
-            </Droppable>
-        </DragDropContext>
+        <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragCancel={handleDragCancel}>
+            <SortableContext items={cards} strategy={rectSortingStrategy}>
+                <Grid columns={5}>{cards.map((card, index) => card)}</Grid>
+            </SortableContext>
+            <DragOverlay adjustScale style={{ transformOrigin: '0 0 ' }}>
+                {activeId ? <SortableCard key={activeId} id={activeId} isDragging /> : null}
+            </DragOverlay>
+        </DndContext>
     );
 }

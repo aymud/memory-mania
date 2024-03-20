@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import styled from 'styled-components';
 
@@ -12,6 +12,21 @@ const UserCardWrapper = styled.div`
     border-radius: 5px;
     text-align: center;
 `;
+// opacity: ${props => (props.withOpacity ? '0.5' : '1')};
+// transform-origin: '50% 50%';
+// height: 140px;
+// width: 140px;
+// border-radius: 10px;
+// cursor: ${props => (props.isDragging ? 'grabbing' : 'grab')};
+// background-color: #ffffff;
+// display: flex;
+// justify-content: center;
+// align-items: center;
+// box-shadow: ${props =>
+//     props.isDragging
+//         ? 'rgb(63 63 68 / 5%) 0px 2px 0px 2px, rgb(34 33 81 / 15%) 0px 2px 3px 2px'
+//         : 'rgb(63 63 68 / 5%) 0px 0px 0px 1px, rgb(34 33 81 / 15%) 0px 1px 3px 0px'};
+// transform: ${props => (props.isDragging ? 'scale(1.05)' : 'scale(1)')};
 
 const UserImg = styled.img`
     max-width: 100%;
@@ -46,9 +61,12 @@ interface UserCardProps {
     handleOnChange: (name: string, id: string) => void;
     isLevelOver: boolean;
     isLearning: boolean;
+    id: string;
+    withOpacity?: boolean;
+    isDragging?: boolean;
 }
 
-export default function UserCard(props: UserCardProps) {
+const UserCard = forwardRef<HTMLDivElement, UserCardProps>(({ withOpacity, isDragging, ...props }, ref) => {
     const [currentName, setCurrentName] = React.useState('');
 
     const nameInput = (
@@ -68,10 +86,12 @@ export default function UserCard(props: UserCardProps) {
     );
 
     return (
-        <UserCardWrapper data-testid='cypress-user-card'>
+        <UserCardWrapper data-testid='cypress-user-card' ref={ref}>
             <UserImg src={props.user.picture.large} alt='User' />
             {props.isLearning ? <UserName>{props.user.name.first}</UserName> : nameInput}
             {gameResults}
         </UserCardWrapper>
     );
-}
+});
+
+export default UserCard;

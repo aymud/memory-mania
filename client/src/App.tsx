@@ -10,8 +10,8 @@ import TestCountdown from './components/TestCountdown.tsx';
 import Timer from './components/Timer.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
-import UserCard from './components/UserCard.tsx';
 import DragDropUserCardContainer from './components/DragDropUserCardContainer.tsx';
+import SortableCard from './components/SortableCard.tsx';
 
 const Main = styled.main`
     display: flex;
@@ -22,23 +22,15 @@ const Main = styled.main`
     margin-top: 50px;
 `;
 
-interface IDragEndResult {
-    source: {
-        index: number;
-    };
-    destination: {
-        index: number;
-    } | null;
-}
-
 const TEST_WAITING_TIME_IN_SECONDS = 10;
 const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
 
 export default function App() {
     const gameState = useGameState();
     const randomUserElements = gameState.randomUsers.map(user => (
-        <UserCard
+        <SortableCard
             key={user.id.value}
+            id={user.id.value}
             handleOnChange={gameState.handleNameEntered}
             user={user}
             allUserNames={gameState.userNames}
@@ -46,17 +38,6 @@ export default function App() {
             isLevelOver={gameState.isLevelOver}
         />
     ));
-
-    const handleDragEnd = (result: IDragEndResult) => {
-        if (!result.destination) return;
-
-        const updatedCards = Array.from(randomUserElements);
-        const [reorderedCard] = updatedCards.splice(result.source.index, 1);
-        updatedCards.splice(result.destination.index, 0, reorderedCard);
-
-        const updatedUsers = updatedCards.map(card => card.props.user);
-        gameState.setRandomUsers(updatedUsers);
-    };
 
     if (gameState.isRandomUsersLoading) {
         return <LoadingSpinner />;
@@ -72,7 +53,7 @@ export default function App() {
                         duration_seconds={TEST_WAITING_TIME_IN_SECONDS}
                     />
                 ) : (
-                    <DragDropUserCardContainer cards={randomUserElements} handleDragEnd={handleDragEnd} />
+                    <DragDropUserCardContainer>{randomUserElements}</DragDropUserCardContainer>
                 )}
                 {gameState.isLearningPhase && (
                     <React.Fragment>
