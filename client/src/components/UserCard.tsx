@@ -49,7 +49,7 @@ interface UserCardProps {
     id: string;
     withOpacity?: boolean;
     isDragging?: boolean;
-    style: CSSProperties;
+    style?: CSSProperties;
 }
 
 const UserCard = forwardRef<HTMLDivElement, UserCardProps>(({ withOpacity, isDragging, style, ...props }, ref) => {
