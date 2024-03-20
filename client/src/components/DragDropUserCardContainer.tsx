@@ -1,6 +1,5 @@
-import React, { ReactElement, ReactNode, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
-import styled from 'styled-components';
 import {
     closestCenter,
     DndContext,
@@ -12,26 +11,40 @@ import {
     useSensor,
     useSensors
 } from '@dnd-kit/core';
-import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
+import { arrayMove, rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 
 import Grid from './Grid.tsx';
-import SortableCard from './SortableCard.tsx';
+import SortableItem from './SortableItem';
+import Item from './Item';
 
-const StyledUserCardsContainer = styled.div`
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
-    padding: 20px;
-`;
+const mockUser = {
+    name: {
+        first: 'John'
+    },
+    picture: {
+        large: 'image.jpg'
+    },
+    id: {
+        value: '123'
+    }
+};
+const mockUser2 = {
+    name: {
+        first: 'John'
+    },
+    picture: {
+        large: 'image.jpg'
+    },
+    id: {
+        value: '12345'
+    }
+};
 
-interface UserCardContainerProps {
-    children: ReactNode;
-}
+const mockAllUserNames = ['John', 'Jane', 'Doe'];
 
-export default function DragDropUserCardContainer(props: UserCardContainerProps) {
-    const [cards, setCards] = useState<ReactElement[]>(React.Children.toArray(props.children) as ReactElement[]);
+const DragDropUserCardContainer: FC = props => {
+    const [items, setItems] = useState(props.children);
+    // console.log(items.map(el => el.key));
     const [activeId, setActiveId] = useState<string | null>(null);
     const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
@@ -41,18 +54,16 @@ export default function DragDropUserCardContainer(props: UserCardContainerProps)
 
     const handleDragEnd = useCallback((event: DragEndEvent) => {
         const { active, over } = event;
+
         if (active.id !== over?.id) {
-            setCards(items => {
-                const newItems = [...items];
-                const oldIndex = newItems.findIndex(card => card.key === active.id);
-                const newIndex = newItems.findIndex(card => card.key === over?.id);
+            setItems(items => {
+                const oldIndex = items.findIndex(card => card.props.user.id.value === active.id);
+                const newIndex = items.findIndex(card => card.props.user.id.value === over.id);
 
-                if (oldIndex !== -1 && newIndex !== -1) {
-                    const [removed] = newItems.splice(oldIndex, 1);
-                    newItems.splice(newIndex, 0, removed);
-                }
+                // const oldIndex = items.indexOf(active.id);
+                // const newIndex = items.indexOf(over!.id);
 
-                return newItems;
+                return arrayMove(items, oldIndex, newIndex);
             });
         }
 
@@ -70,12 +81,18 @@ export default function DragDropUserCardContainer(props: UserCardContainerProps)
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onDragCancel={handleDragCancel}>
-            <SortableContext items={cards} strategy={rectSortingStrategy}>
-                <Grid columns={5}>{cards.map((card, index) => card)}</Grid>
+            <SortableContext items={items.map(el => el.key)} strategy={rectSortingStrategy}>
+                <Grid columns={5}>
+                    {items.map(card => (
+                        <SortableItem key={card.props.user.id.value} id={card.props.user.id.value} />
+                    ))}
+                </Grid>
             </SortableContext>
             <DragOverlay adjustScale style={{ transformOrigin: '0 0 ' }}>
-                {activeId ? <SortableCard key={activeId} id={activeId} isDragging /> : null}
+                {activeId ? <Item id={activeId} isDragging /> : null}
             </DragOverlay>
         </DndContext>
     );
-}
+};
+
+export default DragDropUserCardContainer;

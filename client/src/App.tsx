@@ -11,7 +11,7 @@ import Timer from './components/Timer.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
 import DragDropUserCardContainer from './components/DragDropUserCardContainer.tsx';
-import SortableCard from './components/SortableCard.tsx';
+import SortableItem from './components/SortableItem.tsx';
 
 const Main = styled.main`
     display: flex;
@@ -27,9 +27,10 @@ const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
 
 export default function App() {
     const gameState = useGameState();
-    const randomUserElements = gameState.randomUsers.map(user => (
-        <SortableCard
+    const randomUserElements = gameState.randomUsers.map((user, index) => (
+        <SortableItem
             key={user.id.value}
+            draggableId={index}
             id={user.id.value}
             handleOnChange={gameState.handleNameEntered}
             user={user}
