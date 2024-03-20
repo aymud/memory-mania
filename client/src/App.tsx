@@ -11,7 +11,7 @@ import Timer from './components/Timer.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
 import UserCard from './components/UserCard.tsx';
-import UserCardContainer from './components/UserCardContainer.tsx';
+import DragDropUserCardContainer from './components/DragDropUserCardContainer.tsx';
 
 const Main = styled.main`
     display: flex;
@@ -52,7 +52,7 @@ export default function App() {
                         duration_seconds={TEST_WAITING_TIME_IN_SECONDS}
                     />
                 ) : (
-                    <UserCardContainer>{randomUserElements}</UserCardContainer>
+                    <DragDropUserCardContainer>{randomUserElements}</DragDropUserCardContainer>
                 )}
                 {gameState.isLearningPhase && (
                     <React.Fragment>
