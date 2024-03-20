@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import { ReactElement } from 'react';
 
 import styled from 'styled-components';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
@@ -12,10 +12,6 @@ const StyledUserCardsContainer = styled.div`
     padding: 20px;
 `;
 
-interface UserCardContainerProps {
-    children: ReactNode;
-}
-
 interface IDragEndResult {
     source: {
         index: number;
@@ -25,25 +21,18 @@ interface IDragEndResult {
     } | null;
 }
 
+interface UserCardContainerProps {
+    cards: ReactElement[];
+    handleDragEnd: (result: IDragEndResult) => void;
+}
+
 export default function DragDropUserCardContainer(props: UserCardContainerProps) {
-    const [cards, setCards] = useState<ReactElement[]>(React.Children.toArray(props.children) as ReactElement[]);
-
-    const handleDragEnd = (result: IDragEndResult) => {
-        if (!result.destination) return;
-
-        const updatedCards = Array.from(cards);
-        const [reorderedCard] = updatedCards.splice(result.source.index, 1);
-        updatedCards.splice(result.destination.index, 0, reorderedCard);
-
-        setCards(updatedCards);
-    };
-
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
+        <DragDropContext onDragEnd={props.handleDragEnd}>
             <Droppable droppableId='cards' direction='horizontal'>
                 {provided => (
                     <StyledUserCardsContainer {...provided.droppableProps} ref={provided.innerRef}>
-                        {cards.map((card: ReactElement, index: number) => (
+                        {props.cards.map((card: ReactElement, index: number) => (
                             <Draggable
                                 key={card.props.user.id.value}
                                 draggableId={card.props.user.id.value}
