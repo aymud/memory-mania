@@ -2,29 +2,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 import UserCard from './UserCard.tsx';
+import { IUserCard } from '../types.ts';
 
-interface User {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
-}
-
-interface ISortableCard {
-    id: string;
-    allUserNames: string[];
-    handleOnChange: (name: string, id: string) => void;
-    user: User;
-    isLevelOver: boolean;
-    isLearning: boolean;
-}
-
-export default function SortableUserCard(props: ISortableCard) {
+export default function SortableUserCard(props: IUserCard) {
     const { isDragging, attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
 
     const style = {

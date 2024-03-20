@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import {
     closestCenter,
@@ -16,47 +16,26 @@ import { arrayMove, rectSortingStrategy, SortableContext } from '@dnd-kit/sortab
 
 import Grid from './Grid.tsx';
 import UserCard from './UserCard.tsx';
-
-interface User {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
-}
-interface SortableUserCardProps {
-    user: User;
-    allUserNames: string[];
-    handleOnChange: (name: string, id: string) => void;
-    isLevelOver: boolean;
-    isLearning: boolean;
-    id: string;
-    withOpacity?: boolean;
-    isDragging?: boolean;
-    style?: CSSProperties;
-}
+import { IUserCard } from '../types.ts';
 
 interface DragDropUserCardContainerProps {
-    children: React.ReactElement<SortableUserCardProps>[];
+    children: React.ReactElement<IUserCard>[];
 }
 
 export default function DragDropUserCardContainer(props: DragDropUserCardContainerProps) {
     const [userCards, setUserCards] = useState(props.children);
-    const [activeId, setActiveId] = useState<string | null>(null);
+    const [draggedCardId, setDraggedCardId] = useState<string | null>(null);
     const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
-    const activeCardIndex = userCards.findIndex(card => card.key === activeId);
-    let activeCardProps = null;
-    if (activeCardIndex > -1 && userCards) {
-        activeCardProps = userCards[activeCardIndex].props;
+    // Used for the drag overlay.
+    const draggedCardIndex = userCards.findIndex(card => card.key === draggedCardId);
+    let activeCardProps: IUserCard | undefined;
+    if (draggedCardIndex > -1 && userCards) {
+        activeCardProps = userCards[draggedCardIndex].props;
     }
 
     const handleDragStart = useCallback((event: DragStartEvent) => {
-        setActiveId(String(event.active.id));
+        setDraggedCardId(String(event.active.id));
     }, []);
 
     const handleDragEnd = useCallback((event: DragEndEvent) => {
@@ -69,11 +48,11 @@ export default function DragDropUserCardContainer(props: DragDropUserCardContain
                 return arrayMove(items, oldIndex, newIndex);
             });
         }
-        setActiveId(null);
+        setDraggedCardId(null);
     }, []);
 
     const handleDragCancel = useCallback(() => {
-        setActiveId(null);
+        setDraggedCardId(null);
     }, []);
 
     return (
@@ -87,7 +66,7 @@ export default function DragDropUserCardContainer(props: DragDropUserCardContain
                 <Grid columns={5}>{userCards}</Grid>
             </SortableContext>
             <DragOverlay adjustScale style={{ transformOrigin: '0 0 ' }}>
-                {activeId ? <UserCard isDragging {...activeCardProps} /> : null}
+                {draggedCardId && activeCardProps ? <UserCard isDragging {...activeCardProps} /> : null}
             </DragOverlay>
         </DndContext>
     );

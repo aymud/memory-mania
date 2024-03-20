@@ -3,6 +3,7 @@ import React, { CSSProperties, forwardRef } from 'react';
 import styled from 'styled-components';
 
 import NameDropdown from './NameDropdown.tsx';
+import { IUserCard } from '../types.ts';
 
 const UserCardWrapper = styled.div`
     grid-gap: 10px;
@@ -28,31 +29,7 @@ const ResultText = styled.div<{ $isCorrect: boolean }>`
     color: ${props => (props.$isCorrect ? 'green' : 'red')};
 `;
 
-interface User {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
-}
-
-interface UserCardProps {
-    user: User;
-    allUserNames: string[];
-    handleOnChange: (name: string, id: string) => void;
-    isLevelOver: boolean;
-    isLearning: boolean;
-    id: string;
-    withOpacity?: boolean;
-    isDragging?: boolean;
-    style?: CSSProperties;
-}
-
-const UserCard = forwardRef<HTMLDivElement, UserCardProps>(({ withOpacity, isDragging, style, ...props }, ref) => {
+const UserCard = forwardRef<HTMLDivElement, IUserCard>(({ withOpacity, isDragging, style, ...props }, ref) => {
     const [currentName, setCurrentName] = React.useState('');
 
     const nameInput = (
