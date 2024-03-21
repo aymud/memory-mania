@@ -3,7 +3,7 @@ import React from 'react';
 import { useRandomUsers } from './useRandomUsers.ts';
 import useTimer from './useTimer.ts';
 import { shuffleArray } from '../utils/manipulation.ts';
-import { User } from '../types.ts';
+import { IUser } from '../types.ts';
 
 interface EnteredNamesType {
     id: string;
@@ -89,7 +89,7 @@ export const useGameState = () => {
     function handleTestSubmit() {
         // Iterate over randomUsers and check if the entered names match, and update score.
         const namesValidated: EnteredNamesType[] = enteredNames.map(actualUser => {
-            const expectedUser = randomUsers.find((user: User) => user.id.value === actualUser.id);
+            const expectedUser = randomUsers.find((user: IUser) => user.id.value === actualUser.id);
             if (expectedUser) {
                 const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
                 return {

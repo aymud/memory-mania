@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-export interface User {
+export interface IUser {
     name: {
         first: string;
     };
@@ -14,7 +14,7 @@ export interface User {
 
 export interface IUserCard {
     id: string;
-    user: User;
+    user: IUser;
     allUserNames: string[];
     handleOnChange: (name: string, id: string) => void;
     isLevelOver: boolean;

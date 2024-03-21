@@ -32,6 +32,8 @@ describe('UserCard Component', () => {
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={false}
                 isLearning={true}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -50,6 +52,8 @@ describe('UserCard Component', () => {
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={false}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -66,6 +70,8 @@ describe('UserCard Component', () => {
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={false}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -85,6 +91,8 @@ describe('UserCard Component', () => {
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={true}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -107,6 +115,8 @@ describe('UserCard Component', () => {
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={true}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -127,6 +137,8 @@ describe('UserCard Component', () => {
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={true}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
