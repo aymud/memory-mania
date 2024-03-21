@@ -63,10 +63,10 @@ export default function DragDropUserCardContainer(props: DragDropUserCardContain
             onDragEnd={handleDragEnd}
             onDragCancel={handleDragCancel}>
             <SortableContext items={userCards.map(card => card.key as UniqueIdentifier)} strategy={rectSortingStrategy}>
-                <Grid columns={5}>{userCards}</Grid>
+                <Grid numOfColumns={5}>{userCards}</Grid>
             </SortableContext>
             <DragOverlay adjustScale style={{ transformOrigin: '0 0 ' }}>
-                {draggedCardId && activeCardProps ? <UserCard isDragging {...activeCardProps} /> : null}
+                {draggedCardId && activeCardProps ? <UserCard {...activeCardProps} isDragging /> : null}
             </DragOverlay>
         </DndContext>
     );

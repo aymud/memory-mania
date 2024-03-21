@@ -36,6 +36,8 @@ export default function App() {
             allUserNames={gameState.userNames}
             isLearning={gameState.isLearningPhase}
             isLevelOver={gameState.isLevelOver}
+            isDragging={false}
+            withOpacity={false}
         />
     ));
 

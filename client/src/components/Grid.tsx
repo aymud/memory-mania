@@ -4,17 +4,17 @@ import styled from 'styled-components';
 
 type GridProps = {
     children: ReactNode;
-    columns: number;
+    numOfColumns: number;
 };
 
-const GridContainer = styled.div<GridProps>`
+const GridContainer = styled.div<{ $numOfColumns: number }>`
     display: grid;
-    grid-template-columns: ${({ columns }) => `repeat(${columns}, 1fr)`};
+    grid-template-columns: ${props => `repeat(${props.$numOfColumns}, 1fr)`};
     grid-gap: 10px;
     max-width: 800px;
     margin: 100px auto;
 `;
 
 export default function Grid(props: GridProps) {
-    return <GridContainer columns={props.columns}>{props.children}</GridContainer>;
+    return <GridContainer $numOfColumns={props.numOfColumns}>{props.children}</GridContainer>;
 }

@@ -1,17 +1,25 @@
-import React, { CSSProperties, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import styled from 'styled-components';
 
 import NameDropdown from './NameDropdown.tsx';
 import { IUserCard } from '../types.ts';
 
-const UserCardWrapper = styled.div`
+const UserCardWrapper = styled.div<{ $withOpacity: boolean; $isDragging: boolean }>`
     grid-gap: 10px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
     text-align: center;
+    opacity: ${props => (props.$withOpacity ? '0.5' : '1')};
+    cursor: ${props => (props.$isDragging ? 'grabbing' : 'grab')};
+    box-shadow: ${({ $isDragging }) =>
+        $isDragging
+            ? 'rgb(63 63 68 / 5%) 0px 2px 0px 2px, rgb(34 33 81 / 15%) 0px 2px 3px 2px'
+            : 'rgb(63 63 68 / 5%) 0px 0px 0px 1px, rgb(34 33 81 / 15%) 0px 1px 3px 0px'};
+    transform: ${({ $isDragging }) => ($isDragging ? 'scale(1.05)' : 'scale(1)')};
+    transform-origin: 50% 50%;
 `;
 
 const UserImg = styled.img`
@@ -29,40 +37,46 @@ const ResultText = styled.div<{ $isCorrect: boolean }>`
     color: ${props => (props.$isCorrect ? 'green' : 'red')};
 `;
 
-const UserCard = forwardRef<HTMLDivElement, IUserCard>(({ withOpacity, isDragging, style, ...props }, ref) => {
+const UserCard = forwardRef<HTMLDivElement, IUserCard>((props, ref) => {
+    const {
+        withOpacity,
+        isDragging,
+        cardTransformStyle,
+        handleOnChange,
+        isLearning,
+        isLevelOver,
+        user,
+        allUserNames,
+        ...restProps
+    } = props;
     const [currentName, setCurrentName] = React.useState('');
 
     const nameInput = (
         <NameDropdown
-            user={props.user}
-            allNames={props.allUserNames}
+            user={user}
+            allNames={allUserNames}
             setCurrentName={setCurrentName}
-            handleOnChange={props.handleOnChange}
-            isLevelOver={props.isLevelOver}
+            handleOnChange={handleOnChange}
+            isLevelOver={isLevelOver}
         />
     );
 
-    const gameResults = props.isLevelOver && (
-        <ResultText $isCorrect={currentName === props.user.name.first.toLowerCase()} data-testid='result-text'>
-            {props.user.name.first}
+    const gameResults = isLevelOver && (
+        <ResultText $isCorrect={currentName === user.name.first.toLowerCase()} data-testid='result-text'>
+            {user.name.first}
         </ResultText>
     );
 
-    const inlineStyles: CSSProperties = {
-        opacity: withOpacity ? '0.5' : '1',
-        transformOrigin: '50% 50%',
-        cursor: isDragging ? 'grabbing' : 'grab',
-        boxShadow: isDragging
-            ? 'rgb(63 63 68 / 5%) 0px 2px 0px 2px, rgb(34 33 81 / 15%) 0px 2px 3px 2px'
-            : 'rgb(63 63 68 / 5%) 0px 0px 0px 1px, rgb(34 33 81 / 15%) 0px 1px 3px 0px',
-        transform: isDragging ? 'scale(1.05)' : 'scale(1)',
-        ...style
-    };
-
     return (
-        <UserCardWrapper data-testid='cypress-user-card' ref={ref} style={inlineStyles} {...props}>
-            <UserImg src={props.user.picture.large} alt='User' />
-            {props.isLearning ? <UserName>{props.user.name.first}</UserName> : nameInput}
+        <UserCardWrapper
+            data-testid='cypress-user-card'
+            $withOpacity={withOpacity}
+            $isDragging={isDragging}
+            style={cardTransformStyle}
+            ref={ref}
+            {...restProps}>
+            <UserImg src={user.picture.large} alt='User' />
+            {isLearning ? <UserName>{user.name.first}</UserName> : nameInput}
             {gameResults}
         </UserCardWrapper>
     );

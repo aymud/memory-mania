@@ -19,7 +19,7 @@ export interface IUserCard {
     handleOnChange: (name: string, id: string) => void;
     isLevelOver: boolean;
     isLearning: boolean;
-    withOpacity?: boolean;
-    isDragging?: boolean;
-    style?: CSSProperties;
+    withOpacity: boolean;
+    isDragging: boolean;
+    cardTransformStyle?: CSSProperties;
 }
