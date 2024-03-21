@@ -55,7 +55,14 @@ export default function App() {
                         duration_seconds={TEST_WAITING_TIME_IN_SECONDS}
                     />
                 ) : (
-                    <DragDropUserCardContainer>{randomUserElements}</DragDropUserCardContainer>
+                    <DragDropUserCardContainer
+                        // The key is important because the component will re-render every time the key changes.
+                        key={randomUserElements
+                            .map(child => child.key)
+                            .sort()
+                            .join('')}>
+                        {randomUserElements}
+                    </DragDropUserCardContainer>
                 )}
                 {gameState.isLearningPhase && (
                     <React.Fragment>
