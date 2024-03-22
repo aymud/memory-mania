@@ -1,4 +1,5 @@
-import { tryFetchData } from '../apiHelper.ts';
+import { mapAPIUserData, tryFetchData } from '../apiHelper.ts';
+import { IApiUser, IUser } from '../../types.ts';
 
 describe('tryFetchData', () => {
     beforeEach(() => {
@@ -40,5 +41,23 @@ describe('tryFetchData', () => {
         await expect(tryFetchData('https://example.com/api')).rejects.toThrow(`Error fetching data: ${errorMessage}`);
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expect(global.fetch).toHaveBeenCalledWith('https://example.com/api', {});
+    });
+});
+
+describe('mapAPIUserData', () => {
+    it('maps API user data correctly to IUser', () => {
+        const mockApiUser: IApiUser = {
+            id: { value: '12345' },
+            name: { first: 'John' },
+            picture: { large: 'https://example.com/picture.jpg' }
+        };
+        const expectedUser: IUser = {
+            id: '12345',
+            firstName: 'John',
+            pictureURL: 'https://example.com/picture.jpg'
+        };
+
+        const mappedUser = mapAPIUserData(mockApiUser);
+        expect(mappedUser).toEqual(expectedUser);
     });
 });
