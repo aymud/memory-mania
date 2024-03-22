@@ -1,35 +1,14 @@
-import styled from 'styled-components';
+import { Button } from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 import { UseTheme } from '../hooks/useTheme.ts';
-import { ITheme, lightTheme } from '../themes.ts';
-
-const StyledButton = styled.button<{
-    $theme: ITheme;
-}>`
-    background-color: ${props => props.$theme.backgroundColor};
-    color: ${props => props.$theme.color};
-    border: 1px solid ${props => props.$theme.buttonBorderColor};
-    padding: 8px 16px;
-    cursor: pointer;
-    transition:
-        background-color 0.3s,
-        color 0.3s;
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    white-space: nowrap;
-
-    &:hover {
-        background-color: ${props => props.$theme.backgroundColor};
-    }
-`;
+import { lightTheme } from '../themes.ts';
 
 export default function ThemeSwitcher() {
     const { theme, toggleTheme } = UseTheme();
-
     return (
-        <StyledButton $theme={theme} onClick={toggleTheme}>
-            Switch to {theme === lightTheme ? 'DARK' : 'LIGHT'} mode
-        </StyledButton>
+        <Button aria-label='Toggle Color Mode' onClick={toggleTheme} _focus={{ boxShadow: 'none' }} w='fit-content'>
+            {theme === lightTheme ? <MoonIcon color='black' /> : <SunIcon />}
+        </Button>
     );
 }

@@ -18,6 +18,7 @@ const TimerContainer = styled.div`
 
 const Time = styled.div`
     font-size: 2rem;
+    color: black;
 `;
 
 interface ITimerProps {

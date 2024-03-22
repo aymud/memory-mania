@@ -1,96 +1,87 @@
-import { FiMenu, FiUser } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React from 'react';
 
+import {
+    Avatar,
+    Box,
+    Button,
+    Center,
+    Flex,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuItem,
+    MenuList,
+    Stack
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+
+import ThemeSwitcher from './ThemeSwitcher.tsx';
 import { useAuthState } from '../hooks/useAuthState.ts';
+import { UseTheme } from '../hooks/useTheme.ts';
 
 interface NavbarProps {
     level?: number;
 }
 
-const NavbarList = styled.ul`
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background: ${props => props.theme.navbarBackgroundColor};
-    color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    list-style: none;
-    margin: 0;
-`;
-
-const NavbarItem = styled.li<{ $isRight: boolean }>`
-    padding: 10px;
-    margin-left: 5px;
-    font-size: 1.5em;
-    transition: box-shadow 0.3s;
-    color: #fff;
-
-    ${props => props.$isRight && 'margin-left: auto'};
-`;
-
-const MenuIcon = styled.div`
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-`;
-
-const ProfileContainer = styled.div`
-    display: flex;
-    align-items: center;
-    color: #ccc;
-    cursor: pointer;
-`;
-
-const ProfileIcon = styled.div`
-    font-size: 1.5rem;
-    margin-right: 5px;
-    color: #fff;
-`;
-
-const ProfileName = styled.div`
-    font-size: 1.5rem;
-    color: #fff;
-`;
-
-const LevelInfo = styled.div`
-    font-size: 1.5rem;
-    font-weight: bold;
-    /* Center the LevelInfo horizontally */
-    flex: 1;
-    text-align: center;
-`;
-
 export default function Navbar(props: NavbarProps) {
+    const { isAuthenticated, user, logout } = useAuthState();
+    const { theme } = UseTheme();
     const navigate = useNavigate();
-    const { isAuthenticated, user } = useAuthState();
-
-    function handleProfile() {
-        navigate('/profile');
-    }
 
     return (
-        <header>
-            <nav>
-                <NavbarList>
-                    <MenuIcon>
-                        <FiMenu />
-                    </MenuIcon>
-                    {props.level && <LevelInfo data-testid='cypress-level-info'>Level {props.level}</LevelInfo>}
-                    {isAuthenticated ? (
-                        <NavbarItem $isRight>
-                            <ProfileContainer onClick={handleProfile}>
-                                <ProfileIcon>
-                                    <FiUser />
-                                </ProfileIcon>
-                                <ProfileName>{user}</ProfileName>
-                            </ProfileContainer>
-                        </NavbarItem>
-                    ) : (
-                        <NavbarItem $isRight>Login</NavbarItem>
+        <React.Fragment>
+            <Box bg={theme.navbarBackgroundColor} px={4}>
+                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                    <Box color={theme.navbarTextColor}>Logo</Box>
+                    {props.level && (
+                        <Box data-testid='cypress-level-info' color={theme.navbarTextColor}>
+                            Level {props.level}
+                        </Box>
                     )}
-                </NavbarList>
-            </nav>
-        </header>
+                    <Flex alignItems={'center'}>
+                        <Stack direction={'row'} spacing={7}>
+                            <ThemeSwitcher />
+                            {isAuthenticated && (
+                                <Menu>
+                                    <MenuButton
+                                        as={Button}
+                                        rounded={'full'}
+                                        variant={'link'}
+                                        cursor={'pointer'}
+                                        minW={0}>
+                                        <Avatar
+                                            size={'sm'}
+                                            src={
+                                                'https://api.dicebear.com/8.x/adventurer-neutral/svg?seed=Salem&radius=50'
+                                            }
+                                        />
+                                    </MenuButton>
+                                    <MenuList alignItems={'center'}>
+                                        <br />
+                                        <Center>
+                                            <Avatar
+                                                size={'2xl'}
+                                                src={
+                                                    'https://api.dicebear.com/8.x/adventurer-neutral/svg?seed=Salem&radius=50'
+                                                }
+                                            />
+                                        </Center>
+                                        <br />
+                                        <Center>
+                                            <p>{user}</p>
+                                        </Center>
+                                        <br />
+                                        <MenuDivider />
+                                        <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+                                        <MenuItem>Settings</MenuItem>
+                                        <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            )}
+                        </Stack>
+                    </Flex>
+                </Flex>
+            </Box>
+        </React.Fragment>
     );
 }

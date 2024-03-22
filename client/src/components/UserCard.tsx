@@ -31,6 +31,7 @@ const UserName = styled.div`
     font-weight: bold;
     margin-top: 10px;
     font-size: 18px;
+    color: ${props => props.theme.cardTextColor};
 `;
 
 const ResultText = styled.div<{ $isCorrect: boolean }>`

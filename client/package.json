@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "@4tw/cypress-drag-drop": "^2.2.5",
+        "@chakra-ui/icons": "^2.1.1",
         "@chakra-ui/react": "^2.8.2",
         "@cypress/webpack-preprocessor": "^6.0.1",
         "@dnd-kit/core": "^6.1.0",
