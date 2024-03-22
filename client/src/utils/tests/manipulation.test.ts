@@ -2,7 +2,7 @@ import { getDistinctUsers, shuffleArray } from '../manipulation.ts';
 
 describe('shuffleArray', () => {
     it('should shuffle the array randomly', () => {
-        const inputArray = [1, 2, 3, 4, 5];
+        const inputArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         const shuffledArray = shuffleArray(inputArray);
 
         // Check if the shuffled array is not equal to the input array in terms of order.
