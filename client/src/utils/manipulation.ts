@@ -1,5 +1,4 @@
 // Shuffle an array randomly using the Fisher-Yates shuffle algorithm.
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IUser } from '../types.ts';
 
 export function shuffleArray<T>(array: T[]): T[] {
