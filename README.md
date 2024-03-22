@@ -38,10 +38,9 @@ This folder structure separates the client and server parts of the application.
 │     │   ├── login.jsx  
 │     ├── utils/            - Helper functions and classes
 │     ├── App.tsx           - Core component that manages the game's logic and user interface
-│     ├── App.css
-│     ├── index.html        - Template file which is served up when script is run
 │     ├── main.tsx          - Entry point for rendering the React app into the HTML template
 │     ├── themes.ts         - Application themes that defines the colours
+├──── index.html            - Template file which is served up when script is run
 ├──── .eslintrc.cjs         - ESLint configuration for linting code
 ├──── .prettierrc           - Prettier configuration for code formatting rules
 ├──── tsconfig.json         - TypeScript configuration for compiler and linting options
@@ -124,6 +123,8 @@ This project utilizes various aspects of the React ecosystem, including:
 - React Testing Library / Jest: For writing unit tests for React components and ensuring their behavior as expected.
 - Authentication: Simulated authentication using mock data and local storage for storing user credentials.
 - API Requests: Utilizing Fetch API for making HTTP requests to fetch data from external APIs.
+- Draggable Components: Incorporates draggable components from the React dnd kit package,
+  enhancing user interaction and interface design.
 
 ### Continuous Integration (CI) and Continuous Deployment (CD)
 
