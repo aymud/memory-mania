@@ -8,7 +8,7 @@
 
 ## Contents
 
-- [Overview](#1-overview)
+- [Overview](#1--overview)
 - [Folder Structure](#2-folder-structure)
 - [Running the Application Locally](#3--running-the-application-locally)
 - [Prerequisites](#4-prerequisites)
@@ -97,7 +97,7 @@ follow these steps to run the application locally.
 > early in the development process.
 > You can configure your code editor to automatically format code using the ESLint and Prettier config files.
 
-## `5`  ✨ Technologies and Concepts Used
+## `5` ✨ Technologies and Concepts Used
 
 ### Why React?
 
