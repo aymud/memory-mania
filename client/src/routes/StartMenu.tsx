@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Instructions from '../components/Instructions.tsx';
-import ThemeSwitcher from '../components/ThemeSwitcher.tsx';
+import Navbar from '../components/Navbar.tsx';
 
 const StyledStartMenu = styled.div`
     height: 100vh;
@@ -48,28 +48,23 @@ export default function StartMenu() {
         setShowInstructions(prevShowInstructions => !prevShowInstructions);
     }
 
-    function handleProfile() {
-        navigate('/profile');
-    }
-
     function handleStartGame() {
         navigate('/app');
     }
 
     return (
-        <StyledStartMenu>
-            <ThemeSwitcher />
-            <GameTitle data-testid='cypress-main-title'>Memory Mania</GameTitle>
-            <MenuButton data-testid='cypress-start-game-button' onClick={handleStartGame}>
-                Start Game
-            </MenuButton>
-            <MenuButton data-testid='cypress-instructions-button' onClick={toggleInstructions}>
-                Instructions
-            </MenuButton>
-            <MenuButton data-testid='cypress-profile-button' onClick={handleProfile}>
-                Profile
-            </MenuButton>
-            {showInstructions && <Instructions OnToggle={toggleInstructions} />}
-        </StyledStartMenu>
+        <React.Fragment>
+            <Navbar />
+            <StyledStartMenu>
+                <GameTitle data-testid='cypress-main-title'>Memory Mania</GameTitle>
+                <MenuButton data-testid='cypress-start-game-button' onClick={handleStartGame}>
+                    Start Game
+                </MenuButton>
+                <MenuButton data-testid='cypress-instructions-button' onClick={toggleInstructions}>
+                    Instructions
+                </MenuButton>
+                {showInstructions && <Instructions OnToggle={toggleInstructions} />}
+            </StyledStartMenu>
+        </React.Fragment>
     );
 }
