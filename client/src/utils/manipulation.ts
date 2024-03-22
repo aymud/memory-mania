@@ -1,5 +1,7 @@
 // Shuffle an array randomly using the Fisher-Yates shuffle algorithm.
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IUser } from '../types.ts';
+
 export function shuffleArray<T>(array: T[]): T[] {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -9,23 +11,11 @@ export function shuffleArray<T>(array: T[]): T[] {
     return shuffled;
 }
 
-interface UserType {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
-}
-
-export function getDistinctUsers(data: UserType[], numOfRandomUsers: number) {
+export function getDistinctUsers(data: IUser[], numOfRandomUsers: number) {
     // Distinct user := unique user picture.
 
     const userPictures = new Set();
-    const distinctUsers: UserType[] = [];
+    const distinctUsers: IUser[] = [];
 
     for (const user of data) {
         const picture = user.picture.large;

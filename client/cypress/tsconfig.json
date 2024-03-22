@@ -4,6 +4,7 @@
     "_version": "3.0.0",
 
     "compilerOptions": {
+        "types": ["cypress", "node", "@4tw/cypress-drag-drop"],
         "target": "ES2020",
         "useDefineForClassFields": true,
         "lib": ["ES2020", "DOM", "DOM.Iterable"],

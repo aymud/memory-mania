@@ -8,18 +8,10 @@ import Navbar from './components/Navbar.tsx';
 import ScoreMessage from './components/ScoreMessage.tsx';
 import TestCountdown from './components/TestCountdown.tsx';
 import Timer from './components/Timer.tsx';
-import UserCard from './components/UserCard.tsx';
 import { useGameState } from './hooks/useGameState.ts';
 import { ThemedAppContainer } from './components/ThemedAppContainer.tsx';
-
-const UserCardsContainer = styled.div`
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
-    padding: 20px;
-`;
+import DragDropUserCardContainer from './components/DragDropUserCardContainer.tsx';
+import SortableUserCard from './components/SortableUserCard.tsx';
 
 const Main = styled.main`
     display: flex;
@@ -35,23 +27,19 @@ const MINIMUM_SCORE_FOR_NEXT_LEVEL_PERCENTAGE = 0.6;
 
 export default function App() {
     const gameState = useGameState();
-    const isTestingPhase = !gameState.isLearningPhase && !gameState.isWaitingTestStart && !gameState.isLevelOver;
-    const userNames = gameState.randomUsers.map(user => user.name.first);
     const randomUserElements = gameState.randomUsers.map(user => (
-        <UserCard
+        <SortableUserCard
             key={user.id.value}
+            id={user.id.value}
             handleOnChange={gameState.handleNameEntered}
             user={user}
-            allUserNames={userNames}
+            allUserNames={gameState.userNames}
             isLearning={gameState.isLearningPhase}
             isLevelOver={gameState.isLevelOver}
+            isDragging={false}
+            withOpacity={false}
         />
     ));
-
-    React.useEffect(() => {
-        if (!isTestingPhase) return;
-        gameState.startTestingPhaseTimer();
-    }, [isTestingPhase, gameState.startTestingPhaseTimer, gameState]);
 
     if (gameState.isRandomUsersLoading) {
         return <LoadingSpinner />;
@@ -67,7 +55,9 @@ export default function App() {
                         duration_seconds={TEST_WAITING_TIME_IN_SECONDS}
                     />
                 ) : (
-                    <UserCardsContainer>{randomUserElements}</UserCardsContainer>
+                    <DragDropUserCardContainer randomUsers={gameState.randomUsers}>
+                        {randomUserElements}
+                    </DragDropUserCardContainer>
                 )}
                 {gameState.isLearningPhase && (
                     <React.Fragment>
@@ -77,7 +67,7 @@ export default function App() {
                         </Button>
                     </React.Fragment>
                 )}
-                {isTestingPhase && (
+                {gameState.isTestingPhase && (
                     <React.Fragment>
                         <Timer timeInSeconds={gameState.testingPhaseTimeRemainingInSeconds} />
                         <Button data-testid='cypress-finish-test-button' onClick={gameState.handleTestSubmit}>

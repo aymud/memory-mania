@@ -2,18 +2,7 @@ import React from 'react';
 
 import { tryFetchData } from '../utils/apiHelper.ts';
 import { getDistinctUsers } from '../utils/manipulation.ts';
-
-interface UserType {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
-}
+import { IUser } from '../types.ts';
 
 const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
 
@@ -22,7 +11,7 @@ export const useRandomUsers = (
     isLearningPhase: boolean,
     startLearningPhaseTimer: () => void
 ) => {
-    const [randomUsers, setRandomUsers] = React.useState<UserType[]>([]);
+    const [randomUsers, setRandomUsers] = React.useState<IUser[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {

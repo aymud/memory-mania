@@ -26,11 +26,14 @@ describe('UserCard Component', () => {
     test('renders UserCard with user info', () => {
         render(
             <UserCard
+                id={mockUser.id.value}
                 user={mockUser}
                 allUserNames={mockAllUserNames}
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={false}
                 isLearning={true}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -43,11 +46,14 @@ describe('UserCard Component', () => {
     test('renders UserCard with NameDropdown in testing mode', () => {
         render(
             <UserCard
+                id={mockUser.id.value}
                 user={mockUser}
                 allUserNames={mockAllUserNames}
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={false}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -58,11 +64,14 @@ describe('UserCard Component', () => {
     test('handles name selection and calls callback in testing mode', () => {
         render(
             <UserCard
+                id={mockUser.id.value}
                 user={mockUser}
                 allUserNames={mockAllUserNames}
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={false}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -76,11 +85,14 @@ describe('UserCard Component', () => {
     test('renders UserCard with game results when game is over', () => {
         render(
             <UserCard
+                id={mockUser.id.value}
                 user={mockUser}
                 allUserNames={mockAllUserNames}
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={true}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -97,11 +109,14 @@ describe('UserCard Component', () => {
     test('incorrect name: renders UserCard with game results when game is over', () => {
         render(
             <UserCard
+                id={mockUser.id.value}
                 user={mockUser}
                 allUserNames={mockAllUserNames}
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={true}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
@@ -116,11 +131,14 @@ describe('UserCard Component', () => {
     test('no name selected: renders UserCard with game results when game is over', () => {
         render(
             <UserCard
+                id={mockUser.id.value}
                 user={mockUser}
                 allUserNames={mockAllUserNames}
                 handleOnChange={mockHandleOnChange}
                 isLevelOver={true}
                 isLearning={false}
+                isDragging={false}
+                withOpacity={false}
             />
         );
 
