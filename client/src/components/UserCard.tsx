@@ -62,8 +62,8 @@ const UserCard = forwardRef<HTMLDivElement, IUserCard>((props, ref) => {
     );
 
     const gameResults = isLevelOver && (
-        <ResultText $isCorrect={currentName === user.name.first.toLowerCase()} data-testid='result-text'>
-            {user.name.first}
+        <ResultText $isCorrect={currentName === user.firstName.toLowerCase()} data-testid='result-text'>
+            {user.firstName}
         </ResultText>
     );
 
@@ -75,8 +75,8 @@ const UserCard = forwardRef<HTMLDivElement, IUserCard>((props, ref) => {
             style={cardTransformStyle}
             ref={ref}
             {...restProps}>
-            <UserImg src={user.picture.large} alt='User' />
-            {isLearning ? <UserName>{user.name.first}</UserName> : nameInput}
+            <UserImg src={user.pictureURL} alt='User' />
+            {isLearning ? <UserName>{user.firstName}</UserName> : nameInput}
             {gameResults}
         </UserCardWrapper>
     );

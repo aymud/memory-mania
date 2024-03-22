@@ -29,8 +29,8 @@ export default function App() {
     const gameState = useGameState();
     const randomUserElements = gameState.randomUsers.map(user => (
         <SortableUserCard
-            key={user.id.value}
-            id={user.id.value}
+            key={user.id}
+            id={user.id}
             handleOnChange={gameState.handleNameEntered}
             user={user}
             allUserNames={gameState.userNames}

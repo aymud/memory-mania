@@ -47,7 +47,7 @@ export const useGameState = () => {
         isLoading: isRandomUsersLoading,
         setIsLoading
     } = useRandomUsers(numOfRandomUsers, isLearningPhase, startLearningPhaseTimer);
-    const userNames = randomUsers.map(user => user.name.first);
+    const userNames = randomUsers.map(user => user.firstName);
 
     React.useEffect(() => {
         if (!isTestingPhase) return;
@@ -90,9 +90,9 @@ export const useGameState = () => {
     function handleTestSubmit() {
         // Iterate over randomUsers and check if the entered names match, and update score.
         const namesValidated: EnteredNamesType[] = enteredNames.map(actualUser => {
-            const expectedUser = randomUsers.find((user: IUser) => user.id.value === actualUser.id);
+            const expectedUser = randomUsers.find((user: IUser) => user.id === actualUser.id);
             if (expectedUser) {
-                const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
+                const isNameCorrect = actualUser.name === expectedUser.firstName.toLowerCase();
                 return {
                     ...actualUser,
                     isCorrect: isNameCorrect

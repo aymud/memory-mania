@@ -9,11 +9,7 @@ import NameDropdown from '../NameDropdown.tsx';
 
 describe('NameDropdown Component', () => {
     const mockNames = ['John', 'Jane', 'Doe'];
-    const mockUser = {
-        id: {
-            value: '123'
-        }
-    };
+    const mockUser = { id: '123' };
     const mockSetCurrentName = jest.fn();
     const mockHandleOnChange = jest.fn();
     let rerender: (ui: ReactNode | null) => void;

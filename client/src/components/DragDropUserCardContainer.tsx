@@ -29,7 +29,7 @@ export default function DragDropUserCardContainer(props: DragDropUserCardContain
     const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
     // Used for the drag overlay.
-    const draggedCardIndex = props.children.findIndex(card => card.props.user.id.value === draggedCardId);
+    const draggedCardIndex = props.children.findIndex(card => card.props.user.id === draggedCardId);
     let activeCardProps: IUserCard | undefined;
     if (draggedCardIndex > -1 && props.children) {
         activeCardProps = props.children[draggedCardIndex].props;
@@ -48,8 +48,8 @@ export default function DragDropUserCardContainer(props: DragDropUserCardContain
 
         if (active.id !== over?.id) {
             setUserCards(items => {
-                const oldIndex = items.findIndex(card => card.id.value === active.id);
-                const newIndex = items.findIndex(card => card.id.value === over!.id);
+                const oldIndex = items.findIndex(card => card.id === active.id);
+                const newIndex = items.findIndex(card => card.id === over!.id);
                 return arrayMove(items, oldIndex, newIndex);
             });
         }
@@ -67,9 +67,7 @@ export default function DragDropUserCardContainer(props: DragDropUserCardContain
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onDragCancel={handleDragCancel}>
-            <SortableContext
-                items={userCards.map(card => card.id.value as UniqueIdentifier)}
-                strategy={rectSortingStrategy}>
+            <SortableContext items={userCards.map(card => card.id as UniqueIdentifier)} strategy={rectSortingStrategy}>
                 <Grid numOfColumns={5}>
                     {/* Sort props children array using the userCards array because userCard holds the order otherwise the cards will not update when dragged. */}
                     {props.children.sort(

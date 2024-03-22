@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { tryFetchData } from '../utils/apiHelper.ts';
+import { mapAPIUserData, tryFetchData } from '../utils/apiHelper.ts';
 import { getDistinctUsers } from '../utils/manipulation.ts';
-import { IUser } from '../types.ts';
+import { IApiUser, IUser } from '../types.ts';
 
 const RANDOM_USER_GENERATOR_API_URL = 'https://randomuser.me/api/';
 
@@ -25,7 +25,8 @@ export const useRandomUsers = (
         const nationality = 'CA,US,AU';
         const apiParams = `?inc=${fields}&format=${format}&nat=${nationality}&results=${numOfRandomUsers * 2}`;
         tryFetchData(RANDOM_USER_GENERATOR_API_URL + apiParams).then(data => {
-            setRandomUsers(getDistinctUsers(data.results, numOfRandomUsers));
+            const results = data.results.map((user: IApiUser) => mapAPIUserData(user));
+            setRandomUsers(getDistinctUsers(results, numOfRandomUsers));
             startLearningPhaseTimer();
             setIsLoading(false);
         });
