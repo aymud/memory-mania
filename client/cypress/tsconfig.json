@@ -3,5 +3,6 @@
     "compilerOptions": {
         "types": ["cypress", "node", "@4tw/cypress-drag-drop"]
     },
-    "include": ["**/*.ts"]
+    "include": ["../cypress.config.cjs", "**/*.ts"],
+    "exclude": []
 }
