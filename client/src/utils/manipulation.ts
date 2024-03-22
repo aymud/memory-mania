@@ -18,7 +18,7 @@ export function getDistinctUsers(data: IUser[], numOfRandomUsers: number) {
     const distinctUsers: IUser[] = [];
 
     for (const user of data) {
-        const picture = user.picture.large;
+        const picture = user.pictureURL;
 
         // Only add a user to the list if there isn't already a user with that picture.
         if (userPictures.has(picture)) {

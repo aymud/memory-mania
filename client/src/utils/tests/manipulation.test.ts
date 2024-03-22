@@ -1,4 +1,5 @@
 import { getDistinctUsers, shuffleArray } from '../manipulation.ts';
+import { IUser } from '../../types.ts';
 
 describe('shuffleArray', () => {
     it('should shuffle the array randomly', () => {
@@ -16,26 +17,26 @@ describe('shuffleArray', () => {
 
 describe('getDistinctUsers', () => {
     it('should return an array of distinct users', () => {
-        const inputUsers = [
+        const inputUsers: IUser[] = [
             {
-                name: { first: '' },
-                picture: { large: '1' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '1',
+                id: ''
             },
             {
-                name: { first: '' },
-                picture: { large: '2' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '2',
+                id: ''
             },
             {
-                name: { first: '' },
-                picture: { large: '1' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '1',
+                id: ''
             },
             {
-                name: { first: '' },
-                picture: { large: '3' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '3',
+                id: ''
             }
         ];
 
@@ -44,31 +45,31 @@ describe('getDistinctUsers', () => {
 
         expect(distinctUsers).toHaveLength(numOfRandomUsers);
 
-        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.large));
+        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.pictureURL));
         expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length);
     });
 
     it('should return a smaller array than requested of distinct users', () => {
-        const inputUsers = [
+        const inputUsers: IUser[] = [
             {
-                name: { first: '' },
-                picture: { large: '1' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '1',
+                id: ''
             },
             {
-                name: { first: '' },
-                picture: { large: '2' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '2',
+                id: ''
             },
             {
-                name: { first: '' },
-                picture: { large: '1' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '1',
+                id: ''
             },
             {
-                name: { first: '' },
-                picture: { large: '2' },
-                id: { value: '' }
+                firstName: '',
+                pictureURL: '2',
+                id: ''
             }
         ];
 
@@ -77,7 +78,7 @@ describe('getDistinctUsers', () => {
 
         expect(distinctUsers).toHaveLength(2);
 
-        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.picture.large));
+        const uniqueThumbnailSet = new Set(distinctUsers.map(user => user.pictureURL));
         expect(uniqueThumbnailSet.size).toEqual(distinctUsers.length);
     });
 });

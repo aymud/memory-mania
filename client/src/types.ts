@@ -1,15 +1,10 @@
 import { CSSProperties } from 'react';
 
 export interface IUser {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
+    firstName: string;
+    lastName?: string;
+    pictureURL: string;
+    id: string;
 }
 
 export interface IUserCard {
@@ -22,4 +17,16 @@ export interface IUserCard {
     withOpacity: boolean;
     isDragging: boolean;
     cardTransformStyle?: CSSProperties;
+}
+
+export interface IApiUser {
+    name: {
+        first: string;
+    };
+    picture: {
+        large: string;
+    };
+    id: {
+        value: string;
+    };
 }
