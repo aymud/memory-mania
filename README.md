@@ -1,31 +1,34 @@
-<h1 align="center">🧠 Memory Mania 🎮</h1>
-<h2 align="center"><a href="https://memorymania.netlify.app//">View Live</a></h2>
-<h2 align="center">A Memory Testing Game with React</h2>
+<div align="center">
+    <h1>🧠 Memory Mania 🎮</h1>
+    <a href="https://memorymania.netlify.app/"><img src="https://img.shields.io/badge/Play-Game-green.svg"></a>
+    <h2>A Memory Recall Game with React</h2>
+</div>
 
 ---
 
 ## Contents
 
-- [Overview](#1-overview)
+- [Overview](#1--overview)
 - [Folder Structure](#2-folder-structure)
-- [Running the Application Locally](#3-running-the-application-locally)
+- [Running the Application Locally](#3--running-the-application-locally)
 - [Prerequisites](#4-prerequisites)
 - [Technologies and Concepts Used](#5--technologies-and-concepts-used)
-- [Contributing](#6-contributing)
+- [Contributing](#6--contributing)
 
-## `1` Overview
+## `1` 🎯 Overview
 
 Memory Mania is a single-page React Application designed to test memory skills
 in a fun and challenging way!
-It generates random names and faces.
-The objective of the game is to memorize the names and then test your memory by entering the correct names for the displayed images.
+It generates random names and faces, providing a practical solution for training memory to remember people.
+Players memorize names and then test their recall by matching names with displayed images.
 
 ## `2` Folder Structure
 This React project was bootstrapped using [Vite](https://vitejs.dev/guide/).  
-This folder structure separates the client and server parts of the application:
+This folder structure separates the client and server parts of the application.
 
 ```
 ├── client/
+├──── cypress/              - Integration and E2E tests
 ├──── public/               - Contains the HTML template and any static assets
 ├──── src/                  - Contains the source code for the React application
 │     └── components/       - Stores React components and their tests used in the application
@@ -35,10 +38,9 @@ This folder structure separates the client and server parts of the application:
 │     │   ├── login.jsx  
 │     ├── utils/            - Helper functions and classes
 │     ├── App.tsx           - Core component that manages the game's logic and user interface
-│     ├── App.css
-│     ├── index.html        - Template file which is served up when script is run
 │     ├── main.tsx          - Entry point for rendering the React app into the HTML template
 │     ├── themes.ts         - Application themes that defines the colours
+├──── index.html            - Template file which is served up when script is run
 ├──── .eslintrc.cjs         - ESLint configuration for linting code
 ├──── .prettierrc           - Prettier configuration for code formatting rules
 ├──── tsconfig.json         - TypeScript configuration for compiler and linting options
@@ -49,7 +51,7 @@ This folder structure separates the client and server parts of the application:
 └── README.md
 ```
 
-## `3` Running the Application Locally
+## `3` 🚀 Running the Application Locally
 Before you begin, ensure you have met the prerequisites, and then
 follow these steps to run the application locally.
 > [!IMPORTANT]
@@ -95,7 +97,7 @@ follow these steps to run the application locally.
 > early in the development process.
 > You can configure your code editor to automatically format code using the ESLint and Prettier config files.
 
-## `5`  ✨ Technologies and Concepts Used
+## `5` ✨ Technologies and Concepts Used
 
 ### Why React?
 
@@ -121,6 +123,8 @@ This project utilizes various aspects of the React ecosystem, including:
 - React Testing Library / Jest: For writing unit tests for React components and ensuring their behavior as expected.
 - Authentication: Simulated authentication using mock data and local storage for storing user credentials.
 - API Requests: Utilizing Fetch API for making HTTP requests to fetch data from external APIs.
+- Draggable Components: Incorporates draggable components from the React dnd kit package,
+  enhancing user interaction and interface design.
 
 ### Continuous Integration (CI) and Continuous Deployment (CD)
 
@@ -139,24 +143,10 @@ To enhance product quality and ensure it's free from bugs, end-to-end testing is
 Code coverage is generated after running each tests and is used to ensure tests are comprehensive
 and cover as much of the code as possible.
 
-## `6` Contributing
+## `6` 🤝🏻 Contributing
 
-Contributions are welcome and appreciated! If you'd like to contribute to this project, please follow these guidelines.
-
-1. Fork the repository: Start by forking the repository to your GitHub account.
-2. Clone the repository: Clone the forked repository to your local machine using git clone.
-3. Create a new branch: Create a new branch for your changes using git checkout -b feature/my-feature or git checkout -b
-   fix/my-fix depending on the type of contribution.
-4. Make your changes: Make your desired changes to the codebase. Ensure that your changes adhere to the project's coding
-   standards and conventions.
-5. Test your changes: Test your changes thoroughly to ensure that they work as expected and do not introduce any
-   regressions.
-6. Commit your changes: Once you are satisfied with your changes, commit them to your forked repository with descriptive
-   commit messages.
-7. Push your changes: Push your changes to your forked repository on GitHub using git push.
-8. Create a pull request: Finally, create a pull request from your forked repository to the original repository. Provide
-   a detailed description of your changes in the pull request, and reference any related issues if applicable.
-9. Review & Merge: Someone will review and provide feedback or comments if needed, once resolved your changed will be
-   merged.
+Changes and improvements are appreciated! Feel free to fork and open a pull request.
+Make your changes in a specific branch and request to pull into `main`.
+If you can, add some tests and make sure the app fully works before sending the PR to speed up the process.
 
 Hakuna Matata! 😊

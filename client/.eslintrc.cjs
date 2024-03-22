@@ -31,6 +31,7 @@ module.exports = {
                 pathGroupsExcludedImportTypes: ['react'],
                 'newlines-between': 'always'
             }
-        ]
+        ],
+        'import/named': 'off'
     }
 };

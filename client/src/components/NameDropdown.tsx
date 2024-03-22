@@ -2,6 +2,8 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import { IUser } from '../types.ts';
+
 const NamesDropdownSelect = styled.select`
     width: 100%;
     padding: 5px;
@@ -18,18 +20,12 @@ const NamesDropdownSelect = styled.select`
     }
 `;
 
-interface User {
-    id: {
-        value: string;
-    };
-}
-
 interface NameDropdownProps {
     allNames: string[];
     isLevelOver: boolean;
     setCurrentName: (name: string) => void;
     handleOnChange: (name: string, id: string) => void;
-    user: User;
+    user: Pick<IUser, 'id'>;
 }
 
 export default function NameDropdown(props: NameDropdownProps) {
@@ -54,7 +50,7 @@ export default function NameDropdown(props: NameDropdownProps) {
                 // Clean up name input before saving it for future validation.
                 name = name.trim().toLowerCase();
                 props.setCurrentName(name);
-                props.handleOnChange(name, props.user.id.value);
+                props.handleOnChange(name, props.user.id);
             }}>
             <option value=''>Select a name</option>
             {dropdownNames}

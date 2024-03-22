@@ -79,5 +79,5 @@ jobs:
           header: Cypress Tests Code Coverage Summary
           recreate: true
           path: code-coverage-results.md
-          message:
+          message: |
             ${{ github.event.pull_request.title }}, Release ${{ github.sha }} to <https://deploy-preview-${{ github.event.number }}--memorymania.netlify.app/>

@@ -1,96 +1,81 @@
-import { FiMenu, FiUser } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React from 'react';
 
+import { Avatar, Box, Flex, HStack, Menu, MenuButton, MenuItem, MenuList, Stack, Text, VStack } from '@chakra-ui/react';
+import { FiChevronDown } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+
+import ThemeSwitcher from './ThemeSwitcher.tsx';
 import { useAuthState } from '../hooks/useAuthState.ts';
+import { UseTheme } from '../hooks/useTheme.ts';
 
 interface NavbarProps {
     level?: number;
 }
 
-const NavbarList = styled.ul`
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background: ${props => props.theme.navbarBackgroundColor};
-    color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    list-style: none;
-    margin: 0;
-`;
-
-const NavbarItem = styled.li<{ $isRight: boolean }>`
-    padding: 10px;
-    margin-left: 5px;
-    font-size: 1.5em;
-    transition: box-shadow 0.3s;
-    color: #fff;
-
-    ${props => props.$isRight && 'margin-left: auto'};
-`;
-
-const MenuIcon = styled.div`
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-`;
-
-const ProfileContainer = styled.div`
-    display: flex;
-    align-items: center;
-    color: #ccc;
-    cursor: pointer;
-`;
-
-const ProfileIcon = styled.div`
-    font-size: 1.5rem;
-    margin-right: 5px;
-    color: #fff;
-`;
-
-const ProfileName = styled.div`
-    font-size: 1.5rem;
-    color: #fff;
-`;
-
-const LevelInfo = styled.div`
-    font-size: 1.5rem;
-    font-weight: bold;
-    /* Center the LevelInfo horizontally */
-    flex: 1;
-    text-align: center;
-`;
-
 export default function Navbar(props: NavbarProps) {
+    const { isAuthenticated, user, logout } = useAuthState();
+    const { theme } = UseTheme();
     const navigate = useNavigate();
-    const { isAuthenticated, user } = useAuthState();
-
-    function handleProfile() {
-        navigate('/profile');
-    }
 
     return (
-        <header>
-            <nav>
-                <NavbarList>
-                    <MenuIcon>
-                        <FiMenu />
-                    </MenuIcon>
-                    {props.level && <LevelInfo data-testid='cypress-level-info'>Level {props.level}</LevelInfo>}
-                    {isAuthenticated ? (
-                        <NavbarItem $isRight>
-                            <ProfileContainer onClick={handleProfile}>
-                                <ProfileIcon>
-                                    <FiUser />
-                                </ProfileIcon>
-                                <ProfileName>{user}</ProfileName>
-                            </ProfileContainer>
-                        </NavbarItem>
-                    ) : (
-                        <NavbarItem $isRight>Login</NavbarItem>
+        <React.Fragment>
+            <Box bg={theme.navbarBackgroundColor} px={4}>
+                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                    <Box color={theme.navbarTextColor}>Memory Mania</Box>
+                    {props.level && (
+                        <Box data-testid='cypress-level-info' color={theme.navbarTextColor}>
+                            Level {props.level}
+                        </Box>
                     )}
-                </NavbarList>
-            </nav>
-        </header>
+                    <HStack spacing={{ base: '0', md: '6' }}>
+                        <ThemeSwitcher />
+                        <Flex alignItems={'center'}>
+                            <Stack direction={'row'} spacing={7}>
+                                {isAuthenticated && (
+                                    <Menu>
+                                        <MenuButton py={2} transition='all 0.3s' _focus={{ boxShadow: 'none' }}>
+                                            <HStack>
+                                                <Avatar
+                                                    size={'sm'}
+                                                    src={
+                                                        'https://api.dicebear.com/8.x/adventurer-neutral/svg?seed=Salem&radius=50'
+                                                    }
+                                                />
+                                                <VStack
+                                                    display={{ base: 'none', md: 'flex' }}
+                                                    alignItems='flex-start'
+                                                    spacing='1px'
+                                                    ml='2'>
+                                                    <Text color={theme.navbarTextColor} fontSize='sm'>
+                                                        {user}
+                                                    </Text>
+                                                    <Text fontSize='xs' color='gray.600'>
+                                                        User
+                                                    </Text>
+                                                </VStack>
+                                                <Box display={{ base: 'none', md: 'flex' }}>
+                                                    <FiChevronDown color={theme.navbarTextColor} />
+                                                </Box>
+                                            </HStack>
+                                        </MenuButton>
+                                        <MenuList>
+                                            <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+                                            <MenuItem>Settings</MenuItem>
+                                            <MenuItem
+                                                onClick={() => {
+                                                    logout();
+                                                    navigate('/');
+                                                }}>
+                                                Logout
+                                            </MenuItem>
+                                        </MenuList>
+                                    </Menu>
+                                )}
+                            </Stack>
+                        </Flex>
+                    </HStack>
+                </Flex>
+            </Box>
+        </React.Fragment>
     );
 }

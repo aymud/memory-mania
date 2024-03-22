@@ -3,23 +3,12 @@ import React from 'react';
 import { useRandomUsers } from './useRandomUsers.ts';
 import useTimer from './useTimer.ts';
 import { shuffleArray } from '../utils/manipulation.ts';
+import { IUser } from '../types.ts';
 
 interface EnteredNamesType {
     id: string;
     name: string;
     isCorrect?: boolean;
-}
-
-interface UserType {
-    name: {
-        first: string;
-    };
-    picture: {
-        large: string;
-    };
-    id: {
-        value: string;
-    };
 }
 
 type GameState = {
@@ -46,7 +35,7 @@ export const useGameState = () => {
     const [isLevelOver, setIsLevelOver] = React.useState(false);
     const [isLearningPhase, setIsLearningPhase] = React.useState(true);
     const [isWaitingTestStart, setIsWaitingTestStart] = React.useState(false);
-
+    const isTestingPhase = !isLearningPhase && !isWaitingTestStart && !isLevelOver;
     const {
         timeRemainingInSeconds: learningPhaseTimeRemainingInSeconds,
         startTimer: startLearningPhaseTimer,
@@ -63,6 +52,12 @@ export const useGameState = () => {
         isLoading: isRandomUsersLoading,
         setIsLoading
     } = useRandomUsers(numOfRandomUsers, isLearningPhase, startLearningPhaseTimer);
+    const userNames = randomUsers.map(user => user.firstName);
+
+    React.useEffect(() => {
+        if (!isTestingPhase) return;
+        startTestingPhaseTimer();
+    }, [isTestingPhase, startTestingPhaseTimer]);
 
     React.useEffect(() => {
         saveGameStateToBrowserStorage({
@@ -101,14 +96,15 @@ export const useGameState = () => {
     function handleTestStart() {
         setIsLearningPhase(false);
         setIsWaitingTestStart(true);
+        resetLearningPhaseTimer();
     }
 
     function handleTestSubmit() {
         // Iterate over randomUsers and check if the entered names match, and update score.
         const namesValidated: EnteredNamesType[] = enteredNames.map(actualUser => {
-            const expectedUser = randomUsers.find((user: UserType) => user.id.value === actualUser.id);
+            const expectedUser = randomUsers.find((user: IUser) => user.id === actualUser.id);
             if (expectedUser) {
-                const isNameCorrect = actualUser.name === expectedUser.name.first.toLowerCase();
+                const isNameCorrect = actualUser.name === expectedUser.firstName.toLowerCase();
                 return {
                     ...actualUser,
                     isCorrect: isNameCorrect
@@ -123,6 +119,7 @@ export const useGameState = () => {
         });
         setEnteredNames(namesValidated);
         setIsLevelOver(true);
+        resetTestingPhaseTimer();
     }
 
     function handleNameEntered(name: string, id: string) {
@@ -157,11 +154,13 @@ export const useGameState = () => {
     return {
         currentLevel,
         numOfRandomUsers,
+        userNames,
         isLevelOver,
         isLearningPhase,
         isWaitingTestStart,
         learningPhaseTimeRemainingInSeconds,
         testingPhaseTimeRemainingInSeconds,
+        isTestingPhase,
         startTestingPhaseTimer,
         randomUsers,
         isRandomUsersLoading,

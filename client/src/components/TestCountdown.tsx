@@ -16,6 +16,7 @@ const TestCountdownContainer = styled.div`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 300px;
     margin: 0 auto;
+    color: black;
 `;
 
 const CountdownText = styled.h2`

@@ -1,4 +1,7 @@
 {
     "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "types": ["cypress", "node", "@4tw/cypress-drag-drop"]
+    },
     "include": ["**/*.ts"]
 }
