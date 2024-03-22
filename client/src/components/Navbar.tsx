@@ -74,7 +74,13 @@ export default function Navbar(props: NavbarProps) {
                                         <MenuDivider />
                                         <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
                                         <MenuItem>Settings</MenuItem>
-                                        <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                                        <MenuItem
+                                            onClick={() => {
+                                                logout();
+                                                navigate('/');
+                                            }}>
+                                            Logout
+                                        </MenuItem>
                                     </MenuList>
                                 </Menu>
                             )}
