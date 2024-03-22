@@ -48,10 +48,6 @@ export default function StartMenu() {
         setShowInstructions(prevShowInstructions => !prevShowInstructions);
     }
 
-    function handleProfile() {
-        navigate('/profile');
-    }
-
     function handleStartGame() {
         navigate('/app');
     }
@@ -66,9 +62,6 @@ export default function StartMenu() {
                 </MenuButton>
                 <MenuButton data-testid='cypress-instructions-button' onClick={toggleInstructions}>
                     Instructions
-                </MenuButton>
-                <MenuButton data-testid='cypress-profile-button' onClick={handleProfile}>
-                    Profile
                 </MenuButton>
                 {showInstructions && <Instructions OnToggle={toggleInstructions} />}
             </StyledStartMenu>
