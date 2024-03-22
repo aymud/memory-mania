@@ -84,6 +84,7 @@ export const useGameState = () => {
     function handleTestStart() {
         setIsLearningPhase(false);
         setIsWaitingTestStart(true);
+        resetLearningPhaseTimer();
     }
 
     function handleTestSubmit() {
@@ -106,6 +107,7 @@ export const useGameState = () => {
         });
         setEnteredNames(namesValidated);
         setIsLevelOver(true);
+        resetTestingPhaseTimer();
     }
 
     function handleNameEntered(name: string, id: string) {
