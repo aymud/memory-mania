@@ -46,7 +46,7 @@ This folder structure separates the client and server parts of the application.
 ├──── tsconfig.json         - TypeScript configuration for compiler and linting options
 ├──── package.json          - Configuration file for npm packages and project settings
 ├── server/
-├──── server.js             - Server-side JavaScript file that serves as the backend for the application
+├──── server.js             - Serves as the backend for the application
 ├──── package.json          - Configuration file for npm packages and project settings
 └── README.md
 ```
