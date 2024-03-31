@@ -12,6 +12,7 @@
         "lint-fix": "eslint --fix .",
         "format": "npm run prettier",
         "jest:run": "jest",
+        "cy:open": "npx cypress open",
         "cy:run-e2e": "cypress run --e2e",
         "report:coverage:summary": "nyc report --reporter=cobertura"
     },
