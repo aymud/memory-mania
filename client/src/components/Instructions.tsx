@@ -38,9 +38,11 @@ interface InstructionsProps {
 
 export default function Instructions(props: InstructionsProps) {
     return (
-        <InstructionsModal>
+        <InstructionsModal data-testid='cypress-instructions-modal'>
             <Card>
-                <CloseButton onClick={props.OnToggle}>Close</CloseButton>
+                <CloseButton data-testid='cypress-instructions-close-button' onClick={props.OnToggle}>
+                    Close
+                </CloseButton>
                 <h2>Game Instructions</h2>
                 <p>Look at each person and try to memorize their name.</p>
                 <p>When ready, start the test. There will be a short waiting period before recall begins.</p>
