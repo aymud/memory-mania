@@ -1,0 +1,70 @@
+{
+    "results": [
+        {
+            "id": {
+                "value": "1"
+            },
+            "name": {
+                "first": "A"
+            },
+            "picture": {
+                "large": "PersonA.png"
+            }
+        },
+        {
+            "id": {
+                "value": "2"
+            },
+            "name": {
+                "first": "A"
+            },
+            "picture": {
+                "large": "PersonB.png"
+            }
+        },
+        {
+            "id": {
+                "value": "3"
+            },
+            "name": {
+                "first": "A"
+            },
+            "picture": {
+                "large": "PersonC.jpeg"
+            }
+        },
+        {
+            "id": {
+                "value": "4"
+            },
+            "name": {
+                "first": "A"
+            },
+            "picture": {
+                "large": "PersonD.png"
+            }
+        },
+        {
+            "id": {
+                "value": "5"
+            },
+            "name": {
+                "first": "A"
+            },
+            "picture": {
+                "large": "PersonE.jpeg"
+            }
+        },
+        {
+            "id": {
+                "value": "6"
+            },
+            "name": {
+                "first": "A"
+            },
+            "picture": {
+                "large": "PersonF.png"
+            }
+        }
+    ]
+}

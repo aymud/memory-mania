@@ -52,7 +52,7 @@ export default function Profile() {
     return (
         <ThemedAppContainer>
             <Navbar />
-            <ProfileWrapper>
+            <ProfileWrapper data-testid='cypress-profile-container'>
                 <ProfileContainer>
                     <Title>User Profile</Title>
                     <ProfileInfo>

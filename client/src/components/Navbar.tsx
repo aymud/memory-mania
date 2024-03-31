@@ -54,14 +54,22 @@ export default function Navbar(props: NavbarProps) {
                                                     </Text>
                                                 </VStack>
                                                 <Box display={{ base: 'none', md: 'flex' }}>
-                                                    <FiChevronDown color={theme.navbarTextColor} />
+                                                    <FiChevronDown
+                                                        color={theme.navbarTextColor}
+                                                        data-testid='cypress-navbar-menu-dropdown'
+                                                    />
                                                 </Box>
                                             </HStack>
                                         </MenuButton>
-                                        <MenuList>
-                                            <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+                                        <MenuList data-testid='cypress-navbar-menu'>
+                                            <MenuItem
+                                                data-testid='cypress-profile-button'
+                                                onClick={() => navigate('/profile')}>
+                                                Profile
+                                            </MenuItem>
                                             <MenuItem>Settings</MenuItem>
                                             <MenuItem
+                                                data-testid='cypress-logout-button'
                                                 onClick={() => {
                                                     logout();
                                                     navigate('/');
