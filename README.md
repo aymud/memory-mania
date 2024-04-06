@@ -79,6 +79,14 @@ follow these steps to run the application locally.
 >
 > Because the project includes a client side and a server side, you need to install & run each separately.
 
+> [!TIP]
+>
+> This project utilizes TypeScript for type checking, ESLint for
+> linting code, and Prettier for code formatting. This is to
+> enforce coding standards, maintain code consistency, and catch potential issues
+> early in the development process.
+> You can configure your code editor to automatically format code using the ESLint and Prettier config files.
+
 <details><summary><b>Show instructions</b></summary>
 
 1. **Clone the repository**: Start by cloning the repository to your local machine.
@@ -114,14 +122,6 @@ follow these steps to run the application locally.
 - An Integrated Development Environment (IDE)
   - WebStorm
   - Visual Studio Code
-
-> [!TIP]
->
-> This project utilizes TypeScript for type checking, ESLint for
-> linting code, and Prettier for code formatting. This is to
-> enforce coding standards, maintain code consistency, and catch potential issues
-> early in the development process.
-> You can configure your code editor to automatically format code using the ESLint and Prettier config files.
 
 </details>
 
