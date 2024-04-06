@@ -113,12 +113,12 @@ follow these steps to run the application locally.
 - Node.js: Make sure you have Node.js installed.
   Node.js includes npm (package manager) by default.  
   To confirm that Node.js is installed correctly, open your terminal or command prompt and run the following commands:
+    - ```shell 
+      node -v # Displays the current version of Node.js.
+      ```
     - ```shell
-  node -v # Displays the current version of Node.js.
-    ```
-    - ```shell
-    npm -v # Displays the current version of npm.
-    ```
+      npm -v # Displays the current version of npm.
+      ```
 - An Integrated Development Environment (IDE)
   - WebStorm
   - Visual Studio Code
