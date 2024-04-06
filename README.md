@@ -122,6 +122,7 @@ follow these steps to run the application locally.
 > enforce coding standards, maintain code consistency, and catch potential issues
 > early in the development process.
 > You can configure your code editor to automatically format code using the ESLint and Prettier config files.
+
 </details>
 
 ## `5` ✨ Technologies and Concepts Used
