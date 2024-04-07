@@ -3,6 +3,8 @@
 version: 2.1
 orbs:
   node: circleci/node@5
+  cypress: cypress-io/cypress@1
+
 jobs:
   test-node:
     # Install node dependencies and run tests
@@ -22,6 +24,14 @@ jobs:
           command: ./node_modules/.bin/jest --ci --runInBand --reporters=default --reporters=jest-junit
       - store_test_results:
           path: ./test-results/
+
+  test-cypress:
+    executor: cypress/default
+    working_directory: ~/project/client
+    steps:
+      - checkout
+      - cypress/run
+
   build-node:
     # Build node project
     executor: node/default
