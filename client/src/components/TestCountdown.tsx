@@ -38,7 +38,7 @@ interface TestCountdownProps {
     duration_seconds: number;
 }
 
-const RANDOM_FACT_API_URL = 'https://api.api-ninjas.com/v1/facts?limit=1';
+const RANDOM_FACT_API_URL = 'https://api.api-ninjas.com/v1/facts';
 
 export default function TestCountdown(props: TestCountdownProps) {
     const [funFact, setFunFact] = React.useState('');
