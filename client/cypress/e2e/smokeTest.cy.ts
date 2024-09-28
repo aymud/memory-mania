@@ -14,7 +14,14 @@ describe('Memory Mania Smoke Test', () => {
         cy.url().should('include', '/login');
     });
 
-    it('logs in the user', () => {
+    it('opens and closes the instructions', () => {
+        cy.get('[data-testid="cypress-instructions-button"]').click();
+        cy.get('[data-testid="cypress-instructions-modal"]').should('be.visible');
+        cy.get('[data-testid="cypress-instructions-close-button"]').click();
+        cy.get('[data-testid="cypress-instructions-modal"]').should('not.exist');
+    });
+
+    it('logs in the user and logs out', () => {
         const username = 'user';
         cy.get('[data-testid="cypress-start-game-button"]').click();
         cy.get('#login-username-field').type(username).type('{enter}');
@@ -22,6 +29,28 @@ describe('Memory Mania Smoke Test', () => {
         // cy.get('#login-password-field').type(`password`);
         cy.url().should('eq', 'http://localhost:5173/');
         cy.contains(`Successfully logged in as ${username}`);
+
+        // logout
+        cy.get('[data-testid="cypress-navbar-menu-dropdown"]').click({ force: true });
+        cy.get('[data-testid="cypress-navbar-menu"]').should('be.visible');
+        cy.get('[data-testid="cypress-logout-button"]').click({ force: true });
+        cy.get('[data-testid="cypress-navbar-menu"]').should('not.exist');
+    });
+
+    it('goes to profile', () => {
+        const username = 'user';
+        cy.get('[data-testid="cypress-start-game-button"]').click();
+        cy.get('#login-username-field').type(username).type('{enter}');
+        // Don't want to test password for now because its default value is correct and doesn't need to change.
+        // cy.get('#login-password-field').type(`password`);
+        cy.url().should('eq', 'http://localhost:5173/');
+        cy.contains(`Successfully logged in as ${username}`);
+
+        // profile
+        cy.get('[data-testid="cypress-navbar-menu-dropdown"]').click({ force: true });
+        cy.get('[data-testid="cypress-navbar-menu"]').should('be.visible');
+        cy.get('[data-testid="cypress-profile-button"]').click({ force: true });
+        cy.get('[data-testid="cypress-profile-container"]').should('be.visible');
     });
 
     it('logs in the user and caches auth state', () => {
@@ -68,18 +97,9 @@ describe('Memory Mania Smoke Test', () => {
         // Spying and response stubbing.
         // Note: The order of the faces can be different since its shuffled.
         // So I will give them all the same name, so I can 'force' all correct answers.
-        cy.intercept('GET', 'https://randomuser.me/api/*', {
-            results: [
-                { id: { value: '1' }, name: { first: 'A' }, picture: { large: 'PersonA.png' } },
-                { id: { value: '2' }, name: { first: 'A' }, picture: { large: 'PersonB.png' } },
-                { id: { value: '3' }, name: { first: 'A' }, picture: { large: 'PersonC.jpeg' } },
-                { id: { value: '4' }, name: { first: 'A' }, picture: { large: 'PersonD.png' } },
-                { id: { value: '5' }, name: { first: 'A' }, picture: { large: 'PersonE.jpeg' } },
-                { id: { value: '6' }, name: { first: 'A' }, picture: { large: 'PersonF.png' } }
-            ]
-        }).as('randomUserRequest');
+        cy.intercept('GET', 'https://randomuser.me/api/*', { fixture: 'users.json' }).as('randomUserRequest');
 
-        // Start game (learning phase)
+        // // Start game (learning phase)
         cy.get('[data-testid="cypress-start-game-button"]').click();
         cy.get('[data-testid="cypress-test-button"]').click();
         cy.get('[data-testid="cypress-skip-button"]').click();
